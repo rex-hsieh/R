@@ -1,5 +1,6 @@
 ---
 title: "R Notebook"
+author: Meng Hsuan Hsieh
 output: html_notebook
 ---
 
@@ -10,7 +11,7 @@ The following is a quick tutorial, should you ever want to use Markdown document
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
-plot(cars)
+plot(cars, main="Distance vs Speed of Cars")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
@@ -23,4 +24,13 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 ----
 # The Basics
 
-For starters, let 
+A copy of *Learning R* by Cotton (published by O'Reilly) is available in your Google Drive. I will follow its examples closely, while offering some methods that I found useful (and fairly efficient, of course).
+
+**Assigning variables** is an important part of any languages; for historical reasons, I prefer using "<-" to assign variables, though "=" works just as well.
+
+
+```{r}
+x <- 1:5
+y = 6:10
+```
+
