@@ -335,3 +335,27 @@ The syntax for creating matrices is similar, but rather than passing a dim argum
 ))
 ```
 
+And one can easily examine the dimensions of a matrix:
+```{r}
+dim(a_matrix)
+nrow(a_matrix)
+ncol(a_matrix)
+```
+
+The length function that we have previously used with vectors also works on matrices and arrays. In this case it returns the product of each of the dimensions! Try this yourself.
+
+It is possible to call the names of the dimensions:
+```{r}
+rownames(a_matrix)
+colnames(a_matrix)
+dimnames(a_matrix)
+```
+
+Indexing the matrix has the following syntax: matrix[row,column]. To see this in practice:
+```{r}
+a_matrix[1,]
+a_matrix[,"zwei"]
+
+a_matrix[,c("zwei","drei")]
+```
+
