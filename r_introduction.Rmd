@@ -642,7 +642,7 @@ data.frame( #lengths 1, 2, and 4 are OK
 
 The following example will fail:
 
-```{r}
+```{r, eval=FALSE}
 data.frame( #lengths 1, 2, and 3 cause an error
 x = 1, #lowest common multiple is 6, which is more than 3
 y = 2:3,
