@@ -263,3 +263,62 @@ replicate(10, h2(9))
 See the problem here? If the uniform draw is greater than 0.5, then y is defined as 12. Otherwise, y is define as 16. It is often better to pass arguments into the function as necessary, rather than before defining it straight up.
 
 
+
+# Strings and Factors
+
+Text data is stored in character vectors (or, less commonly, character arrays). It's important to remember that each element of a character vector is a whole string, rather than just an individual character. In R, "string" is an informal term that is used because "element of a character vector" is quite a mouthful. The fact that the basic unit of text is a character vector means that most string manipulation functions operate on vectors of strings, in the same way that mathematical operations are vectorized.
+
+The c() function is used to create the desired string:
+
+```{r}
+c(
+  "You should use double quotes most of the time",
+  'Single quotes are better for including " inside the string'
+)
+```
+
+The paste function combines strings together. Each vector passed to it has its elements recycled to reach the length of the longest input, and then the strings are concatenated, with a space separating them. We can change the separator by passing an argument called *sep*, or use the related function paste0 to have no separator. After all the strings are combined, the result can be collapsed into one string containing everything using the collapse argument:
+
+```{r}
+paste(c("red", "yellow"), "lorry")
+paste(c("red", "yellow"), "lorry", sep = "-")
+paste(c("red", "yellow"), "lorry", collapse = ", ")
+paste0(c("red", "yellow"), "lorry")
+```
+
+```{r}
+x <- (1:15) ^ 2
+toString(x)
+toString(x, width = 40)
+```
+
+```{r}
+x <- c(
+"I", "saw", "a", "saw", "that", "could", "out",
+"saw", "any", "other", "saw", "I", "ever", "saw"
+)
+y <- noquote(x)
+x
+y
+```
+
+## Formatting Numbers
+
+Explicitly, R does a bunch of formatting using C-style commands. There are specifications that allow you to specify fixed or scientific formatting, the number of decimal places, and the width of the output. Whatever the options, the input should be one of the numeric types (including arrays), and the output is a character vector or array:
+
+```{r}
+pow <- 1:6
+(powers_of_e <- exp(pow))
+formatC(powers_of_e)
+formatC(powers_of_e, digits = 3) #3 sig figs
+formatC(powers_of_e, digits = 3, width = 10) #preceding spaces
+formatC(powers_of_e, digits = 3, format = "e") #scientific formatting
+formatC(powers_of_e, digits = 3, flag = "+") #precede +ve values with +
+```
+
+R also provides slightly more general C-style formatting with the function sprintf. This works in the same way as sprintf in every other language: the first argument contains placeholders for string or number variables, and further arguments are substituted into those placeholders. Just remember that most numbers in R are floating-point values rather than integers.
+
+The first argument to sprintf specifies a formatting string, with placeholders for other
+values. For example, %s denotes another string, %f and %e denote a floating-point number
+in fixed or scientific format, respectively, and %d represents an integer. Additionalarguments specify the values to replace the placeholders. As with the paste function,
+shorter inputs are recycled to match the longest input:
