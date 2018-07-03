@@ -1,0 +1,165 @@
+---
+title: "R: Intermediate Level Material"
+author: Meng Hsuan Hsieh
+output:
+  html_notebook:
+    theme: united
+    toc: yes
+---
+
+Having learned the basic data structures of R, we now turn our focus to some intermediate level coding topics. We assume a fair bit of coding skills and logic in this tutorial. We will begin with specifying environments, functions, loops, and eventually make our way into data analysis --- which si the bulk of the materials in the next tutorial.
+
+
+# Environments
+
+All the variables that we create need to be stored somewhere, and that somewhere is an environment. Environments themselves are just another type of variable --- we can assign them, manipulate them, and pass them into functions as arguments, just like we would any other variable. They are closely related to lists in that they are used for storing different types of variables together. In fact, most of the syntax for lists also works for environments, and we can coerce a list to be an environment (and vice versa).
+
+If you ever worked in some sort of computer language, storing objects is of a concern. However, Usually, you won’t need to explicitly deal with environments. For example, when you assign a variable at the command prompt, it will automatically go into an environment called the global environment (also known as the user workspace). When you call a function, an environment is automatically created to store the function-related variables. Understanding the basics of environments can be useful, however, in understanding the scope of variables, and for examining the call stack when debugging your code.
+
+One can easily add a new environment by the following command:
+
+```{r}
+an_environment <- new.env()
+```
+
+which, in the environment tab in RStudio, is labelled as "Environment", as expected. Assigning a variable to an environment is equally easy: it takes an extra second to write,
+
+```{r}
+an_environment[["pythag"]] <- c(12, 15, 20, 21) #See http://oeis.org/A156683
+an_environment$root <- polyroot(c(6, -5, 1))
+```
+
+Similarly, we can use the *assign()* function to put objects into an environment of our choice:
+
+```{r}
+assign(
+"moonday",
+weekdays(as.Date("1966/05/01")),
+an_environment
+)
+```
+
+We can also easily read variables stored in these environment:
+
+```{r}
+ls(envir = an_environment)
+ls.str(envir = an_environment)
+```
+
+And we can tell if an object lives in an environment by using the following command:
+
+```{r}
+exists("pythag", an_environment)
+```
+
+It is possible to turn environments into a list, and vice versa; the underlying reason why this is possible is, again, due to the flexibility of these environments.
+
+```{r}
+#Convert to list
+(a_list <- as.list(an_environment))
+as.environment(a_list)
+list2env(a_list)
+```
+
+Important note: all environments are nested, meaning that they must have a parent environment (the exception is a special environment called the **empty environment** that sits at the top of the chain). By default, the exists and get functions will also look for variables in the parent environments. Pass inherits = FALSE to them to change this behavior so that they will only look in the environment that you’ve specified:
+
+```{r}
+nested_environment <- new.env(parent = an_environment)
+exists("pythag", nested_environment)
+exists("pythag", nested_environment, inherits = FALSE)
+```
+
+Shortcut functions are available to access both the global environment (where variables that you assign from the command prompt are stored) and the base environment (this contains functions and other variables from R’s base package, which provides basic functionality):
+
+```{r}
+non_stormers <<- c(3, 7, 8, 13, 17, 18, 21) #See http://oeis.org/A002312
+get("non_stormers", envir = globalenv())
+head(ls(envir = baseenv()), 20)
+```
+
+
+There are two other situations where we might encounter environments.
+
+1. Whenever a function is called, all the variables defined by the function are stored in an environment belonging to that function (a function plus its environment is sometimes called a closure).
+2. Whenever we load a package, the functions in that package are stored in an environment on the search path.
+
+
+# Functions
+
+This is extremely useful, and, beyond undergraduate level in econometrics or statistical modelling classes, functions are used for any serious modelling/estimation procedures. In order to understand functions better (this is actually not that different from Python functions), let’s take a look at what they consist of. Typing the name of a function shows you the code that runs when you call it. This is the *rt* function, which generates random numbers from a Student's t-distribution:
+
+```{r}
+rt
+```
+
+Let's try to combine some stuff in pratice:
+
+```{r}
+stats_env <- new.env()
+t_dist <- rt(200,1)
+assign(
+"t-dist-ex",
+t_dist,
+stats_env
+)
+```
+
+As you can see from the previous output, the function parameters and syntax are quite easy to write down. Also, different from functions in Python, for example, there is no explicit “return” keyword to state which value should be returned from the function. In R, the last value that is calculated in the function is automatically returned. In the case of *rt*, if the *ncp* (used for calculating non-central t-distribution) argument is omitted, some *C* code is called to generate the random numbers, and those are returned. Otherwise, the function calls the *rnorm*, *rchisq*, and *sqrt* functions to generate the numbers, and those are returned.
+
+To create our own functions, we just assign them as we would any other variable. As an example, let’s create a function to calculate the length of the hypotenuse of a right-angled triangle (for simplicity, we’ll use the obvious algorithm; for real-world code, this doesn’t work well with very big and very small numbers, so you shouldn’t calculate hypotenuses this way):
+
+```{r}
+options(scipen=999)
+hypotenuse <- function(x, y){
+  # format(sqrt(x ^ 2 + y ^ 2), scientific = FALSE)
+  sqrt(x ^ 2 + y ^ 2)
+}
+hypotenuse(10,20)
+```
+
+Just for intellectual curiosity, why does this code not work so well? The answer is implicit in *machine accuracy*: the code above works in theory, but in practice it may fail. If $x$ is so large that $x^2$ overflows, the code will produce an infinite result. We’d like to be able to say to the computer "Now $x^2$ and $y^2$ might be too big, but just wait a minute. I’m going to take a square root, and so the numbers will get smaller. I just need to borrow some extra range for a minute". I know this is a long heuristic, but this is exactly what good mathematics is about: one can achieve machine limitations like that in environments by extending precision, but that would be inefficient and unnecessary. And of course it would fail completely if you’re already using the largest numeric type available. Hence, we use the following algorithm to avoid overflow: it is not the best code out there, but it works far more reliably than the last:
+
+```{r}
+hypo_large <- function(x,y){
+  max_xy = max(abs(x),abs(y))
+  min_xy = min(abs(x),abs(y))
+  r = min_xy / max_xy
+  # format(max_xy * sqrt(1+r^2),scientific = FALSE)
+  max_xy * sqrt(1+r^2)
+}
+hypo_large(10,20)
+```
+
+but check out the following:
+
+```{r}
+start_time <- Sys.time()
+system.time({hypotenuse(12839081902859018902809189658908690849062830946802934860928309468902384068,1923091029309120390192309851894534534534537898643120591)})
+hypotenuse(12839081902859018902809189658908690849062830946802934860928309468902384068,1923091029309120390192309851894534534534537898643120591)
+end_time <- Sys.time()
+
+end_time - start_time
+```
+
+```{r}
+start_time <- Sys.time()
+system.time({hypo_large(12839081902859018902809189658908690849062830946802934860928309468902384068,1923091029309120390192309851894534534534537898643120591)})
+hypotenuse(12839081902859018902809189658908690849062830946802934860928309468902384068,1923091029309120390192309851894534534534537898643120591)
+end_time <- Sys.time()
+
+end_time - start_time
+```
+
+Granted, these are "small" numbers by machine standards, so printing them in the interpreter is not so much of a problem. But look at the runtime differences: the "approximation" algorithm is slightly faster than the regular, theory-based algorithm.
+
+A piece of theory that is good to know is that we can always standardise a normal random variable so that it has mean 0 and variance 1. We will see it in practice first:
+
+```{r}
+normalize <- function(x, m = mean(x), s = sd(x)){
+  (x - m) / s
+} 
+normalized <- normalize(c(1, 3, 6, 10, 15))
+mean(normalized) #almost 0!
+sd(normalized)
+```
+
