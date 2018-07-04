@@ -1,11 +1,11 @@
----
+----
 title: "Introduction to R: Codes and Examples"
 author: Meng Hsuan Hsieh
 output:
   html_notebook:
     theme: united
     toc: yes
----
+----
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. You are not expected to write this from the grounds up; this is created purely for demonstration purposes, so you can follow some of teh commands that you've been asked to do.
 
@@ -24,7 +24,6 @@ When you save the notebook, an HTML file containing the code and output will be 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
 
-----
 # The Basics
 
 A copy of *Learning R* by Cotton (published by O'Reilly) is available in your Google Drive. I will follow its examples closely, while offering some methods that I found useful (and fairly efficient, of course).
@@ -390,7 +389,7 @@ names(a_list) <- c("catalan", "months", "involutary", "arcsin")
 a_list
 ```
 
-To make things even more complicated and chunky sometimes, we can even embed lists into lists -- creating a list of list, if you will:
+To make things even more complicated and chunky sometimes, we can even embed lists into lists --- creating a list of list, if you will:
 
 ```{r}
 (main_list <- list(
@@ -405,7 +404,7 @@ element_in_main_list = log10(1:10)
 ))
 ```
 
-In theory, you can keep nesting lists forever. In practice, current versions of R will throw an error once you start nesting your lists tens of thousands of levels deep (the exact number is machine specific). Luckily, this shouldn't be a problem for you, since real-world code where nesting is deeper than three or four levels is extremely rare. I will not provide any exercise or situation where deep nesting is necessary at all (and it presents a confusing set of codes anyways -- no one needs that).
+In theory, you can keep nesting lists forever. In practice, current versions of R will throw an error once you start nesting your lists tens of thousands of levels deep (the exact number is machine specific). Luckily, this shouldn't be a problem for you, since real-world code where nesting is deeper than three or four levels is extremely rare. I will not provide any exercise or situation where deep nesting is necessary at all (and it presents a confusing set of codes anyways --- no one needs that).
 
 
 
@@ -425,7 +424,7 @@ length(a_list)
 length(main_list)
 ```
 
-Lists do not have dimension -- so using *dim(list object))* will return NULL. But, it does make sense to speak of the number of rows and columns an object contains:
+Lists do not have dimension --- so using *dim(list object))* will return NULL. But, it does make sense to speak of the number of rows and columns an object contains:
 
 ```{r}
 nrow(a_list)
@@ -482,7 +481,7 @@ l[[1]]
 l[["first"]]
 ```
 
-Again, *is.list()* function returns TRUE or FALSE -- the former if the object is a list, the latter if not. 
+Again, *is.list()* function returns TRUE or FALSE --- the former if the object is a list, the latter if not. 
 
 Sometimes, it is convenient to convert vectors to lists: this can be done using the function function *as.list()*. This creates a list with each element of the vector mapping to a list element containing one value:
 
@@ -526,7 +525,7 @@ c(list(a = 1, b = 2), list(3))
 c(list(a = 1, b = 2), 3)
 ```
 
-And, more useful than not, we can actually use *rbind()* and *cbind()* functions to assemble some datasets (at least, I've found these helpful -- in cases where datasets, after assembly, look rectangular). An example is as follows:
+And, more useful than not, we can actually use *rbind()* and *cbind()* functions to assemble some datasets (at least, I've found these helpful --- in cases where datasets, after assembly, look rectangular). An example is as follows:
 
 ```{r}
 (matrix_list_hybrid <- cbind(
@@ -535,7 +534,7 @@ list(c = 3, list(d = 4))
 ))
 ```
 
-Some might argue that this use of bind functions is "illegal", in the sense that they destroy datasets the way they appear. It makes analyses slightly more challenging and unnecessarily clunky. I agree, but these functions also provide a way for us to toy around with the existing datasets, to analyse them in ways that we cannot previously -- because of inherent limitation in how data is collected. One might argue that these functions form another case of R being a little too flexible and accommodating, instead of telling you that you've done something silly by throwing an error.
+Some might argue that this use of bind functions is "illegal", in the sense that they destroy datasets the way they appear. It makes analyses slightly more challenging and unnecessarily clunky. I agree, but these functions also provide a way for us to toy around with the existing datasets, to analyse them in ways that we cannot previously --- because of inherent limitation in how data is collected. One might argue that these functions form another case of R being a little too flexible and accommodating, instead of telling you that you've done something silly by throwing an error.
 
 # NULL
 
@@ -600,7 +599,7 @@ data.frame(
 )
 ```
 
-this is one of the best places where we can run simulations in: in mathematics, we care about properties of objects. Having these tools at our disposal make it a lot easier for us to see big ideas -- before/after we prove the properties.
+this is one of the best places where we can run simulations in: in mathematics, we care about properties of objects. Having these tools at our disposal make it a lot easier for us to see big ideas --- before/after we prove the properties.
 
 In addition, names can be overridden by using an extra argument:
 

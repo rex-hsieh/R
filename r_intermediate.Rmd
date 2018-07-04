@@ -354,4 +354,361 @@ To create a factor, the command is extremely simple:
 class(heights$gender)
 ```
 
+It is extremely important to speak of the *levels* that a particular factor contains. We need to clarify a few things:
+
+```{r}
+class(heights$gender)
+heights$gender
+levels(heights$gender)
+
+# Creating factors is as easy as using the factor function:
+
+gender_char <- c(
+      "female", "male", "female", "male", "male",
+      "female", "female", "male", "male", "female"
+      )
+(gender_fac <- factor(gender_char))
+```
+
+And looking at these new factors give us
+```{r}
+gender_fac
+```
+
+We can change the order of the levels when the factor is created by specifying a levels argument:
+
+```{r}
+factor(gender_char, levels = c("male", "female"))
+```
+
+and we can change the order of the factor levels by using the factor function again --- only this time passing into the existing factor (rather than the character vector we created earlier):
+
+```{r}
+factor(gender_fac, levels = c("male", "female"))
+```
+
+The relevel function is an alternative way of changing the order of factor levels. In this case, it just lets you specify which level comes first. As you might imagine, the use case for this function is rather niche --- it can come in handy for regression models where you want to compare different categories to a reference category. We will talk at length about this later. Most of the time you will be better off calling factor if you want to set the levels:
+
+```{r}
+relevel(gender_fac, "male")
+```
+
+## Dropping Factors Levels
+
+There are instances where some levels are undesirable to keep in the data. For example, it is entirely possible that some factors contain NAs.
+
+```{r}
+getting_to_work <- data.frame(
+      mode = c(
+        "bike", "car", "bus", "car", "walk",
+        "bike", "car", "bike", "car", "car"
+        ),
+time_mins = c(25, 13, NA, 22, 65, 28, 15, 24, NA, 14)
+)
+
+(getting_to_work <- subset(getting_to_work, !is.na(time_mins)))
+
+unique(getting_to_work$mode)
+
+
+```
+
+We can always drop the unused levels of the factor: in this case, we can use the *droplevels()* function. This accepts either a factor or a data frame. In the latter case, it drops the unused levels in all the factors of the input. Since there is only one factor in our example data frame, the two lines of code in the next example are equivalent:
+
+```{r}
+getting_to_work$mode <- droplevels(getting_to_work$mode)
+getting_to_work <- droplevels(getting_to_work)
+levels(getting_to_work$mode)
+```
+
+
+We can always order factors if we want; for example sake, let us generate 10,000 responses (pseudo-random, of course) and see what we have.
+
+```{r}
+happy_choices <- c("depressed", "grumpy", "so-so", "cheery", "ecstatic")
+happy_values <- sample(
+  happy_choices, 10000,
+  replace = TRUE
+)
+happy_fac <- factor(happy_values, happy_choices)
+head(happy_fac)
+happy_fac
+```
+
+And we can order this by using the *ordered()* function:
+
+```{r}
+happy_ord <- ordered(happy_values, happy_choices)
+head(happy_ord)
+```
+which, by default, assumes the "<" relation!
+
+An ordered factor is a factor, but a normal factor isn’t ordered: to see what I am saying, see the following output
+
+```{r}
+is.factor(happy_ord)
+is.ordered(happy_ord)
+is.ordered(happy_fac)
+```
+
+There will be times when it is desirable to cnovert factors data to numerical data, and that is the whole point of data cleaning. For example, if there is a mistyped data, R is smart enough to recognise it as factor type, but not so much anything else. As such, we have the embarrassing case of
+
+```{r}
+dirty <- data.frame(
+  x = c("1.23","4..55","30.12")
+)
+as.numeric(dirty$x)
+```
+and the *as.numeric()* command is obviously wrong. A recommended course of action for such conversion is to first convert factors' levels to numeric, then put everything as numeric or integer. This means
+
+```{r}
+as.numeric(levels(dirty$x))[as.integer(dirty$x)]
+```
+an alternative is clunkier, but still works:
+```{r}
+as.numeric(as.character(dirty$x))
+```
+first by converting dirty$x to characters (which does one conversion) and then to numeric (another conversion).
+
+The first method (the less clunky one) is more preferable but less intuitive; hence, if we are to code it, it is often times better to wrap it in function:
+
+```{r}
+factor_to_numeric <- function(f){
+  as.numeric(levels(f))[as.integer(f)]
+}
+dirty$x <- factor_to_numeric(dirty$x)
+dirty$x[is.na(dirty$x)] <- 0
+dirty
+```
+and something like above is implemented fairly often in the context of data cleaning --- which is something we will not be doing a lot in our work.
+
+A dataset is **balanced** if every cell contains a valid data type, and every category has the same number of data. The first is checked --- since there are a lot of data types built into R, all of which mapped to by some element. The second is harder; in an abstract, non-real-world-application-type setting, the *gl()* function can be used to generate a factor. In its simplest form, the function takes an integer for the number of levels in the resultant factor, and another integer for how many times each level should be repeated. More commonly, you will want to set the names of the levels, which is achieved by passing a character vector to the labels argument. More complex level orderings, such as alternating values, can be created by also passing a length argument:
+
+```{r}
+gl(3, 2)
+gl(3, 10)
+gl(3, 2, labels = c("placebo", "drug A", "drug B"))
+gl(3, 1, 10, labels = c("placebo", "drug A", "drug B")) #alternating
+```
+
+The term "interaction" should sound familiar if you have dealt with some statistical theory, but in the context of creating factors, this is how we combine multiple levels.
+
+```{r}
+treatment <- gl(3, 2, labels = c("placebo", "drug A", "drug B"))
+gender <- gl(2, 1, 6, labels = c("female", "male"))
+interaction(treatment, gender)
+```
+
+
+# Flow Control and Loops
+This is an immensely important topics. Sometimes, the functions we are executing will fail because
+
+1. inputs are incorrect / misspecfied
+2. output presents a programmatic error
+3. functions are wrongly specified
+
+The latter two cases can be corrected by being careful; the first is tricky *if* we did not consider the all possible inputs to begin with. In other words, if we do not correctly specify the function's arguments (inputs), we might run into problems executing it --- or, even worse, return undesirable results!
+
+The *if,,,else,,,* syntax in R is powerful for multiple reasons --- not the least of which because it allows us to circumvent the issue of misspecification/wrongly specified inputs.
+
+Even by way of example, let us avoid the trivial cases where entering TRUE and FALSE each returns different things; we want to have some mix of syntax/expression, each of which returns different results. Here is a nontrivial example:
+
+```{r}
+x <- rnorm(1,0,1)
+x
+if(abs(x) > 0.5) print("OMG") else print("ONO")
+```
+
+and the basic syntax is simple:
+
+```{r,eval=FALSE}
+if(FALSE)
+{
+  message("This won't execute...")
+} else
+{
+  message("but this will.")
+}
+```
+
+And R allows some nifty enough nesting of if-else commands (notice that this is NOT ifelse(); that is something else):
+
+```{r}
+(r <- round(rnorm(2), 1))
+(x <- r[1] / r[2])
+
+if(is.nan(x))
+  {
+  message("x is missing")
+  } else if(is.infinite(x))
+    {
+    message("x is infinite")
+    } else if(x > 0)
+      {
+      message("x is positive")
+      } else if(x < 0)
+        {
+        message("x is negative")
+        } else
+          {
+            message("x is zero")
+          }
+```
+
+In addition, conditional statement can be embedded in if statements!
+
+```{r}
+x <- sqrt(-1 + 0i)
+(reality <- if(Re(x) == 0) "real" else "imaginary")
+```
+
+## Vectorised Version of if-else: ifelse()
+
+Since much of R is written and done in vectors, the vectorised version of if...else... is done by ifelse() (for those who are intellectually curious, try a vector as simple as x <- c(1,2,3) and use if...else... on it; you will see an error message with length > 1 as its traceback). ifelse() takes three arguments --- visit help page or type help(ifelse) into interpreter for more information. Bottomline: it takes a test statement, a returned expression for when the test returns TRUE, an another for when the test returns FALSE.
+
+By way of example, see the following randomly generated distribution values:
+
+```{r}
+ifelse(rbinom(10, 1, 0.5), "Head", "Tail")
+x <- rnorm(10,0,1) > 0.5
+ifelse(x > 0.5, "Yes", "No")  # Syntax-wise, this can be reduced to simpler things, but for all practical purposes and code readability, this is desirable.
+```
+
+Slightly less cumbersome/clunky code can be achieved if we use the *switch()* function instead: notice if the switch input does not match any of the code after, it will automatically return NULL:
+
+```{r}
+nthroot <- function(x,n){
+  x^{1/n}
+}
+
+numbers_game <- function(x){
+  switch(
+    as.character(x),
+    one = nthroot(rnorm(1,50,15),4),
+    two = sqrt(rnorm(1,50,15)),
+    three =
+    {
+      a <- cos(pi / (rnorm(1,50,15)))
+      (4 * a)^2
+    }
+  )
+}
+x <- "three"
+y <- "two"
+z <- "one"
+(c(numbers_game(x), numbers_game(y), numbers_game(z)))
+```
+
+
+## repeat Loops
+This is the easiest family of loops, since it requires only repeating things over and over again. The following example should be extremely self-explanatory:
+
+```{r}
+repeat
+{
+  message("Happy Groundhog Day!")
+  action <- sample(
+    c("Learn French",
+      "Make an ice statue",
+      "Rob a bank",
+      "Win heart of Andie McDowell"
+      ),
+      1
+    )
+    if(action == "Rob a bank")
+    {
+      message("Quietly skipping to the next iteration")
+      next
+    }
+    message("action = ", action)
+    if(action == "Win heart of Andie McDowell") break
+}
+```
+
+## while Loops
+
+This is also fairly self-explanatory --- though I will say this is kind of like a backwards *repeat* loop:
+
+```{r}
+action <- sample(
+  c(
+    "Learn French",
+    "Make an ice statue",
+    "Rob a bank",
+    "Win heart of Andie McDowell"
+    ),
+  1
+  )
+while(action != "Win heart of Andie McDowell") # while action is NOT "Win heart of Andie McDowell"
+  {
+  message("Happy Groundhog Day!")
+  action <- sample(
+    c(
+      "Learn French",
+      "Make an ice statue",
+      "Rob a bank",
+      "Win heart of Andie McDowell"
+    ),
+  1
+  )
+  message("action = ", action)
+  }
+```
+
+
+## for Loops
+
+This is popular when we know exactly how many times we need to calculate an expression. This is a staple of numerical computations, one that is extremely useful for our purposes later on.
+
+```{r}
+# simple example
+for(i in 1:5) message("i = ", i)
+```
+
+```{r}
+# harder example
+for(i in 1:5)
+  {
+    j <- i ^ 2
+    message("j = ", j)
+  }
+```
+
+R’s for loops are particularly flexible in that they are not limited to integers, or even numbers in the input. We can pass character vectors, logical vectors, or lists:
+
+```{r}
+for(month in month.name)
+  {
+    message("The month of ", month)
+  }
+```
+
+```{r}
+yn <- sample(c(TRUE,FALSE,NA))
+
+for(yn in c(TRUE, FALSE, NA))
+  {
+    message("This statement is ", yn)
+  }
+```
+
+```{r}
+l <- list(
+  pi,
+  LETTERS[1:5],
+  charToRaw("not as complicated as it looks"),
+  list(
+    TRUE
+  )
+)
+
+for(i in l)
+{
+  print(i)
+}
+```
+
+Last remark: since for loops operate on each element of a vector, they provide a sort of "pretend vectorization". In fact, the vectorized operations in R will generally use some kind of for loop in internal C code. But be warned: R’s for loops will almost always run much slower than their vectorized equivalents, often by an order of magnitude or two. This means that you should try to use the vectorization capabilities wherever possible.
+
+A far more problematic claim is the widespread agreement that if one writes R code that looks like Fortran, one loses the right to complain that R is too slow.
 
