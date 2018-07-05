@@ -1,0 +1,62 @@
+---
+title: "R: Data Analysis Workflow"
+author: Meng Hsuan Hsieh
+output:
+  html_notebook:
+    theme: united
+    toc: yes
+---
+
+We will now get into data science using R. This assumes a lot of maturity in the language; please consult the previous notebooks if you're unsure about some of the techniques presented here.
+
+# Data Types
+
+One of the packages in the base R distribution is called datasets, and it is entirely filled with example datasets. While you’ll be lucky if any of them are suited to your particular area of research, they are ideal for testing your code and for exploring new techniques.
+
+```{r}
+data()
+data("kidney", package = "survival")
+kidney
+```
+
+Let's be real: we cannot expect to use these datasets other than testing purposes. As such, the more interesting question is **how can we import datasets and work with them from there**. There are many, many formats and standards of text documents for storing data. Com‐ mon formats for storing data are delimiter-separated values (CSV or tab-delimited), eXtensible Markup Language (XML), JavaScript Object Notation (JSON), and YAML (which recursively stands for YAML Ain’t Markup Language). Other sources of text data are less well-structured—a book, for example, contains text data without any formal (that is, standardized and machine parsable) structure. 
+
+The main advantage of storing data in text files is that they can be read by more or less all other data analysis software and by humans. This makes your data more widely reusable by others.
+
+## CSV
+
+Rectangular (spreadsheet-like) data is commonly stored in delimited-value files, par‐ ticularly comma-separated values (CSV) and tab-delimited values files. The read.table function reads these delimited files and stores the results in a data frame. In its simplest form, it just takes the path to a text file and imports the contents.
+
+Example:
+
+```{r}
+library(learningr)
+deer_file <- system.file(
+  "extdata",
+  "RedDeerEndocranialVolume.dlm",
+  package = "learningr"
+  )
+deer_data <- read.table(deer_file, header = TRUE, fill = TRUE)
+str(deer_data, vec.len = 1) #vec.len alters the amount of output
+head(deer_data)
+```
+
+Notice that the class of each column has been automatically determined, and row and column names have been automatically assigned. The column names are (by default) forced to be valid variable names (via make.names), and if row names aren’t provided the rows are simply numbered 1, 2, 3, and so on.
+
+There are lots of arguments to specify how the file will be read; perhaps the most important is sep, which determines the character to use as a separator between fields. You can also specify how many lines of data to read via nrow, and how many lines at the start of the file to skip. More advanced options include the ability to override the default row names, column names, and classes, and to specify the character encoding of the input file and how string input columns should be declared.
+
+Example on why it is important what is read:
+
+```{r}
+crab_file <- system.file(
+  "extdata",
+  "crabtag.csv",
+  package = "learningr"
+  )
+(crab_id_block <- read.csv(
+  crab_file, header = FALSE, skip = 3,
+  nrow = 2
+  )
+)
+```
+
