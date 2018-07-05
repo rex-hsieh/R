@@ -1,0 +1,333 @@
+---
+title: "R: Advanced Topics"
+author: Meng Hsuan Hsieh
+output:
+  html_notebook:
+    theme: united
+    toc: yes
+---
+
+We will focus on a series of advanced topics in R --- with a focus on data analyses later on in the document.
+
+
+# More on Loops
+
+While we can use the *rep()* function to create multiple copies of input you give it, but *replicate()* calls expressions several times. For historical reasons, rep(x,y) repeats x exactly y many times, whiel replicate(x,y) executes expression x for a n number of times.
+
+```{r}
+rep(rpois(1,lambda=8),2)
+replicate(2,rpois(1,lambda=8)) # random vector!
+```
+
+This next example estimates a person's time to commute to work via different methods of transport. It's a little bit complicated, but that's on purpose because that’s when replicate is most useful.
+
+The time_for_commute function uses sample to randomly pick a mode of transport (car, bus, train, or bike), then uses rnorm or rlnorm to find a normally or lognormally distributed travel time (with parameters that depend upon the mode of transport):
+
+
+```{r}
+time_for_commute <- function()
+  {
+  #Choose a mode of transport for the day
+  mode_of_transport <- sample(
+    c("car", "bus", "train", "bike"),
+    size = 1,
+    prob = c(0.2,0.25,0.35,0.2)
+    )
+  #Find the time to travel, depending upon mode of transport
+  time <- switch(mode_of_transport,
+                 car   = rlnorm(1, log(30), 0.5),
+                 bus   = rlnorm(1, log(40), 0.5),
+                 train = rnorm(1, 30, 10),
+                 bike  = rnorm(1, 60, 5)
+                 )
+  names(time) <- mode_of_transport
+  time
+}
+
+replicate(5,time_for_commute())
+```
+
+
+## Vectorised Loops: lapply()
+
+By now, you should have noticed that an awful lot of R is vectorized. In fact, your default stance should be to write vectorized code. It's often cleaner to read, and invariably gives you performance benefits when compared to a loop. In some cases, though, trying to achieve vectorization means contorting your code in unnatural ways. In those cases, the apply family of functions can give you pretend vectorization, without the pain.
+
+
+*lapply()*, short for "list apply", is a nice function that takes list and a function as inputs, and maps the function to each element of the list! 
+
+
+```{r}
+prime_factors <- list(
+  two = 2,
+  three = 3,
+  four = c(2, 2),
+  five = 5,
+  six   = c(2, 3),
+  seven = 7,
+  eight = c(2, 2, 2),
+  nine  = c(3, 3),
+  ten   = c(2, 5)
+  )
+head(prime_factors)
+```
+
+Trying to find the unique value in each list element is difficult to do in a vectorized way. We could write a for loop to examine each element, but that’s a little bit clunky:
+
+```{r}
+unique_primes <- vector("list", length(prime_factors))
+
+for(i in seq_along(prime_factors))
+  {
+  unique_primes[[i]] <- unique(prime_factors[[i]])
+  }
+
+names(unique_primes) <- names(prime_factors)
+unique_primes
+```
+
+whereas lapply() makes the job a lot easier:
+
+```{r}
+lapply(prime_factors, unique)
+```
+
+When the return value from the function is the same size each time, and you know what that size is, you can use a variant of lapply called vapply. vapply stands for "list apply that returns a vector". As before, you pass it a list and a function, but vapply takes a third argument that is a template for the return values. Rather than returning a list, it simplifies the result to be a vector or an array:
+
+```{r}
+vapply(prime_factors, length, numeric(1))
+```
+
+Finally, there is another function that sits in between lapply and vapply: it's called sapply, which stands for "simplifying the list apply result". The biggest difference here is it does not require a template in order to spit out outputs --- but rather it will automatically search for an alternative!
+
+```{r}
+sapply(prime_factors, unique)
+sapply(prime_factors, length)
+sapply(prime_factors, summary)
+```
+
+As an example, these give nice results because we know what we have, and exactly what we want. As such, this is a wonderful scenario because you usually automatically get the result in the form that you want. This function does require some care if you aren't sure about what your inputs might be, though, since the result is sometimes a list and sometimes a vector. This can trip you up in some subtle ways. Our previous length example re‐ turned a vector, but look what happens when you pass it an empty list:
+
+```{r}
+sapply(list(), length) # the simplest output is exactly the list() function. If the input list has length zero, then sapply always returns a list, regardless of the function that is passed.
+vapply(list(), length, numeric(1))
+```
+
+One remark: although these functions are primarily designed for use with lists, they can also acce. The source function is used to read and evaluate the contents of an R file --- that is, one can use it to run a R script. Unfortunately, the soruce function is not vectorised, so if we want to run all R scripts in a specified directory, we need to wrap the directory in a call to lapply. Something we can do is like the following:
+
+```{r, eval=FALSE}
+r_files <- dir(pattern = "\\.R$")
+lapply(r_files, source)
+```
+
+An important remark: **for all the examples considered here, notice that all functions passed to lapply, vapply, and sapply took only one argument**. The major limitation to these functions is that one can only pass one vectorised argument, but we can pass other scalar arguments! 
+
+```{r}
+complemented <- c(2, 3, 6, 18) #See http://oeis.org/A000614
+lapply(complemented, rep.int, times = 4)
+```
+
+In the example directly above, the argument "times" is passed to rep.int()!
+
+Very, very occasionally, you may want to loop over every variable in an environment, rather than in a list. There is a dedicated function, eapply, for this, though in recent versions of R you can also use lapply:
+
+```{r}
+env <- new.env()
+env$molien <- c(1, 0, 1, 0, 1, 1, 2, 1, 3) #See http://oeis.org/A008584
+env$larry <- c("Really", "leery", "rarely", "Larry")
+eapply(env, length)
+lapply(env, length)
+```
+
+Can you explain what is happening in these code, using everything from intermediate level tutorial?
+
+Finally, rapply is a recursive version of lapply that allows you to loop over nested lists. This is a niche requirement, and code is often simpler if you flatten the data first using unlist.
+
+
+## Iterating Over Arrays
+
+lapply, and its friends vapply and sapply, can be used on matrices and arrays, but their behavior often is not what we want. The three functions treat the matrices and arrays as though they were vectors, applying the target function to each element one at a time (moving down columns). More commonly, when we want to apply a function to an array, we want to apply it by row or by column. This next example uses the matlab package, which gives some functionality ported from the rival language.
+
+```{r}
+install.packages("matlab")
+library(matlab)
+```
+
+Also, a remark: when one loads the matlab package, it overrides some functions in the base, stats, and utils packages to make them behave like their MATLAB counterparts. After these examples that use the matlab package, you may wish to restore the usual behavior by unloading the package. Call **detach("package:matlab")** to do this.
+
+The magic function creates a magic square—an n-by-n square matrix of the numbers from 1 to n^2, where each row and each column has the same total:
+
+```{r}
+(magic6 <- magic(6))
+```
+
+and there are many instances where we want to see different statistics depending on the rows/columns in the matrix! For that, see that rowSums(magic6) would return the statistic that we desire *if* we want consistent statistic calculated for each row. For the exact opposite purpose, we can use the *apply()* function: which takes a matrix, a dimension number, and a function as its arguments. As such, we can get
+
+```{r}
+apply(magic6, 1, median) # per row
+apply(magic6, 2, median) # per column
+apply(magic6, 1, quantile) # per row
+```
+
+apply can also be used on data frames, though the mixed-data-type nature means that this is less common (for example, you can't sensibly calculate a sum or a product when there are character columns):
+
+```{r}
+(baldwins <- data.frame(
+  name             = c("Alec", "Daniel", "Billy", "Stephen"),
+  date_of_birth    = c("1958-Apr-03", "1960-Oct-05", "1963-Feb-21", "1966-May-12"),
+  n_spouses = c(2, 3, 1, 1),
+  n_children = c(1, 5, 3, 2), stringsAsFactors = FALSE
+))
+```
+
+```{r}
+apply(baldwins, 1, toString)
+apply(baldwins, 2, toString)
+```
+
+and sapply, in this case, has the exact same output as that from apply to columns!
+
+```{r}
+sapply(baldwins, toString)
+```
+
+Of course, simply printing a dataset in different forms isn't that interesting. Using sapply combined with range, on the other hand, is a great way to quickly determine the extent of your data:
+
+```{r}
+sapply(baldwins, range)
+```
+
+One can always use *mapply()* to address a limitation we have sought from before --- that is, to accept multiple vectors to loop over. The function mapply, short for "multiple argument list apply", lets you pass in as many vectors as you like, solving the problem. A common usage is to pass in a list in one argument and the names of that list in another, solving the second problem. One little annoyance is that in order to accommodate an arbitrary number of vector arguments, the order of the arguments has been changed. For mapply, the function is passed as the first argument:
+
+```{r}
+msg <- function(name, factors){
+      ifelse(
+        length(factors) == 1,
+        paste(name, "is prime"),
+        paste(name, "has factors", toString(factors))
+      )
+  }
+mapply(msg, names(prime_factors), prime_factors)
+```
+
+## The Problem of Vectorisation: Can We Do It Instantly?
+
+The answer: *yes*. The following example is a faux pas, since we cannot completely and fully consider the *switch()* function as spitting vectors --- it requires a scalar input at the end of the matches.
+
+```{r}
+baby_gender_report <- function(gender){
+  switch(
+    gender,
+    male   = "It's a boy!",
+    female = "It's a girl!",
+    "Um..."
+  )
+  }
+```
+
+and the following will be an error (PSA: don't try to run this)!
+
+```{r, eval=FALSE}
+genders <- c("male", "female", "other")
+baby_gender_report(genders)
+```
+
+To resolve this, we use the *Vectorize()* function (yes, capital "v" required):
+```{r}
+vectorized_baby_gender_report <- Vectorize(baby_gender_report)
+genders <- c("male", "female", "other")
+vectorized_baby_gender_report(genders)
+```
+
+## Split-Apply-Combine Mechanism
+
+A really common problem when investigating data is how to calculate some statistic on a variable that has been split into groups. Here are some scores on the classic road safety awareness computer game, Frogger:
+
+```{r}
+(frogger_scores <- data.frame(
+  player = rep(c("Tom", "Dick", "Harry"), times = c(2, 5, 3)),
+  score  = round(rlnorm(10, 8), -1)
+))
+```
+
+If we want to calculate the mean score for each player, then there are three steps. First, we split the dataset by player; second, calculate means; third, put these back together.
+
+```{r}
+(scores_by_player <- with(
+  frogger_scores,
+  split(score, player)
+))
+
+(list_of_means_by_player <- lapply(scores_by_player, mean))
+
+(mean_by_player <- unlist(list_of_means_by_player))
+```
+
+the last two steps can easily be done by using sapply (or, if you wnat, vapply):
+
+```{r}
+(mean_by_player <- sapply(scores_by_player, mean))
+```
+
+tapply, however, is built with the singular purpose to make our lives easier in times like this:
+
+```{r}
+with(frogger_scores, tapply(score, player, mean))
+```
+
+
+
+## plyr Package
+
+The *apply family of functions are mostly wonderful, but they have three drawbacks that stop them being as easy to use as they could be. Firstly, the names are a bit obscure. The “l” in lapply for lists makes sense, but after using R for a little over a year, I still don’t know what the “t” in tapply stands for.
+
+Secondly, the arguments aren’t entirely consistent. Most of the functions take a data object first and a function argument second, but mapply swaps the order, and tapply takes the function for its third argument. The data argument is sometimes X and some‐ times object, and the simplification argument is sometimes simplify and sometimes SIMPLIFY.
+
+Thirdly, the form of the output isn’t as controllable as it could be. Getting your results as a data frame --- or discarding the result --- takes a little bit of effort.
+
+
+Hence, we have the plyr package: thes package contains a set of functions named **ply, where the blanks (asterisks) denote the form of the input and output, respectively. So, llply takes a list input, applies a function to each element, and returns a list, making it a drop-in replacement for lapply:
+
+```{r}
+library(plyr)
+llply(prime_factors, unique)
+```
+
+The *laply* function takes a list and returns an arary --- mimicking sapply. *raply* replaces replicate (not rapply), but there are also *rlply* and *rdply* functions that let you return the result in list or data frame form, and an r_ply function that discards the result (useful for drawing plots):
+
+
+```{r}
+raply(5, runif(1)) #array output
+rlply(5, runif(1)) #list output
+rdply(5, runif(1)) #data frame output
+r_ply(5, runif(1)) #discarded output & sometimes useful....
+```
+
+
+Perhaps the most commonly used function in plyr is *ddply*, which takes data frames as inputs and outputs and can be used as a replacement for tapply. Its big strength is that it makes it easy to make calculations on several columns at once. Let's add a level column to the Frogger dataset, denoting the level the player reached in the game:
+
+```{r}
+frogger_scores$level <- floor(log(frogger_scores$score))
+```
+
+There are several different ways of calling ddply. All methods take a data frame, the name of the column(s) to split by, and the function to apply to each piece. The column is passed without quotes, but wrapped in a call to the . function.
+
+For the function, you can either use colwise to tell ddply to call the function on every column (that you didn’t mention in the second argument), or use summarize and specify manipulations of specific columns:
+
+```{r}
+ddply(
+  frogger_scores,
+  .(player),
+  colwise(mean) #call mean on every column except player
+)
+
+ddply(
+  frogger_scores,
+  .(player),
+  summarize,
+  mean_score = mean(score) #call mean on score max_level = max(level) #... and max on level
+)
+```
+
+colwise is quicker to specify, but you have to do the same thing with each column, whereas summarize is more flexible but requires more typing.
+
+There is no direct replacement for mapply, though the m*ply functions allow looping with multiple arguments. Likewise, there is no replacement for vapply or rapply.
