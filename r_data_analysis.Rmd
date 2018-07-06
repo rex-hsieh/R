@@ -60,3 +60,70 @@ crab_file <- system.file(
 )
 ```
 
+And now we can build a proper dataset:
+
+```{r}
+(crab_tag_notebook <- read.csv(
+  crab_file,
+  header = FALSE,
+  skip = 8,
+  nrow = 5
+  )
+)
+```
+
+```{r}
+(crab_lifetime_notebook <- read.csv(
+  crab_file,
+  header = FALSE,
+  skip = 15,
+  nrow = 3 
+  )
+)
+```
+
+For really low-level control when importing this sort of file, you can use the scan function, on which read.table is based. Ordinarily, you should never have to resort to scan, but it can be useful for malformed or nonstandard files.
+
+The opposite task, writing files, is generally simpler than reading files, since you don’t need to worry about oddities in the file—you usually want to create something standard. read.table and read.csv have the obviously named counterparts write.table and write.csv.
+
+Finally, functions take a data frame and a file path to write to:
+
+```{r}
+write.csv(
+  crab_lifetime_notebook, "Data/Cleaned/crab lifetime data.csv", row.names = FALSE,
+  fileEncoding = "utf8"
+)
+```
+
+
+```{r}
+library(xlsx)
+bike_file <- system.file(
+  "extdata",
+  "Alpe d'Huez.xls",
+  package = "learningr"
+  )
+
+bike_data <- read.xlsx2(
+  bike_file,
+  sheetIndex = 1,
+  startRow =2,
+  endRow = 38,
+  colIndex = 2:8,
+  colClasses = c(
+    "character", "numeric", "character", "integer",
+    "character", "character", "character"
+    )
+)
+
+head(bike_data)
+```
+
+However, we will work mostly with datasets that can be imported easily with functions such as read.csv().
+
+
+# Data Cleaning
+
+After one imports the dataset, one needs to be extra careful about what is feasible in a dataset and what is not. It's almost always the wrong one for what you want to do with it, and no matter who gave it to you, it’s almost always dirty. Cleaning and transforming data may not be the fun part of data analysis, but you’ll probably spend more of your life than you care to doing it. Fortunately, R has a wide selection of tools to help with these tasks.
+
+
