@@ -134,4 +134,12 @@ data
 ```
 
 
+# Working with Beavers
+
+> The beaver1 and beaver2 datasets contain body temperatures of two beavers. Add a column named id to the beaver1 dataset, where the value is always 1. Similarly, add an id column to beaver2, with value 2. Vertically concatenate the two data frames and find the subset where either beaver is active.
+
+```{r}
+# Your attempt
+# Use rbind() and subset() --- these will make your life easier!
+```
 
