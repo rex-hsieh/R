@@ -97,3 +97,41 @@ Can you rewrite the above program using the following functions:
 
 ```
 
+
+# Diagonal Matrices
+
+Term 1
+: A **diagonal matrix** is any matrix with nonzero entries on its diagonal, but zero everywhere else. For example,
+$$ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & -2 \end{bmatrix}  $$
+is a $3 \times 3$ diagonal matrix.
+
+> The diag function has several uses, one of which is to take a vector as its input and create a square matrix with that vector on the diagonal. Create a 21-by-21 matrix with the sequence -10 to 0 to 11 (i.e., -10, ... , 1, 0, 1, ,,,m 11).
+
+I will provide a different example: I will create a $10 \times 10$ matrix with sequences -3 to 13.
+
+```{r}
+s <- -3:13
+diag(s, ncol = 10, nrow = 10)
+```
+
+Try it yourself!
+
+
+```{r}
+# Your attempt
+```
+
+
+
+
+# Working With Iris
+
+> R ships with several built-in datasets, including the famous3 iris (flowers, not eyes) data collected by Anderson and analyzed by Fisher in the 1930s. Type iris to see the dataset. Create a new data frame that consists of the numeric columns of the iris dataset, and calculate the means of its columns.
+
+```{r}
+data <- iris
+data
+```
+
+
+
