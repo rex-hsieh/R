@@ -1,0 +1,99 @@
+---
+title: "Basic Exercises in R: Data Structures"
+output: html_notebook
+---
+
+We are going to put what we learned in "r_introduction" into practice! Every propmt below corresponds to a particular section of the introduction, and will be clearly labelled. In some cases, either partial answers are provided *or* alternative answers are provided. A simple example is provided below.
+
+
+# Example: Random Draws from a Population
+
+> Randomly generate 1,000 pets, from the choices "dog", "cat", "goldfish", "monster", each with equal probability of each being chosen. Display the first few values of the resultant variable, and count the number of each type of pet.
+
+This is a classic exercise in statistics/econometrics/any sort of scientific investigation: can I draw randomly from a population with **known** number and types of species?
+
+The answer is: **sort of**, but **yes**. The truth is computers don't really make things randomly, but we will accept it as such because we cannot define randomness.
+
+How do I make sure this happen?
+
+```{r}
+(pets <- c("dog", "cat", "goldfish", "monster"))  # But this only gives us the pets! We need to use the factor() data structure
+
+help("factor")  # see what this function does!
+help("sample")  # see what this function does!
+
+pets <- factor(sample(
+  c("dog", "cat", "goldfish", "monster"),
+  1000,
+  replace = TRUE
+  )
+)  # without specifying the probability vector, it is assumed to be uniform.
+
+head(pets)
+summary(pets)
+```
+
+Does the distribution (ie. the numbers of pets) closely match our initial setup? Is the distribution of pets "uniform" enough?
+
+A slightly interesting variation: suppose we know the population is 30% dogs, 20% cat, 40% goldfish, 10% monster. We can alter the simulation slightly and get:
+
+```{r}
+pets <- factor(sample(
+  c("dog", "cat", "goldfish", "monster"),
+  1000,
+  replace = TRUE,
+  prob = c(0.3,0.2,0.4,0.1)
+  )
+)  # without specifying the probability vector, it is assumed to be uniform.
+
+head(pets)
+summary(pets)  # total counts after simulation
+pets_proportions <- (summary(pets) / 10)  # In percentage form
+pets_proportions
+```
+
+One can do a lot more things with this setup: professionally/academically, we can use this do something we call *bootstrapping*. The details of this will be left to the statistics classes you will take in the future.
+
+
+
+
+# Manipulating Workspace Variables
+
+> Create some variables named after vegetables. List the names of all the variables in the user workspace that contain the letter "a".
+
+A possible solution is the following:
+
+```{r}
+eggplant <- 1
+lettuce  <- 2
+tomato  <- 3
+spinach  <- 4
+
+# HINT: use ls() -- see ls() and its arugments!
+```
+
+
+# Some Arithmetic
+
+> The $n$-th triangular number is given by $\frac{n(n+1)}{2}$. Create a sequence of the first 20 triangular numbers. R has a built-in constant, letters, that contains the lowercase letters of the Roman alphabet. Name the elements of the vector that you just created with the first 20 letters of the alphabet. Select the triangular numbers where the name is a vowel.
+
+A possible solution is:
+
+```{r}
+#There are several possibilities for creating sequences, including the colon operator.
+n <- 1:20
+triangular <- (n * (n+1))/2
+names(triangular) <- letters[n]
+triangular
+```
+
+Can you rewrite the above program using the following functions:
+
+* seq_along()
+* seq_len()
+
+```{r}
+# Your attempt
+
+```
+
