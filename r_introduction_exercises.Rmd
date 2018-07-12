@@ -8,9 +8,6 @@ We are going to put what we learned in "r_introduction" into practice! Every pro
 
 # Example: Random Draws from a Population
 
-is_even <- function(x) (x %% 2) == 0
-is_even(c(-5:5, Inf, -Inf, NA, NaN))
-
 > Randomly generate 1,000 pets, from the choices "dog", "cat", "goldfish", "monster", each with equal probability of each being chosen. Display the first few values of the resultant variable, and count the number of each type of pet.
 
 This is a classic exercise in statistics/econometrics/any sort of scientific investigation: can I draw randomly from a population with **known** number and types of species?
@@ -153,5 +150,99 @@ This is difficult, but we will get there together:
 
 > Write a function that accepts a vector of integers (for simplicity, you don't have to worry about input checking) and returns a logical vector that is TRUE whenever the input is even, FALSE whenever the input is odd, and NA whenever the input is nonfinite (nonfinite means anything that will make is.finite return FALSE: Inf, -Inf, NA, and NaN). Check that the function works with positive, negative, zero, and nonfinite inputs.
 
+How does one do this? Well, we need to know that whenever a number is even, it is **divisible by 2**. So, of the vector below:
+
+```{r}
+numbers <- c(1,2,3,4,5,6,7,8,9,10)
+(numbers_mod_2 <- numbers %% 2)
+```
+
+The "%%" sign means "modulo", a fancy way of saying division by some number following it. So "%% 2" means division by two, and the result it spits out is the remainder! So,
+
+```{r}
+(4 %% 3)  # = 1, because 4 = 3 x 1 + 1 !
+```
+
+So we are going to write function that takes $x$ and spits out the remainders of the elements upon division by 2!
+
+I am going to do a variation on this exercise: I wonder if it is possible to identify odd numbers using the same method. The answer is **yes**, because odd numbers are those with remainder 1 upon division by 2 (this approach works well with small numbers, but NOT for huge numbers --- this is something we won't care much for, because the mathematical background needed for writing better algorithms is too daunting). So, I can write
+
+```{r}
+is_odd <- function(x){
+  x %% 2 == 1  #  Check if the remainder of x divided by 2 = 1. Remember the == operator returns a logical / boolean value!
+}
+is_odd(101)
+is_odd(c(-5:5, Inf, -Inf, NA, NaN))
+example <- as.data.frame( cbind( values = c(-5:5, Inf, -Inf, NA, NaN), parity = is_odd(c(-5:5, Inf, -Inf, NA, NaN)) ) )
+example$parity <- ifelse(example$parity == 1, TRUE, FALSE)  # replace 1 with TRUE and 0 with FALSE.
+```
+
+Give the question a try! 
+
+```{r}
+is_even <- function(x){
+  # YOUR ATTEMPT
+}
+is_even(20)  # should return TRUE
+is_even(c(-5:5), Inf, -Inf, NA, NaN))
+```
+
+
+# Simple Maths
+
+> Display the value of pi to 16 significant digits.
+
+```{r}
+pi
+# HINT: use format -- I've done most of the work here.
+(format(pi, digits = ))
+```
+
+
+# A Hypothetical Game
+
+For your role-playing game, each of your adventurer's character attributes is calculated as the sum of the scores from three six-sided dice rolls. To save arm-ache, you decide to use R to generate the scores. Here's a helper function to generate them:
+
+```{r}
+#n specifies the number of scores to generate.
+#It should be a natural number.
+three_d6 <- function(n){
+  random_numbers <- matrix(
+    sample(6, 3 * n, replace = TRUE),
+    nrow = 3
+    )
+  colSums(random_numbers)
+}
+```
+
+
+Big scores give characters bonuses, and small scores give characters penalties, according to the following table:
+
+| Score    | Bonus |
+|----------|-------|
+| 3        | -3    |
+| 4,5      | -2   |
+| 6 to 8   | -1     |
+| 9 to 12  | 0 |
+| 13 to 15 | 1 |
+| 16, 17   | 2  |
+| 18       | 3   |
+
+Use the three_d6 function to generate 1000 character attribute scores. Create a table of the number of scores with different levels of bonus.
+
+
+```{r}
+y <- three_d6(1000)
+# Use the cut() function!
+
+bonus <- cut(y,
+             c(2,3,5,7,12,15,17,18),  # cut by UPPER BOUNDS
+             labels = -3:3
+             )
+table(bonus)
+```
+
+```{r}
+```
 
 
