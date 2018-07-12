@@ -1,6 +1,9 @@
 ---
 title: "Basic Exercises in R: Data Structures"
-output: html_notebook
+output:
+  html_notebook:
+    theme: united
+    toc: yes
 ---
 
 We are going to put what we learned in "r_introduction" into practice! Every propmt below corresponds to a particular section of the introduction, and will be clearly labelled. In some cases, either partial answers are provided *or* alternative answers are provided. A simple example is provided below.
@@ -201,7 +204,7 @@ pi
 
 # A Hypothetical Game
 
-For your role-playing game, each of your adventurer's character attributes is calculated as the sum of the scores from three six-sided dice rolls. To save arm-ache, you decide to use R to generate the scores. Here's a helper function to generate them:
+> For your role-playing game, each of your adventurer's character attributes is calculated as the sum of the scores from three six-sided dice rolls. To save arm-ache, you decide to use R to generate the scores. Here's a helper function to generate them:
 
 ```{r}
 #n specifies the number of scores to generate.
@@ -216,7 +219,7 @@ three_d6 <- function(n){
 ```
 
 
-Big scores give characters bonuses, and small scores give characters penalties, according to the following table:
+> Big scores give characters bonuses, and small scores give characters penalties, according to the following table:
 
 | Score    | Bonus |
 |----------|-------|
@@ -228,11 +231,12 @@ Big scores give characters bonuses, and small scores give characters penalties, 
 | 16, 17   | 2  |
 | 18       | 3   |
 
-Use the three_d6 function to generate 1000 character attribute scores. Create a table of the number of scores with different levels of bonus.
+> Use the three_d6 function to generate 1000 character attribute scores. Create a table of the number of scores with different levels of bonus.
 
+For a *small* sample, I will generate the bonus table for yoU for a small sample. Please replicate this for 1000 by yourself:
 
 ```{r}
-y <- three_d6(1000)
+y <- three_d6(10)
 # Use the cut() function!
 
 bonus <- cut(y,
@@ -242,7 +246,4 @@ bonus <- cut(y,
 table(bonus)
 ```
 
-```{r}
-```
-
-
+Once you generate a larger output, think about the probability of getting bonuses given the scores. Is it more likely to get a bonus of 0 than bonus of 1, for example? If not, what is happening in this simulation? Is this a close approximation of reality / probabilistic thought experiment? What if my sample is 1 million?
