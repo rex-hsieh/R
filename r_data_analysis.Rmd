@@ -169,7 +169,149 @@ One of the problems with history is that there is an awful lot of it (PREACH, am
 ```{r}
 library(stringr)
 english_monarchs$domain
+
 multiple_kingdoms <- str_detect(english_monarchs$domain, fixed(","))
+# The str_detect function lets us detect the patterns in a particular list of dataset. Data cleaning is only possible when we know what is in our dataset.
 english_monarchs[multiple_kingdoms, c("name", "domain")]
 ```
+
+This time, since we are looking for two things, it is easier to specify a regular expression rather than a fixed string. The pipe character, |, has the same meaning in regular expressions as it does in R: it means "or".
+
+In this next example, to prevent excessive output we just return the name column and ignore missing values (with is.na):
+
+```{r}
+multiple_rulers <- str_detect(english_monarchs$name, ",|and")
+english_monarchs$name[multiple_rulers & !is.na(multiple_rulers)]
+```
+
+If we wanted to split the name column into individual rulers, then we could use str_split (or strsplit from base R, which does the same thing) in much the same way. str_split accepts a vector and returns a list, since each input string can be split into a vector of possibly differing lengths.
+
+```{r}
+individual_rulers <- str_split(english_monarchs$name, ", | and ")
+head(individual_rulers[sapply(individual_rulers, length) > 1])
+```
+
+Now, we can count the strings types in each list of strings by writing functions to return counts to categories.
+
+```{r}
+english_monarchs$name
+ap <- c("Ed", "Ec", "Ri") #can also use laply from plyr
+sapply(
+  ap,
+  function(ap)
+    {
+    sum(str_count(english_monarchs$name, ap))
+    }
+)
+```
+
+It looks like the standard modern Latin spelling is most common in this dataset. If we want to replace the eths and thorns, we can use str_replace_all (a variant function, str_replace, replaces only the first match).
+
+```{r}
+fruits <- c("one apple", "two pears", "three bananas")
+str_replace(fruits, "[aeiou]", "-")
+```
+
+
+```{r}
+library(stringr)
+english_monarchs$new_name <- str_replace_all(english_monarchs$name, "[ðþ]", "th")
+
+gender <- c( "MALE", "Male", "male", "M", "FEMALE", "Female", "female", "f", NA )
+
+clean_gender <- str_replace(gender, regex("^f(emale)?$",ignore_case = TRUE), "Female")
+clean_gender
+
+clean_gender <- str_replace(gender, regex("^m(ale)?$",ignore_case = TRUE), "Male")
+clean_gender
+
+str_replace("Toyota subaru on tarmac road with my TA", regex("ta",ignore_case = FALSE), "tA")
+str_replace_all("Toyota subaru on tarmac road with my TA", regex("ta",ignore_case = FALSE), "tA")
+```
+
+More information on string replacement can be found [here](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+
+
+## Editing Columns
+
+Suppose we want to add a column to the english_monarchs data frame denoting the number of years the rulers were in power. We can use standard assignment to achieve this:
+
+```{r}
+english_monarchs$length.of.reign.years <-
+  english_monarchs$end.of.reign - english_monarchs$start.of.reign
+```
+
+This works, but the repetition of the data frame variable names makes this a lot of effort to type and to read. The with function makes things easier by letting you call variables directly. It takes a data frame OR environment and an expression to evaluate:
+
+```{r}
+english_monarchs$length.of.reign.years <- with(
+  english_monarchs,
+  end.of.reign - start.of.reign
+)
+```
+
+This is less clunky to write, and gives us exactly what we wanted!
+
+The within() function works similarly, but returns the entire dataframe!
+
+```{r}
+english_monarchs <- within(
+  english_monarchs,
+  {
+    length.of.reign.years <- end.of.reign - start.of.reign
+  }
+)
+```
+
+This becomes less clunky if we have many columns to edit and replace:
+
+```{r}
+english_monarchs <- within(
+  english_monarchs,
+  {
+    length.of.reign.years <- end.of.reign - start.of.reign
+    reign.was.more.than.30.years <- length.of.reign.years > 30
+  }
+)
+```
+
+A good heuristic is that if you are creating or changing one column, then use with; if you want to manipulate several columns at once, then use within.
+
+An alternative approach is taken by the mutate function in the plyr package, which accepts new and revised columns as name-value pairs:
+
+```{r}
+# install.packages("plyr")
+library("plyr")
+english_monarchs <- mutate(
+  english_monarchs,
+  length.of.reign.years        = end.of.reign - start.of.reign,
+  reign.was.more.than.30.years = length.of.reign.years > 30
+)
+```
+
+The red deer dataset that we saw in the previous chapter contains measurements of the endocranial volume for each deer using four different techniques. For some but not all of the deer, a second measurement was taken to test the repeatability of the technique. This means that some of the rows have missing values. The complete.cases function tells us which rows are free of missing values:
+
+```{r}
+data("deer_endocranial_volume", package = "learningr")
+has_all_measurements <- complete.cases(deer_endocranial_volume)
+deer_endocranial_volume[has_all_measurements, ]
+```
+
+The na.omit function provides a shortcut to this, removing any rows of a data frame where there are missing values; by contrast, na.fail function spits out "failure" whenever the dataframe has a missing value:
+
+
+```{r}
+na.omit(deer_endocranial_volume)
+na.fail(deer_endocranial_volume)
+```
+
+Both these functions can accept vectors as well, removing missing values or failing, as in the data frame case.
+
+You can use multiple imputation to fill in missing values in a statistically sound way. This is beyond the scope of the book, but the mice and mix packages are good places to start.
+
+
+## Converting Wide and Long Forms
+
+The red deer dataset contains measurements of the volume of deer skulls obtained in four different ways. Each measurement for a particular deer is given in its own column.
+
 

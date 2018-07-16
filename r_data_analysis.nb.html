@@ -183,6 +183,8 @@ $(document).ready(function () {
 </ul></li>
 <li><a href="#data-cleaning">Data Cleaning</a><ul>
 <li><a href="#cleaning-stringstexts">Cleaning Strings/Texts</a></li>
+<li><a href="#editing-columns">Editing Columns</a></li>
+<li><a href="#converting-wide-and-long-forms">Converting Wide and Long Forms</a></li>
 </ul></li>
 </ul>
 </div>
@@ -191,7 +193,7 @@ $(document).ready(function () {
 <p>We will now get into data science using R. This assumes a lot of maturity in the language; please consult the previous notebooks if you’re unsure about some of the techniques presented here.</p>
 <div id="data-types" class="section level1">
 <h1>Data Types</h1>
-<p>One of the packages in the base R distribution is called datasets, and it is entirely filled with example datasets. While youâll be lucky if any of them are suited to your particular area of research, they are ideal for testing your code and for exploring new techniques.</p>
+<p>One of the packages in the base R distribution is called datasets, and it is entirely filled with example datasets. While you’ll be lucky if any of them are suited to your particular area of research, they are ideal for testing your code and for exploring new techniques.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YSgpXG5kYXRhKFwia2lkbmV5XCIsIHBhY2thZ2UgPSBcInN1cnZpdmFsXCIpXG5raWRuZXlcbmBgYCJ9 -->
@@ -199,7 +201,7 @@ $(document).ready(function () {
 data(&quot;kidney&quot;, package = &quot;survival&quot;)
 kidney</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6NzZ9LCJyZGYiOiJINHNJQUFBQUFBQUFCc1dZeTI4YlZSVEdyejEyM1ZwcWlRUUxGbDFVQ0NHRXFPWE1NK1VWbDZhRUpxWnB5eVlTcmRTcDR5UVdybDE1SmxERUF2TWZzSVVWZjBxM1NDQ3haUmVwRWhJN0kxQ0ZCQXFNUGVjNzdmM0NLR21icWlOZC84N2N4L25PZmR1K3RyVHUxdGZyeHBpeWNhclpwNU9abFhMMlVUSVZjMkxLdThZNEwyWkdMVXVuc3RSZW5KalpBN1lNOFRoeGp2Z1M4V1hpYWVJWjRpdkVWNG12RVY4bnZrRjhrOWdnTm9uelJKZm9FWDFpUUF5SkVYR0JlSTc0RnZGdDRqdkVkNG52RVJlSkxlYlk1bmxESE50ODN4REhOaThZaTBiV21jNTNVNGp4d0x4aHZOQ3ZMeWM1azEyN1A1aDNqTi9nKzV4WVgxaEhYMDNzZGlzUzM3WVE2NkhUc3R1blArZU14Uy9pWHJmNzFib2w1VmZGMy9oZVRzd2oxdE9jY0N0MzFOb1Vqa1QzdXJSSC96dTdkbnlmSUYvNDlUYzV2eEEvR0FlTTR4WHhkMEc0TFBrWXR5WGhkZEh2aVorYlVyOGp4UHhqL0l5eCszZFQydk02L1VpSTgrQWkvSksvclh0MnZSdnlma2JlVjRWTkljNlRqOFhmMnRpcWJ3ck9NeEJQVWZuelpsRjgvQlRWTDJyL3BQNGVkL3lLeWc4YjExR1AyNU9PN3lIcTVlY1puOE1mRWx0RVBuLzVubXNLY1c1Y0d0dGNGYmFsL0dyTEp1cXRTUGtIeElQTzlZdkdKdCtMbHc4ZzlqbjBjTjZ1VUQ2SWMybFp5dm5lV2dNNXZ2SC9zeTNFK2NQanU4S2srSERlZ0czaUpaRDBRTzJmdlBQM0FCNWZqb2ZHMHh6eSs5bXpMbi9hK28vTG8vYi90UDZlZC91ajV2NXp6VG1aZlV4WGVVbFNXVkxwZ0ZTbTVFamlkOVIzS0hGK2tYKzhWeVFWK2VOVUZCZm5JOEYvVWY4cmRySitXQjNyZHovcjlwUE1tcHVWNXJuVnRYUzdPNUtYOHZKbFdPZGhPVmRXbDhoVHRkT1BFemhTOTV0eEp4Mk9NbXZQNEFJcWI4NGVjSEdQK0ljM2U1UzdNdkhnWDhUZnY1MCszNEg4dzI5ZisxOUZCL3hGMm9QM1JmYyt4UUUra0hZUEN0b3pLYjdGM3c0Z3gvdm5qOVBuSitVUFVnL2tlUDhtVHNUUHBLRC9yTWZ4L2lPNklJOC9rL1VwL2xZdHp3YzVubFpKNWxHNHI5eUlIeUhQRHkvTFFYeTdpMlZadzBMdWJZaFZTWHUzdTFpc1NScW5Pd21XZUx5RkFpZnAzaFd6dHRGTHVuR0NrdXJtS083MVNmTEVhUGg1NDFIWk52N0ZtSWZod3ZCZytEQUNHQ0dNQ01ZQ2pIUG94M3hUclhtMVhMVTh0WHkxQXJWQ3RTSzFGdFJTRFZjMVhOVndWY05WRFZjMVhOVndWY05WRFZjMVhOWHdWTU5URFU4MVBOWHdWTU5URFU4MVBOWHdWTU5URFY4MWZOWHdWY05YRFY4MWZOWHdWY05YRFY4MWZOVUlWQ05RalVBMUF0VUlWQ05RalVBMUF0VUlWQ05RalZBMVF0VUlWU05ValZBMVF0VUlWU05ValZBMVF0V0lWQ05TalVnMUl0V0lWQ05TalNqTTk0UHpyN0V2Zy9wR25NYU5iTWRrTzI1MklWaTdwamE4ay9hR2cyelBsS2QvOUZXcGNXbEVHUy9zREtaN2JPTnNaM3RuOE9uWjZkOWNkZlB3MGpzcGJEOWkxM0xKQ2dLcll1TjNCMXU5Z2U3cGZueXIyNWVYVTlsZW5tM2x4cDFSYjVDaUoxbHUwa2lIYVl4NjljNndqNXo4c3R2N0Q2Mk04Q3pXRkFBQSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6NzZ9LCJyZGYiOiJINHNJQUFBQUFBQUFBOFdZeTI4YlZSVEdyejEyM1ZwcWlRUUxGbDFVQ0NHRXFPWE1NK1VWbDZhRUpxWnB5eVlTcmRTcE0wa3NYTHV5SjFERUF2TWZzSVVWZjBxM1NDQ3haUmVwRWhJN0kxQ0ZCQXFNUGVjNzdmM0NLR21icWlOZC84N2N4L25PZmR1K3RyVHUxdGZyeHBpeWNaeXlLVHVaV1Nsbkh5VlRNU2Vtdkd1TTgySm0xTEowS2t2dHhZbVpQV0RMRUk4VDU0Z3ZFVjhtbmlhZUliNUNmSlg0R3ZGMTRodkVONGtOWXBNNFQzU0pIdEVuQnNTUUdCRVhpT2VJYnhIZkpyNURmSmY0SG5HUjJHS09iWjQzeExITjl3MXhiUE9Dc1doa25lbDhONFVZRDh3YnhndjkrbktTYzdScjl3ZnpqdkhyZjU4VDZ3dnI2S3VKM1c1RjR0c1dZajEwV25iNzlPZWNzZmhGM090MnYxcTNwUHlxK0J2Znk0bDV4SHFhRTI3bGpscWJ3cUhvWHBmMjZIOW4xNDd2RStRTHYvNG01eGZpQitPQWNid2kvaTRJbHlVZjQ3WWt2Qzc2WGZGelUrcDNoSmgvako4eGR2OXVTbnRlcHg4SmNSNWNoRi95dDNYUHJuZEQzcy9JKzZxd0tjUjU4ckg0V3h0YjlVM0JlUWJpS1NwLzNpeUtqNStpK2tYdG45VGY0NDVmVWZsaDR6cnFjWHZTOFQxRXZmdzg0M1A0UTJLTHlPY3YzM05OSWM2TlMyT2JxOEsybEY5dDJVUzlGU24vZ0hqUXVYN1IyT1I3OGZJQnhENkhIczdiRmNvSGNTNHRTem5mVzJzZ3h6ZitmN2FGT0g5NGZGZVlGQi9PRzdCTnZBU1NIcWo5azNmK0hzRGp5L0hRZUpwRGZqOTcxdVZQVy85eGVkVCtuOWJmODI1LzFOeC9yamtuczQvcEtpOUpLa3NxSFpES2xCeEovSTc2RGlYT0wvS1A5NHFrSW4rY2l1TGlmQ1Q0TCtwL3hVN1dENnRqdmVTenBEZktyTGxaYVo1YlhVdTNrNkc4bEpjdnd6b1B5N215dWtTZXFwMWVQSUlqZGI4WmQ5TEJNTFAyREM2Zzh1YnNBUmYzaUg5NHMwZTVLeE1QL2tYOC9kdnA4eDNJUC96MnRmOVZkTUJmcEQxNFgzVHZVeHpnQTJuM29LQTlrK0piL08wQWNyeC8vamg5ZmxMK0lQVkFqdmR2NGtUOFRBcjZ6M29jN3oraUMvTDRNMW1mNG0vVjhueVE0Mm1WWkI2Ris4cU4rQkh5L1BDeTdNZTNFeXpMR2haeWQwT3NTdHE5bldDeGp0STQzUmxoaWNkYktIQkd5VjB4YXh2ZFVSS1BVRkxkSE1iZEhrbWVHQTQrYnp3cTI4YS9HUE13WEJnZURCOUdBQ09FRWNGWWdIRU8vWmh2cWpXdmxxdVdwNWF2VnFCV3FGYWsxb0phcXVHcWhxc2FybXE0cXVHcWhxc2FybXE0cXVHcWhxc2FubXA0cXVHcGhxY2FubXA0cXVHcGhxY2FubXA0cXVHcmhxOGF2bXI0cXVHcmhxOGF2bXI0cXVHcmhxOGFnV29FcWhHb1JxQWFnV29FcWhHb1JxQWFnV29FcWhHcVJxZ2FvV3FFcWhHcVJxZ2FvV3FFcWhHcVJxZ2FrV3BFcWhHcFJxUWFrV3BFcWhHRitYNXcvalgyWlZEZmlOTzRrZTJZYk1mTkxnUnIxOVFHZDlMdW9KL3RtZkwwajc0cU5TNE5LZU9GbmY1MGoyMmM3V3p2OUQ4OU8vMjZYemNQTDcyVHd2WWpkaTJYckNDd0tqWiswdC9xOW5WUDkrSmJTVTllVG1WN2ViYVZHM2VHM1g2S25tUzVvMFk2U0dQVXEzY0dQZVRrbDkzZWY1T1FPNkRXRkFBQSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["status"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["disease"],"name":[6],"type":["fctr"],"align":["left"]},{"label":["frail"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"8","3":"1","4":"28","5":"1","6":"Other","7":"2.3","_rn_":"1"},{"1":"1","2":"16","3":"1","4":"28","5":"1","6":"Other","7":"2.3","_rn_":"2"},{"1":"2","2":"23","3":"1","4":"48","5":"2","6":"GN","7":"1.9","_rn_":"3"},{"1":"2","2":"13","3":"0","4":"48","5":"2","6":"GN","7":"1.9","_rn_":"4"},{"1":"3","2":"22","3":"1","4":"32","5":"1","6":"Other","7":"1.2","_rn_":"5"},{"1":"3","2":"28","3":"1","4":"32","5":"1","6":"Other","7":"1.2","_rn_":"6"},{"1":"4","2":"447","3":"1","4":"31","5":"2","6":"Other","7":"0.5","_rn_":"7"},{"1":"4","2":"318","3":"1","4":"32","5":"2","6":"Other","7":"0.5","_rn_":"8"},{"1":"5","2":"30","3":"1","4":"10","5":"1","6":"Other","7":"1.5","_rn_":"9"},{"1":"5","2":"12","3":"1","4":"10","5":"1","6":"Other","7":"1.5","_rn_":"10"},{"1":"6","2":"24","3":"1","4":"16","5":"2","6":"Other","7":"1.1","_rn_":"11"},{"1":"6","2":"245","3":"1","4":"17","5":"2","6":"Other","7":"1.1","_rn_":"12"},{"1":"7","2":"7","3":"1","4":"51","5":"1","6":"GN","7":"3.0","_rn_":"13"},{"1":"7","2":"9","3":"1","4":"51","5":"1","6":"GN","7":"3.0","_rn_":"14"},{"1":"8","2":"511","3":"1","4":"55","5":"2","6":"GN","7":"0.5","_rn_":"15"},{"1":"8","2":"30","3":"1","4":"56","5":"2","6":"GN","7":"0.5","_rn_":"16"},{"1":"9","2":"53","3":"1","4":"69","5":"2","6":"AN","7":"0.7","_rn_":"17"},{"1":"9","2":"196","3":"1","4":"69","5":"2","6":"AN","7":"0.7","_rn_":"18"},{"1":"10","2":"15","3":"1","4":"51","5":"1","6":"GN","7":"0.4","_rn_":"19"},{"1":"10","2":"154","3":"1","4":"52","5":"1","6":"GN","7":"0.4","_rn_":"20"},{"1":"11","2":"7","3":"1","4":"44","5":"2","6":"AN","7":"0.6","_rn_":"21"},{"1":"11","2":"333","3":"1","4":"44","5":"2","6":"AN","7":"0.6","_rn_":"22"},{"1":"12","2":"141","3":"1","4":"34","5":"2","6":"Other","7":"1.2","_rn_":"23"},{"1":"12","2":"8","3":"0","4":"34","5":"2","6":"Other","7":"1.2","_rn_":"24"},{"1":"13","2":"96","3":"1","4":"35","5":"2","6":"AN","7":"1.4","_rn_":"25"},{"1":"13","2":"38","3":"1","4":"35","5":"2","6":"AN","7":"1.4","_rn_":"26"},{"1":"14","2":"149","3":"0","4":"42","5":"2","6":"AN","7":"0.4","_rn_":"27"},{"1":"14","2":"70","3":"0","4":"42","5":"2","6":"AN","7":"0.4","_rn_":"28"},{"1":"15","2":"536","3":"1","4":"17","5":"2","6":"Other","7":"0.4","_rn_":"29"},{"1":"15","2":"25","3":"0","4":"17","5":"2","6":"Other","7":"0.4","_rn_":"30"},{"1":"16","2":"17","3":"1","4":"60","5":"1","6":"AN","7":"1.1","_rn_":"31"},{"1":"16","2":"4","3":"0","4":"60","5":"1","6":"AN","7":"1.1","_rn_":"32"},{"1":"17","2":"185","3":"1","4":"60","5":"2","6":"Other","7":"0.8","_rn_":"33"},{"1":"17","2":"177","3":"1","4":"60","5":"2","6":"Other","7":"0.8","_rn_":"34"},{"1":"18","2":"292","3":"1","4":"43","5":"2","6":"Other","7":"0.8","_rn_":"35"},{"1":"18","2":"114","3":"1","4":"44","5":"2","6":"Other","7":"0.8","_rn_":"36"},{"1":"19","2":"22","3":"0","4":"53","5":"2","6":"GN","7":"0.5","_rn_":"37"},{"1":"19","2":"159","3":"0","4":"53","5":"2","6":"GN","7":"0.5","_rn_":"38"},{"1":"20","2":"15","3":"1","4":"44","5":"2","6":"Other","7":"1.3","_rn_":"39"},{"1":"20","2":"108","3":"0","4":"44","5":"2","6":"Other","7":"1.3","_rn_":"40"},{"1":"21","2":"152","3":"1","4":"46","5":"1","6":"PKD","7":"0.2","_rn_":"41"},{"1":"21","2":"562","3":"1","4":"47","5":"1","6":"PKD","7":"0.2","_rn_":"42"},{"1":"22","2":"402","3":"1","4":"30","5":"2","6":"Other","7":"0.6","_rn_":"43"},{"1":"22","2":"24","3":"0","4":"30","5":"2","6":"Other","7":"0.6","_rn_":"44"},{"1":"23","2":"13","3":"1","4":"62","5":"2","6":"AN","7":"1.7","_rn_":"45"},{"1":"23","2":"66","3":"1","4":"63","5":"2","6":"AN","7":"1.7","_rn_":"46"},{"1":"24","2":"39","3":"1","4":"42","5":"2","6":"AN","7":"1.0","_rn_":"47"},{"1":"24","2":"46","3":"0","4":"43","5":"2","6":"AN","7":"1.0","_rn_":"48"},{"1":"25","2":"12","3":"1","4":"43","5":"1","6":"AN","7":"0.7","_rn_":"49"},{"1":"25","2":"40","3":"1","4":"43","5":"1","6":"AN","7":"0.7","_rn_":"50"},{"1":"26","2":"113","3":"0","4":"57","5":"2","6":"AN","7":"0.5","_rn_":"51"},{"1":"26","2":"201","3":"1","4":"58","5":"2","6":"AN","7":"0.5","_rn_":"52"},{"1":"27","2":"132","3":"1","4":"10","5":"2","6":"GN","7":"1.1","_rn_":"53"},{"1":"27","2":"156","3":"1","4":"10","5":"2","6":"GN","7":"1.1","_rn_":"54"},{"1":"28","2":"34","3":"1","4":"52","5":"2","6":"AN","7":"1.8","_rn_":"55"},{"1":"28","2":"30","3":"1","4":"52","5":"2","6":"AN","7":"1.8","_rn_":"56"},{"1":"29","2":"2","3":"1","4":"53","5":"1","6":"GN","7":"1.5","_rn_":"57"},{"1":"29","2":"25","3":"1","4":"53","5":"1","6":"GN","7":"1.5","_rn_":"58"},{"1":"30","2":"130","3":"1","4":"54","5":"2","6":"GN","7":"1.5","_rn_":"59"},{"1":"30","2":"26","3":"1","4":"54","5":"2","6":"GN","7":"1.5","_rn_":"60"},{"1":"31","2":"27","3":"1","4":"56","5":"2","6":"AN","7":"1.7","_rn_":"61"},{"1":"31","2":"58","3":"1","4":"56","5":"2","6":"AN","7":"1.7","_rn_":"62"},{"1":"32","2":"5","3":"0","4":"50","5":"2","6":"AN","7":"1.3","_rn_":"63"},{"1":"32","2":"43","3":"1","4":"51","5":"2","6":"AN","7":"1.3","_rn_":"64"},{"1":"33","2":"152","3":"1","4":"57","5":"2","6":"PKD","7":"2.9","_rn_":"65"},{"1":"33","2":"30","3":"1","4":"57","5":"2","6":"PKD","7":"2.9","_rn_":"66"},{"1":"34","2":"190","3":"1","4":"44","5":"2","6":"GN","7":"0.7","_rn_":"67"},{"1":"34","2":"5","3":"0","4":"45","5":"2","6":"GN","7":"0.7","_rn_":"68"},{"1":"35","2":"119","3":"1","4":"22","5":"2","6":"Other","7":"2.2","_rn_":"69"},{"1":"35","2":"8","3":"1","4":"22","5":"2","6":"Other","7":"2.2","_rn_":"70"},{"1":"36","2":"54","3":"0","4":"42","5":"2","6":"Other","7":"0.7","_rn_":"71"},{"1":"36","2":"16","3":"0","4":"42","5":"2","6":"Other","7":"0.7","_rn_":"72"},{"1":"37","2":"6","3":"0","4":"52","5":"2","6":"PKD","7":"2.1","_rn_":"73"},{"1":"37","2":"78","3":"1","4":"52","5":"2","6":"PKD","7":"2.1","_rn_":"74"},{"1":"38","2":"63","3":"1","4":"60","5":"1","6":"PKD","7":"1.2","_rn_":"75"},{"1":"38","2":"8","3":"0","4":"60","5":"1","6":"PKD","7":"1.2","_rn_":"76"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[76]},"pages":{}}}
@@ -208,33 +210,75 @@ kidney</code></pre>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Let’s be real: we cannot expect to use these datasets other than testing purposes. As such, the more interesting question is <strong>how can we import datasets and work with them from there</strong>. There are many, many formats and standards of text documents for storing data. Comâ mon formats for storing data are delimiter-separated values (CSV or tab-delimited), eXtensible Markup Language (XML), JavaScript Object Notation (JSON), and YAML (which recursively stands for YAML Ainât Markup Language). Other sources of text data are less well-structuredâa book, for example, contains text data without any formal (that is, standardized and machine parsable) structure.</p>
+<p>Let’s be real: we cannot expect to use these datasets other than testing purposes. As such, the more interesting question is <strong>how can we import datasets and work with them from there</strong>. There are many, many formats and standards of text documents for storing data. Com‐ mon formats for storing data are delimiter-separated values (CSV or tab-delimited), eXtensible Markup Language (XML), JavaScript Object Notation (JSON), and YAML (which recursively stands for YAML Ain’t Markup Language). Other sources of text data are less well-structured—a book, for example, contains text data without any formal (that is, standardized and machine parsable) structure.</p>
 <p>The main advantage of storing data in text files is that they can be read by more or less all other data analysis software and by humans. This makes your data more widely reusable by others.</p>
 <div id="csv" class="section level2">
 <h2>CSV</h2>
-<p>Rectangular (spreadsheet-like) data is commonly stored in delimited-value files, parâ ticularly comma-separated values (CSV) and tab-delimited values files. The read.table function reads these delimited files and stores the results in a data frame. In its simplest form, it just takes the path to a text file and imports the contents.</p>
+<p>Rectangular (spreadsheet-like) data is commonly stored in delimited-value files, par‐ ticularly comma-separated values (CSV) and tab-delimited values files. The read.table function reads these delimited files and stores the results in a data frame. In its simplest form, it just takes the path to a text file and imports the contents.</p>
 <p>Example:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsZWFybmluZ3IpXG5gYGAifQ== -->
 <pre class="r"><code>library(learningr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gbGlicmFyeShsZWFybmluZ3IpIDogdGhlcmUgaXMgbm8gcGFja2FnZSBjYWxsZWQg4oCYbGVhcm5pbmdy4oCZXG4ifQ== -->
-<pre><code>Error in library(learningr) : there is no package called learningr</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYbGVhcm5pbmdy4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBfYnlfIOKAmC5HbG9iYWxFbnbigJk6XG5cbiAgICBlbmdsaXNoX21vbmFyY2hzXG4ifQ== -->
+<pre><code>
+Attaching package: ‘learningr’
+
+The following object is masked _by_ ‘.GlobalEnv’:
+
+    english_monarchs</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVlcl9maWxlIDwtIHN5c3RlbS5maWxlKFxuICBcImV4dGRhdGFcIixcbiAgXCJSZWREZWVyRW5kb2NyYW5pYWxWb2x1bWUuZGxtXCIsXG4gIHBhY2thZ2UgPSBcImxlYXJuaW5nclwiXG4gIClcbmRlZXJfZGF0YSA8LSByZWFkLnRhYmxlKGRlZXJfZmlsZSwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpXG5zdHIoZGVlcl9kYXRhLCB2ZWMubGVuID0gMSkgI3ZlYy5sZW4gYWx0ZXJzIHRoZSBhbW91bnQgb2Ygb3V0cHV0XG5gYGAifQ== -->
+<pre class="r"><code>deer_file &lt;- system.file(
+  &quot;extdata&quot;,
+  &quot;RedDeerEndocranialVolume.dlm&quot;,
+  package = &quot;learningr&quot;
+  )
+deer_data &lt;- read.table(deer_file, header = TRUE, fill = TRUE)
+str(deer_data, vec.len = 1) #vec.len alters the amount of output</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MzMgb2JzLiBvZiAgOCB2YXJpYWJsZXM6XG4gJCBTa3VsbElEICAgICA6IEZhY3RvciB3LyAzMyBsZXZlbHMgXCJBNFwiLFwiQjExXCIsXCJCMTJcIiwuLjogMTQgMiAuLi5cbiAkIFZvbENUICAgICAgIDogaW50ICAzODkgMzg5IC4uLlxuICQgVm9sQmVhZCAgICAgOiBpbnQgIDM3NSAzNzAgLi4uXG4gJCBWb2xMV0ggICAgICA6IGludCAgMTQ4NCAxNzIyIC4uLlxuICQgVm9sRmluYXJlbGxpOiBpbnQgIDMzNyAzNzcgLi4uXG4gJCBWb2xDVDIgICAgICA6IGludCAgTkEgTkEgLi4uXG4gJCBWb2xCZWFkMiAgICA6IGludCAgTkEgTkEgLi4uXG4gJCBWb2xMV0gyICAgICA6IGludCAgTkEgTkEgLi4uXG4ifQ== -->
+<pre><code>'data.frame':   33 obs. of  8 variables:
+ $ SkullID     : Factor w/ 33 levels &quot;A4&quot;,&quot;B11&quot;,&quot;B12&quot;,..: 14 2 ...
+ $ VolCT       : int  389 389 ...
+ $ VolBead     : int  375 370 ...
+ $ VolLWH      : int  1484 1722 ...
+ $ VolFinarelli: int  337 377 ...
+ $ VolCT2      : int  NA NA ...
+ $ VolBead2    : int  NA NA ...
+ $ VolLWH2     : int  NA NA ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChkZWVyX2RhdGEpXG5gYGAifQ== -->
+<pre class="r"><code>head(deer_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUE2VlR3WExUTUJCVjVOaE5NNlNGNFFzNm5KdkJpa3ZTRzhRaFRZRmhJTTNRNW9ad1hPcXBzRHVPUStIV1Eva0Mvb1FqMzhDZHZ5azh4MXJaOFhEajhMeHZ0ZnVrWGEwOEhaMko5bG1iTWNhWlpYSEdMZEFteDZmQm1tdzd0MThZc3g2Q3RHQTdzQTZ3c3hZdzlnQzREK3dDblpyUVVlSG5VQzExeHA1ZTVjODh6YXloNjVaVWxMUmYwZ0dwaHNJd3o3QXllcWhaMDNmRlk1TDc0b0RvU0pCcWEzVHN1d2Y5bm5adHVCN0ZIRGo5UWI4U0dsVHpEczNPWTQ4b0g1dHFqenhUejR1ZVlSVG1MMDJIcjEwcTEzb2pqSHhxQ3VmVEo0YVo4R3hDemZEVGtwbkV1Ym1mZWE4MkJ6dFFja2xqTU1NNWwwR1dwR0IzeGVqeXNUYSthYndIYm9GcjRIa2xudnZRTk9iYUJzRFRNbTcvZ3ZrSit4djJPK3dQNEtTaWZ3dDhCU1lWKzRqaU4vajhDLzhmMzd5T1dINEs2VHBhOUNwT0xsZEtIWThvNTEyaS9CbkY0QXhEdWFDYmcvdnFkS0s5ZS9ER1VTelRVS21va3VIUGFDQXRMUmVWN2FBWHRiSzIwK1M2UzZYbC9YRGRtMU1rV245cUUyd3ZaQ2E3NXlra3hSUTN0dHRLcnJJb2liRVp6LzlkdXliT3A3ZXhzTHVLODhNWCs4SEZLcjdjRi9rQjYzQ0JqclpPaGJlS0k1dFVtRTN0aC9ISEtBN3BLcFg4RUNydDdLREpkWS9kcXpTS00rb0VxOHR1bG1TUzh0cEJvbWlsZUtGM2Z3SHZ3UVJacVFRQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["SkullID"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["VolCT"],"name":[2],"type":["int"],"align":["right"]},{"label":["VolBead"],"name":[3],"type":["int"],"align":["right"]},{"label":["VolLWH"],"name":[4],"type":["int"],"align":["right"]},{"label":["VolFinarelli"],"name":[5],"type":["int"],"align":["right"]},{"label":["VolCT2"],"name":[6],"type":["int"],"align":["right"]},{"label":["VolBead2"],"name":[7],"type":["int"],"align":["right"]},{"label":["VolLWH2"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"DIC44","2":"389","3":"375","4":"1484","5":"337","6":"NA","7":"NA","8":"NA","_rn_":"1"},{"1":"B11","2":"389","3":"370","4":"1722","5":"377","6":"NA","7":"NA","8":"NA","_rn_":"2"},{"1":"DIC90","2":"352","3":"345","4":"1495","5":"328","6":"NA","7":"NA","8":"NA","_rn_":"3"},{"1":"DIC83","2":"388","3":"370","4":"1683","5":"377","6":"NA","7":"NA","8":"NA","_rn_":"4"},{"1":"DIC787","2":"375","3":"355","4":"1458","5":"328","6":"NA","7":"NA","8":"NA","_rn_":"5"},{"1":"DIC1573","2":"325","3":"320","4":"1363","5":"291","6":"NA","7":"NA","8":"NA","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Notice that the class of each column has been automatically determined, and row and column names have been automatically assigned. The column names are (by default) forced to be valid variable names (via make.names), and if row names arenât provided the rows are simply numbered 1, 2, 3, and so on.</p>
+<p>Notice that the class of each column has been automatically determined, and row and column names have been automatically assigned. The column names are (by default) forced to be valid variable names (via make.names), and if row names aren’t provided the rows are simply numbered 1, 2, 3, and so on.</p>
 <p>There are lots of arguments to specify how the file will be read; perhaps the most important is sep, which determines the character to use as a separator between fields. You can also specify how many lines of data to read via nrow, and how many lines at the start of the file to skip. More advanced options include the ability to override the default row names, column names, and classes, and to specify the character encoding of the input file and how string input columns should be declared.</p>
 <p>Example on why it is important what is read:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY3JhYl9maWxlIDwtIHN5c3RlbS5maWxlKFxuICBcXGV4dGRhdGFcXCxcbiAgXFxjcmFidGFnLmNzdlxcLFxuICBwYWNrYWdlID0gXFxsZWFybmluZ3JcXFxuICApXG4oY3JhYl9pZF9ibG9jayA8LSByZWFkLmNzdihcbiAgY3JhYl9maWxlLCBoZWFkZXIgPSBGQUxTRSwgc2tpcCA9IDMsXG4gIG5yb3cgPSAyXG4gIClcbilcbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r crab_file &lt;- system.file( , .csv, package = <br />
-) (crab_id_block &lt;- read.csv( crab_file, header = FALSE, skip = 3, nrow = 2 ) )</p>
-<pre><code></code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JhYl9maWxlIDwtIHN5c3RlbS5maWxlKFxuICBcImV4dGRhdGFcIixcbiAgXCJjcmFidGFnLmNzdlwiLFxuICBwYWNrYWdlID0gXCJsZWFybmluZ3JcIlxuICApXG4oY3JhYl9pZF9ibG9jayA8LSByZWFkLmNzdihcbiAgY3JhYl9maWxlLCBoZWFkZXIgPSBGQUxTRSwgc2tpcCA9IDMsXG4gIG5yb3cgPSAyXG4gIClcbilcbmBgYCJ9 -->
+<pre class="r"><code>crab_file &lt;- system.file(
+  &quot;extdata&quot;,
+  &quot;crabtag.csv&quot;,
+  package = &quot;learningr&quot;
+  )
+(crab_id_block &lt;- read.csv(
+  crab_file, header = FALSE, skip = 3,
+  nrow = 2
+  )
+)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjoiZGF0YS5mcmFtZSIsIm5jb2wiOjIsIm5yb3ciOjJ9LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFRUVc3Q01CQmM3S1NJU0ZSSTZRUHlBU0tCeEFjUTRsVDEwQVBLMVUxTWEyRnM1RGlscjZkZHgzRUtQaVE3V3Mvc3pzNzdybHBuVlFZQUJDZ2xRQ2pDaE9CdkFnbk1YUDBCb0hsUEFEcjNGVHpoa2ZnaytUZVhMYUpGei9EZGw3MHc1eXN6dk5oMlFqYkZxeU1OYi9uNGR1Q21GVm9WYnpvYW10YVN0V0htdU9uSWFxc05vaHQrOTU3MnNWeXhNNDh0a2NOcVJPdElNRFA2V2diUi9QOVNWeDJSL2taZXNvWlpWaDROU3J5ZmgzRlRmYkY0Rnc0akxzSTBFazlNMUZoMHlpMXZsdlZYcDA3TDFjWnRHQnpBNEdod2M0L2R6aVE0UzBOS1hIMEt4VU1Ta24yTXdUL2psZjJSNWNVSVpjTXAyRzFMcXkwTHZLeldNblI4MkxjL1hiWC8wREVDQUFBPSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFRVzdDTUJCYzdLU0lTTFNWNkFQeUFTSUJQMENJRStxaEI4VFZUUXhZR0JzNVR1SDF0T3M0VHNHSFpFZnJtZDNaK1ZydDV0a3VBd0FDbEJJZ0ZHRkM4RGVBQkVhdTNnRG9wQ1VBSGZzS252Qk1mSkg4aDhzYTBYdkw4TjJQdFREbkt6TThYelpDVnZuR2ticTNTZisyNWFZV1d1V2ZPaHFhbHBMVllXYS9hYzlLcXcyaU8zNlBudGF4WExFemp5MlI3YXhIODBnd012cGFCTkg0LzFKWEhaSCtSbDZ5aWxsVzdBMUt2SituY1VOOXNYZ1hEaU11d2pRU0QwelVlR3VVVzE1TnkyT2pUdE9GVzlBWmdNNVFaK1lSdTVWSk1KYUdrTGc2Q01WREVKSjk5N20vNHBIdGpjWEZDR1hESmRpdEM2c3RDN3lzMURKMGZOYjNQeHF4SG0wd0FnQUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["V1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["V2"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Firmware Version No","2":"2"},{"1":"Firmware Build Level","2":"70"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
@@ -246,11 +290,16 @@ kidney</code></pre>
 <p>And now we can build a proper dataset:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuKGNyYWJfdGFnX25vdGVib29rIDwtIHJlYWQuY3N2KFxuICBjcmFiX2ZpbGUsXG4gIGhlYWRlciA9IEZBTFNFLFxuICBza2lwID0gOCxcbiAgbnJvdyA9IDVcbiAgKVxuKVxuYGBgXG5gYGAifQ== -->
-<p><code>r</code>r (crab_tag_notebook &lt;- read.csv( crab_file, header = FALSE, skip = 8, nrow = 5 ) )</p>
-<pre><code></code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuKGNyYWJfdGFnX25vdGVib29rIDwtIHJlYWQuY3N2KFxuICBjcmFiX2ZpbGUsXG4gIGhlYWRlciA9IEZBTFNFLFxuICBza2lwID0gOCxcbiAgbnJvdyA9IDVcbiAgKVxuKVxuYGBgIn0= -->
+<pre class="r"><code>(crab_tag_notebook &lt;- read.csv(
+  crab_file,
+  header = FALSE,
+  skip = 8,
+  nrow = 5
+  )
+)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjoiZGF0YS5mcmFtZSIsIm5jb2wiOjIsIm5yb3ciOjV9LCJyZGYiOiJINHNJQUFBQUFBQUFBMzFSVFUvQ01CZ3UzWVpoUmtPQ0IrTnBmNERSVFVhUXF6dDQwSXNtaEd2WmlpNlVsbXhGNU9ZdkI3dXU1V09LeTlhK2U5NnY1M25mMTNnU3VoTVhBQUNCWlVFQUxXbmFVQjROWUlOV2VYOEJZSFZVQUxDdTVPM296MVpCQ2dkV0xhbEp5U2VoaGJUYUtycENiMk95cEh4RFVtKzY4WjU0SWJ3eHlZdU1NKzIvaS9tYVVZN1RzeEdkWnl5eFI4cVR1ZmRHaEJkalFiVHJScm1xRGd2Q1RueVhMMWxSVnBIWXBzYlVTU2d1RE5FOS9SbE9CTStsdFQwU2JWZENsV2luRWw2V2dydWF6S1lYK2FHUERHVVU5VkRRQzFHQXZBQ043dnNqZEhBTmUvSU5FUnA2NkdFVVJRZVgxVWVSWVRqd2theW1lbG03LzVpZUNtTjRRWXd3cUVFNER2WldXRXRvNVh6dG02UlNNL3dHNm5ITzlIWlRMTEEveTJYS0gvMHYrRkxJa2N0aXNLTUhkcHpjeUd0QWU4WEs1bWszK1ZpeGVUY1lsQjMwdElGbVpDWnZiTDBCKzljR0NIdlBtTm0rUS9HVVVQMXpMVlVxa2Y0eXo1Z3dVaVJhK0lJTGJPTGNoRk9ES0hGZyt3TWVxVDE4TEFNQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzMVJ5MUxDTUJRTmFhc0RqbzhaWERpdThnT1V0RklIMmRxRkM5M29ETU0ydEVFN2hJUnBnOGpPTHdmVE5PRlJ4VTZiM0o3N091ZmUxM2dVdGtZdEFBQUVqZ01CZEpUcFFuVTBnQXVhNWYwRmdOUFdBY0E1VjdkblBsY0hhUnc0dGFRVFJqOHBLNVIxcGFNcjlDYW1jeVpXTkVYakZYb1NoVVJEbWhlWjRNWi9HNHNsWjRLa1J5UGF6MFJoajB3a1UvUkdKWXFKcE1aMXJWMVZoeG5sQjc2emw2d29xeWhzVldQcUpZd1VsdWlXL29Ra1V1VEtXdStKZGl1aFdyUlhDUzlMd1UxTjVnbUsvTkRIbGpLT3Vqam9oampBS01DRHU5NEE3MXo5cm5wRGpQc0lQd3lpYU9keWVqaXlETzk5cktycFhzN21QNmFId2ppWlVTc01HaEFPZzYwVjFoS2F1Vmo2TnFuVURMK0JmcndqdlZzcGtjU2Y1Q3Jsai82bllpN1Z5RlV4MkRZRDIwOXU1RFhnY3NITDVta24rVmp3YWFkWE5qRERCb2FRSGJ5MXpRTGNYd3VnL0QzamR2a2VJMlBLek0rRkVxazErdk04NDlJcVVXamhTeUdKaldzbGdsbEVhd1BySC9xTzFMOHJBd0FBIn0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["V1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["V2"],"name":[2],"type":["fctr"],"align":["left"]}],"data":[{"1":"Mission Day","2":"405"},{"1":"Last Deployment Date","2":"08/08/2008 09:55:00"},{"1":"Deployed by Host Version","2":"5.2.0"},{"1":"Downloaded by Host Version","2":"6.0.0"},{"1":"Last Clock Set Date","2":"05/01/2010 10:34:00"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
@@ -261,11 +310,16 @@ kidney</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuKGNyYWJfbGlmZXRpbWVfbm90ZWJvb2sgPC0gcmVhZC5jc3YoXG4gIGNyYWJfZmlsZSxcbiAgaGVhZGVyID0gRkFMU0UsXG4gIHNraXAgPSAxNSxcbiAgbnJvdyA9IDMgXG4gIClcbilcbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r (crab_lifetime_notebook &lt;- read.csv( crab_file, header = FALSE, skip = 15, nrow = 3 ) )</p>
-<pre><code></code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuKGNyYWJfbGlmZXRpbWVfbm90ZWJvb2sgPC0gcmVhZC5jc3YoXG4gIGNyYWJfZmlsZSxcbiAgaGVhZGVyID0gRkFMU0UsXG4gIHNraXAgPSAxNSxcbiAgbnJvdyA9IDMgXG4gIClcbilcbmBgYCJ9 -->
+<pre class="r"><code>(crab_lifetime_notebook &lt;- read.csv(
+  crab_file,
+  header = FALSE,
+  skip = 15,
+  nrow = 3 
+  )
+)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjoiZGF0YS5mcmFtZSIsIm5jb2wiOjIsIm5yb3ciOjN9LCJyZGYiOiJINHNJQUFBQUFBQUFBMzFSM1VyRE1CUStUZHJKQ3VyQUYrZ0xyTFJWOEZyWWpUY2lRMlMzc1V0ck1TWWpTZFZMbjN3emJYTUdDMm9oemVIamZEL25aTDNhVk9rbUJRQUNsQklnMUpVeGNiOElZcGdQOXhjQXZSb2JnSjY3bS9vek5aMDJ6d1QvNE1LNGFqRjJUZWpGZzhwVWt4a3VqZEltOCtqbG8rYkc5SnBuYXlaYmp2RHNpYlhaL1NvUVRtckJET29lM1JwV1c2VmR0USt5UlZPK1FZSWNnalNrTEhDMENvWHVpdXVib3B3STlQQ2Z6V2txeWQ0NXBpS28vMXdlcXlvZ3pMWDZ6SkUwQkNiZk1INzBEKzkweXl6TEcrMG92L2lmcVozdGxIUmlaSGloSkNCSE9nQVd2UnpNdDh2NnRaZHZ5L0oyY1BEckFwOG84aXZFMnE4eHhtUUpib1hMdHBNY055SFlDeGY0M203S2NjaDhwenRwY1JTSG10d3F5N0F2clpWQVpCd085aitlU2t1ZGtBSUFBQT09In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUEzMVIzVXJETUJRK1RkckpDanJCRitnTHJMUlZIMERZalRjaVEyUzNzVXRyTVNZalNkVkxuM3d6YlhNR0Myb2h6ZUhqZkQvblpMM2FWT2ttQlFBQ2xCSWcxSlV4Y2I4SVlwZ1A5eGNBdlJvYmdKNjdtL296TlowMnp3VC80TUs0Nm5Mc210Q0xCNVdwSmpOY0dxVk41dEhGbytiRzlKcG5heVpianZEc2liWFovU29RVG1yQkRPb2UzUnBXVzZWZHRRK3lSVk8rUVlJY2dqU2tMSEMwQ29YdWl1dWJvcHdJOVBDZnpXa3F5ZDQ1cGlLby8xd2VxeW9nekxYNnpKRTBCQ2JmTUg3MEQrOTB5eXpMRyswb3YvaWZxWjN0bEhSaVpIaWhKQ0JIT2dBV3ZSek10OHY2dFpkdnk5dkJ3RzhMZktESWJ4QnJ2OFVZZ3lXNEZDN2JUbkpjaEdBdlhPQnp1eUhIR2ZPZDdxVEZTUnhxY3Fzc3c3NjBWZ0tSY1RiWS93QjdVZ2t5andJQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["V1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["V2"],"name":[2],"type":["fctr"],"align":["left"]}],"data":[{"1":"Tag ID","2":"A03401"},{"1":"Pressure Range","2":"10"},{"1":"No of sensors","2":"2"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
@@ -275,28 +329,42 @@ kidney</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>For really low-level control when importing this sort of file, you can use the scan function, on which read.table is based. Ordinarily, you should never have to resort to scan, but it can be useful for malformed or nonstandard files.</p>
-<p>The opposite task, writing files, is generally simpler than reading files, since you donât need to worry about oddities in the fileâyou usually want to create something standard. read.table and read.csv have the obviously named counterparts write.table and write.csv.</p>
+<p>The opposite task, writing files, is generally simpler than reading files, since you don’t need to worry about oddities in the file—you usually want to create something standard. read.table and read.csv have the obviously named counterparts write.table and write.csv.</p>
 <p>Finally, functions take a data frame and a file path to write to:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxud3JpdGUuY3N2KFxuICBjcmFiX2xpZmV0aW1lX25vdGVib29rLCBcXERhdGEvQ2xlYW5lZC9jcmFiIGxpZmV0aW1lIGRhdGEuY3N2XFwsIHJvdy5uYW1lcyA9IEZBTFNFLFxuICBmaWxlRW5jb2RpbmcgPSBcXHV0ZjhcXFxuKVxuYGBgXG5gYGAifQ== -->
-<p><code>r</code>r write.csv( crab_lifetime_notebook, /Cleaned/crab lifetime data.csv, row.names = FALSE, fileEncoding = 8<br />
-)</p>
-<pre><code></code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KFxuICBjcmFiX2xpZmV0aW1lX25vdGVib29rLCBcIkRhdGEvQ2xlYW5lZC9jcmFiIGxpZmV0aW1lIGRhdGEuY3N2XCIsIHJvdy5uYW1lcyA9IEZBTFNFLFxuICBmaWxlRW5jb2RpbmcgPSBcInV0ZjhcIlxuKVxuYGBgIn0= -->
+<pre class="r"><code>write.csv(
+  crab_lifetime_notebook, &quot;Data/Cleaned/crab lifetime data.csv&quot;, row.names = FALSE,
+  fileEncoding = &quot;utf8&quot;
+)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnRGF0YS9DbGVhbmVkL2NyYWIgbGlmZXRpbWUgZGF0YS5jc3YnOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5RXJyb3IgaW4gZmlsZShmaWxlLCBpZmVsc2UoYXBwZW5kLCBcXGFcXCwgXFx3XFwpLCBlbmNvZGluZyA9IGZpbGVFbmNvZGluZykgOiBcbiAgY2Fubm90IG9wZW4gdGhlIGNvbm5lY3Rpb25cbiJ9 -->
-<pre><code>cannot open file 'Data/Cleaned/crab lifetime data.csv': No such file or directoryError in file(file, ifelse(append, \a\, \w\), encoding = fileEncoding) : 
+<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnRGF0YS9DbGVhbmVkL2NyYWIgbGlmZXRpbWUgZGF0YS5jc3YnOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5RXJyb3IgaW4gZmlsZShmaWxlLCBpZmVsc2UoYXBwZW5kLCBcImFcIiwgXCJ3XCIpLCBlbmNvZGluZyA9IGZpbGVFbmNvZGluZykgOiBcbiAgY2Fubm90IG9wZW4gdGhlIGNvbm5lY3Rpb25cbiJ9 -->
+<pre><code>cannot open file 'Data/Cleaned/crab lifetime data.csv': No such file or directoryError in file(file, ifelse(append, &quot;a&quot;, &quot;w&quot;), encoding = fileEncoding) : 
   cannot open the connection</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeSh4bHN4KVxuYmlrZV9maWxlIDwtIHN5c3RlbS5maWxlKFxuICBcXGV4dGRhdGFcXCxcbiAgXFxBbHBlIGQnSHVlei54bHNcXCxcbiAgcGFja2FnZSA9IFxcbGVhcm5pbmdyXFxcbiAgKVxuYmlrZV9kYXRhIDwtIHJlYWQueGxzeDIoXG4gIGJpa2VfZmlsZSxcbiAgc2hlZXRJbmRleCA9IDEsXG4gIHN0YXJ0Um93ID0yLFxuICBlbmRSb3cgPSAzOCxcbiAgY29sSW5kZXggPSAyOjgsXG4gIGNvbENsYXNzZXMgPSBjKFxuICAgIFxcY2hhcmFjdGVyXFwsIFxcbnVtZXJpY1xcLCBcXGNoYXJhY3RlclxcLCBcXGludGVnZXJcXCxcbiAgICBcXGNoYXJhY3RlclxcLCBcXGNoYXJhY3RlclxcLCBcXGNoYXJhY3RlclxcXG4gICAgKVxuKVxuYGBgXG5gYGAifQ== -->
-<p><code>r</code>r library(xlsx) bike_file &lt;- system.file( , d’Huez.xls, package = <br />
-) bike_data &lt;- read.xlsx2( bike_file, sheetIndex = 1, startRow =2, endRow = 38, colIndex = 2:8, colClasses = c( , , , , , , <br />
-) )</p>
-<pre><code></code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh4bHN4KVxuYmlrZV9maWxlIDwtIHN5c3RlbS5maWxlKFxuICBcImV4dGRhdGFcIixcbiAgXCJBbHBlIGQnSHVlei54bHNcIixcbiAgcGFja2FnZSA9IFwibGVhcm5pbmdyXCJcbiAgKVxuYmlrZV9kYXRhIDwtIHJlYWQueGxzeDIoXG4gIGJpa2VfZmlsZSxcbiAgc2hlZXRJbmRleCA9IDEsXG4gIHN0YXJ0Um93ID0yLFxuICBlbmRSb3cgPSAzOCxcbiAgY29sSW5kZXggPSAyOjgsXG4gIGNvbENsYXNzZXMgPSBjKFxuICAgIFwiY2hhcmFjdGVyXCIsIFwibnVtZXJpY1wiLCBcImNoYXJhY3RlclwiLCBcImludGVnZXJcIixcbiAgICBcImNoYXJhY3RlclwiLCBcImNoYXJhY3RlclwiLCBcImNoYXJhY3RlclwiXG4gICAgKVxuKVxuYGBgIn0= -->
+<pre class="r"><code>library(xlsx)
+bike_file &lt;- system.file(
+  &quot;extdata&quot;,
+  &quot;Alpe d'Huez.xls&quot;,
+  package = &quot;learningr&quot;
+  )
+bike_data &lt;- read.xlsx2(
+  bike_file,
+  sheetIndex = 1,
+  startRow =2,
+  endRow = 38,
+  colIndex = 2:8,
+  colClasses = c(
+    &quot;character&quot;, &quot;numeric&quot;, &quot;character&quot;, &quot;integer&quot;,
+    &quot;character&quot;, &quot;character&quot;, &quot;character&quot;
+    )
+)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gbG9hZFdvcmtib29rKGZpbGUsIHBhc3N3b3JkID0gcGFzc3dvcmQpIDogQ2Fubm90IGZpbmQgXG4ifQ== -->
 <pre><code>Error in loadWorkbook(file, password = password) : Cannot find </code></pre>
@@ -325,13 +393,13 @@ kidney</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6MzZ9LCJyZGYiOiJINHNJQUFBQUFBQUFCcDFYVFd3Ynh4WGU2SSt5L2l3blR0TFVhVHNJakJvb1pJR2tLTWxHZXlCRldwWWMyUlpFSzBoYjlERGtEcmtUTFhmWTJWM0o5Q21ISGxLZ2x4N1RROUVBUVE5cDBXTXZ6YUdJRUFSSW0wTVFvd2dRdENoNjdLRTk5NUwybTkwM1N5NXRKMG9IZU54NU0vUCs1djNNNDBIajFmTGNxM09PNDB3NGs5UDRuY1IwYWdJL1R6bFR6am56dmU4NGs4OWdVc0IzRWQvTHlhWWh3SUk1RFFDbE01T2VjV1lCaHRBd25RY3NBQXpkRXNGNXdETGdBdUJwZ09GOUVmQXM0RG5BODRDdkFWNEFmSjNnRXVCRndEY0l2Z240Rm9DbGtGTjR4aGZId2c5SkNxUFZ3dHJtRmJhMi9sSU8zUmlpMTY2d1lqR1BsdkpvSlllVzEzTG9XbjUzVkpCQk40Zm9kYkFxNTlHTkhGcktIeTZYOHVpMUhMcFd6S1A1dzVWS0hoMXFWU25tN0RWb1pTT0hyZzlaVlVyUTZsb09MZWQzUjlRdzZDZ3JvT3Y1M2ZXaGdaVXlPSTlvdFFaMGVEbVZkUWdxNXRHUlhYSlozdnZUYlorSDF2bFpTSFI0TzFJYXM4OHBDQzlYdHo1OEIrTTMxYTAvbS9GUnRlNGtvMXFmZU1tTWFuMzJEWXlmVnV1bEMyWlU2enVFMzBycDZuZitoZkh2YXYwbkRUT3E5WjhSbjdjSi95M2hmekRqM2VIM2p5VG5QWkx6VnpQK1ZxMy9QVjF2a0I2TlZycmY4Rk0ralY5M3pLZzJpRytEK0RUK1FlZittZXFWZmYvekpzWXZxamRZZXU3R200VFRkL3VkOU56MjcxSTdka2d1ZlVlUy9WbEsxTkh2TWlYNEZNMWZvTVNlb3NRMmlXemNZb3JDTEJXQTUraXNLUXFUeE91U2t4WVRVemhzSVRESi96d2x2a2w2VTBBUzE2YStNKzZlK0MveGVwRTh2Rnp6VzBKSGl0VlZFSEhYK1BwMXN6NWY4OFY5OW9QVGQzMWYwTkdMWm9rSHJ0RHNGUm1vSXhWcmRVekh6OWNDVndzZXNwZjkwOSs3SWlDUzgxdENCMXk3YkVjR1BQWWpXcDdmZW8zclFMQURLVU83Vk9ldThObU5ZeDdZcGNVNjE3NEtXWk9Ia2JaS0xHenpPRXpVN2ZkbHR1YXJnY3Yyb0J2NHBRb3RiZXZUdDRNajFteDd2bWdmMGNtbmI4TFdxN2Q0d081NUlnNWtHR1o4YjBvZUJKSnR4ZDFBV1oxdWF0RmxlNktuQXBlV3p1MjJRSHliRDdJemh0bWg3MnZaOWl5cld5b1VyUFlBMWRTMXg4NUR1VFlXZFErMnFLQkx5MHQ3UE5ZaWlOaTJoRmg3YXd0N3NRelpqdEJhYUc0djR6YlhiY1gyT2J3VVNESnkrYmJzeHJpMTNjQ045ZWxiMGpKWTNCZXVWcXdoL0M3UFZGamFsNFlqTzFDK3p6T0RsZytndVBIUUt4S0svRGkyOTdGME1EQ08zaEhoYThMbHZuVnprL2VNd09icFcwSGJFdzhzazN1ZTZzSDVEYWlHRndTR0pNRTJhWVB0OGVXRTBxVHdFZUFoNEVQQXg0QS8wZHBmQ0I0Uy9nbk5IOUlaQzU4Q1BpRDRtR2crSWZpTXdKeDVIM0JLK1BzamUyYitLOEI3S1dUcFc2Q1NOL3Fkb2ZrTXdUU2wyWXlUZjdPbmFGNFkyVDlIS2IxRWF3dVV3dE9VMXBiWEJKMlpJL3JIcGUrU2pjY2Fza0Z6WDlvNG1hbnpnTHNXbTYwclgvVmEyVzZoSVlJZTF6WWRacmExQ1V1N2llVG84V0JnSDRUZGlQc1dtWHVaUCtCSFhvamdzeXQ3OFgzUmE2RUkyR0NldnlNaVQyZ1RYRGFGWi9lVmp1SXU0b2Q0TnZzOGk5TDU1b21NSHFRRU5uQVBBeGtKbHpVakhvbndURkUwNXd3N3E2OENkb3pqemhQT2puL0h6NCtOTElybXlJTUY4bkppdVpNV2NSczFpNWxYaHpKTlFaOGQwOE9jTlkrRktmaFR6ckNiTk44RjUxRzlMenk2bG91aWkzU2pEbjNmUUNWaFRkR1A0RmdrZjdsWUtxNWtEd05EZlZReHdzVmxrY2NqNWdubWNjeEZhRHpXVjZHTTVMRmdIWnhzK3lKb3haSFF5bWN5WUp5MXdjTWdFVDhTQVVPeGtrRTM1VElRWEY4SjJUM0VFWE1GU3dOeWxmUXBsNHZGMHRnZWkyVGtDNGFvbC8wK0JMY0c3TEMrYThSQTNiS2xMSUZ5N1N0UmpvaXMvRjhpdjFQRFU5bkZ0cXY2eGp5eUV2dzJubURlOXpJS0hYZFpqRWVEYUVyWHIxY3doMkRGUE5uMWNOR2l4eVBWMWpKaWFaZHVlWHozQzNpc2Z3bVBNNmp4WlN6T1lzcm1HWG1zYkNPOFhOYU5wUjhObU9vZ2J1Z3FWYWNqakI5dzhhZ3dyRjVyV3BxOUhjRTRYaHpHM1o2TVRDQWFPZnpZVUVFTCtBcFJTMnFGUDF3ci9ZanhYdDhURWUvSlFJUUlhUmV4cVNPSk55dHpTdzFKQUxXdm1RZy93YXRtUkxieFNLUE1zZzRlWEx5aFNWQ2ZTRmVFZlhROW1jdkROaGh5ZjVWZXkxL3VtZ2dwWG9lR3VCd2VTUldFVFBTRU5oZUZkbHYyc2pRWWE1OVMzWTNnYlMxa0N6V1dvVEllQzQwa0c3QzZMd1BaVGpJTnpZZE1tUHVzNVNzRkdrUlkySWxEeUJybW1maWlLTnk1QzNNMzJhM1lIeVR4dkdKN3BzUjRqZTRIZlF6cmFOVkxPSTJsQmx6aW9WbUpCTzhSdnhEOEVtWnJLQjZRdTdtUzBKbU1RUm5vU04wRE95b2VIUzU5WUR5cElvbEJOL2J2anVxZGw3YkNUankwSzRhNmd5c0lQZENXTmlMUG12SnppTDZMdDhFVXIxSWkzWmh6Mkt3MWFpUFZLK3RTMkltS2ZZUUlVanNPK3dLZHJadm9FTXI3REQxZjVJWHBIU2VobFdpa3hwSTdNVjMyRUNjeThsSXptMnhmNFpuMGt5dXhpbjI3YVdzSHd2b3h2a2dyakQyOU5XeXZFeCswZWR6MW90VEJWL01La0c4M0gvRnRHb0dYMGdaK0pEdjRrU0hETGErZTVYWE4vME1NZUUvWWY0Z0ZXcHk2Qi9PekJpQkdjTXYyeU5MVUhUNmNmeCsxUGp1YXBBTWFsOGkyR0lVR2N2UXdhOGpuYThPa0dWUGtuRllucTFZWjgzWk92SjQrdXBlZllOT2N5eU8rMnRGR2wwZnRLcWcrU1psNGhoN3JVZUtuOU5qQ2Nod1k0ZTdWdGhjSFIxZkxSWHJsYlJld1NQUExJL05DS25QS2FqWnRiMXNFWFZRaWU4TStid25iS3kzQnlzVEkxVDVjYmY4NnpXRTFYSTFVbFBWVWMyM2wyNVcwSmZyOGZ3b0ZFcmFkRWdBQSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Time"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["NumericTime"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Name"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Year"],"name":[4],"type":["int"],"align":["right"]},{"label":["Nationality"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["DrugUse"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["Allegations"],"name":[7],"type":["fctr"],"align":["left"]}],"data":[{"1":"37' 35\"","2":"37.58333","3":"Marco Pantani","4":"1997","5":"Italy","6":"TRUE","7":"Alleged drug use during 1997 due to high haematocrit levels."},{"1":"37' 36\"","2":"37.60000","3":"Lance Armstrong","4":"2004","5":"United States","6":"TRUE","7":"2004 Tour de France title stripped by UCI in 2012."},{"1":"38' 00\"","2":"38.00000","3":"Marco Pantani","4":"1994","5":"Italy","6":"TRUE","7":"Alleged drug use during 1994 due to high haematocrit levels."},{"1":"38' 01\"","2":"38.01667","3":"Lance Armstrong","4":"2001","5":"United States","6":"TRUE","7":"2001 Tour de France title stripped by UCI in 2012."},{"1":"38' 04\"","2":"38.06667","3":"Marco Pantani","4":"1995","5":"Italy","6":"TRUE","7":"Alleged drug use during 1995 due to high haematocrit levels."},{"1":"38' 23\"","2":"38.38333","3":"Jan Ullrich","4":"1997","5":"Germany","6":"TRUE","7":"Found guilty of a doping offence by the CAS."},{"1":"38' 34\"","2":"38.56667","3":"Floyd Landis","4":"2006","5":"United States","6":"TRUE","7":"Stripped of 2006 Tour de France title."},{"1":"38' 35\"","2":"38.58333","3":"Andreas Klöden","4":"2006","5":"Germany","6":"TRUE","7":"Alleged doping during 2006 Tour de France."},{"1":"38' 37\"","2":"38.61667","3":"Jan Ullrich","4":"2004","5":"Germany","6":"TRUE","7":"Found guilty of a doping offence by the CAS."},{"1":"39' 02\"","2":"39.03333","3":"Richard Virenque","4":"1997","5":"France","6":"TRUE","7":"In 1998 he was the central figure in a widespread doping scandal."},{"1":"39' 06\"","2":"39.10000","3":"Iban Mayo","4":"2003","5":"Spain","6":"TRUE","7":"On July 30, 2007, the UCI confirmed he had failed a test for EPO during the Tour de France, which he finished 16th."},{"1":"39' 17\"","2":"39.28333","3":"Andreas Klöden","4":"2004","5":"Germany","6":"TRUE","7":"In 2009 allegations emerged claiming that Andreas Klöden used the Freiburg University Clinic for an illegal blood transfusion during the 2006 Tour de France."},{"1":"39' 21\"","2":"39.35000","3":"Jose Azevedo","4":"2004","5":"Portugal","6":"FALSE","7":""},{"1":"39' 28\"","2":"39.46667","3":"Miguel Induráin","4":"1995","5":"Spain","6":"FALSE","7":""},{"1":"39' 28\"","2":"39.46667","3":"Alex Zülle","4":"1995","5":"Switzerland","6":"TRUE","7":"Zülle admitted taking EPO."},{"1":"39' 30\"","2":"39.50000","3":"Bjarne Riis","4":"1995","5":"Denmark","6":"TRUE","7":"Alleged drug use during 1995 due to high haematocrit levels"},{"1":"39' 31\"","2":"39.51667","3":"Carlos Sastre","4":"2008","5":"Spain","6":"FALSE","7":""},{"1":"39' 44\"","2":"39.73333","3":"Gianni Bugno","4":"1991","5":"Italy","6":"FALSE","7":""},{"1":"39' 45\"","2":"39.75000","3":"Miguel Induráin","4":"1991","5":"Spain","6":"FALSE","7":""},{"1":"40' 00\"","2":"40.00000","3":"Jan Ullrich","4":"2001","5":"Germany","6":"TRUE","7":"Found guilty of a doping offence by the CAS."},{"1":"40' 46\"","2":"40.76667","3":"Fränk Schleck","4":"2006","5":"Luxembourg","6":"TRUE","7":"On 17 July 2012, Schleck was removed from the Tour de France by his team"},{"1":"40' 51\"","2":"40.85000","3":"Alexander Vinokourov","4":"2003","5":"Kazakhstan","6":"TRUE","7":"Vinokourov was caught blood-doping during the 2007 Tour de France."},{"1":"41' 18\"","2":"41.30000","3":"Lance Armstrong","4":"2003","5":"United States","6":"TRUE","7":"2003 Tour de France title stripped by UCI in 2012"},{"1":"41' 21\"","2":"41.35000","3":"Samuel Sánchez","4":"2011","5":"Spain","6":"FALSE","7":""},{"1":"41' 30\"","2":"41.50000","3":"Alberto Contador","4":"2011","5":"Spain","6":"TRUE","7":"In September 2010, Contador announced that he had tested positive for clenbuterol in a control taken during that year's Tour de France."},{"1":"41' 46\"","2":"41.76667","3":"Cadel Evans","4":"2008","5":"Australia","6":"FALSE","7":""},{"1":"41' 50\"","2":"41.83333","3":"Laurent Fignon","4":"1989","5":"France","6":"TRUE","7":"He also admitted to having used banned drugs[31] amphetamines and cortisone."},{"1":"41' 50\"","2":"41.83333","3":"Luis Herrera","4":"1987","5":"Colombia","6":"FALSE","7":""},{"1":"41' 57\"","2":"41.95000","3":"Pierre Rolland","4":"2011","5":"France","6":"FALSE","7":""},{"1":"42' 15\"","2":"42.25000","3":"Pedro Delgado","4":"1989","5":"Spain","6":"FALSE","7":""},{"1":"43' 12\"","2":"43.20000","3":"Ryder Hesjedal","4":"2011","5":"Canada","6":"FALSE","7":""},{"1":"43' 12\"","2":"43.20000","3":"Thomas Danielson","4":"2011","5":"United States","6":"TRUE","7":"On October 10, 2012, USADA announced Danielson would be suspended for six months for admitting to doping during his time with the US Postal team."},{"1":"45' 20\"","2":"45.33333","3":"Gert-Jan Theunisse","4":"1989","5":"Netherlands","6":"FALSE","7":""},{"1":"45' 22\"","2":"45.36667","3":"Fausto Coppi","4":"1952","5":"Italy","6":"FALSE","7":""},{"1":"48' 00\"","2":"48.00000","3":"Bernard Hinault","4":"1986","5":"France","6":"FALSE","7":""},{"1":"48' 00\"","2":"48.00000","3":"Greg Lemond","4":"1986","5":"United States","6":"FALSE","7":""}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[36]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShcImxlYXJuaW5nclwiKVxuYWxwZV9kX2h1ZXogPC0gbGVhcm5pbmdyOjphbHBlX2RfaHVlelxuYWxwZV9kX2h1ZXpcbmFscGVfZF9odWV6JERydWdVc2UgPC0geW5fdG9fbG9naWNhbChhbHBlX2RfaHVleiREcnVnVXNlKVxuYWxwZV9kX2h1ZXpcbmBgYCJ9 -->
+<pre class="r"><code>library(&quot;learningr&quot;)
+alpe_d_huez &lt;- learningr::alpe_d_huez
+alpe_d_huez
+alpe_d_huez$DrugUse &lt;- yn_to_logical(alpe_d_huez$DrugUse)
+alpe_d_huez</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>This direct replacement of one string with another doesn’t scale very well to having lots of choices of string. If you have ten thousand possible inputs, then a function to change each one would be very hard to write without errors, and even harder to maintain.</p>
@@ -345,7 +413,7 @@ kidney</code></pre>
 <pre class="r"><code>data(english_monarchs, package = &quot;learningr&quot;)
 head(english_monarchs)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvMVl6VzhjUlJZZjdQbnlPTEhqT0JCWUpHZ2syTlBnRlZ3NTJaUEJ0b2h4bEdGbHJ1WHU2dWtXTlZWV2RiVTd3NGtUTi82RHZYREpaWVhnakxTWG5SdmMyUDhIOWxWWHZmb1lUOWlOMUpsK3YvZXE2dFg3Ymo5Lzh1WEhveTlIblU1bnE3UGRnLyszNGJXN0JmKzkxdWwyZHZUdmkwNW4reEJlZ0x0OUgzNzc4UHdLejIvdy9BTFBQK0g1R3A0ZjF4YjJHYjJscklLM0IvRDh4NkxkNHl3am5jNDMrbjEzOWUzcUo4cXVhU0dWaGU0akpBdVZuRnZ3N1FnOFR3alBraW1SV1ZPejNJcjhOUllaSjZ0dldTN0wxTXBtOFliN3NUVENJd05YaXZBWWFRakxZcDBiU2xoaG9SMTlWczVXTDFGbXFJRjRqYUVUZDlUN0NJMUJPOWJlWkp4Y1Zvd1lqUytyUmMxeCtmaVZzbU1yYU5jRVIvN0ZyM25GcnEzV2NBMFphMTF5YXVrUFduckorVGlaMFZUQStxY2tXeVlpVDFSQmt3c3EwNUx3eWdyM1FKaVJrS0RCdG96cW01c0FHQjdUS2cyT0FYNUVnOGxoZjNidDc3Sm5FZXV0TlRsSk1YYmVNMGpyaWZHZktidHJCV1dwaWhncUFudU1FSkkwRnBJMGM1RjBMNEFRZTkxait2Qy9jMGxCRjh0ODF6RkJSU0d6VjZpNFk4WEtOTlltaUUxN3RJa3JIOWdPdXhDTXhZbzNkMi9YQ0xhTytLUjZ4eU50L0d6T21yYzNTbWxGRS9UNXpqRkxDMk51REFLV2hmU0RZL0NHdGRjcG1FdGhEVGxtQmVCNHUrTUZJNnNmcnBOSlRlVHFlelRFSWNJTGlQTlRrVXRTWm00OXo0cWF1OXJET2JIdmd4T3drZDdhYW5oQ0JWeEwyOXNBSXdPMDFyQTZhNFN2TGVHeEFLend4dzFPYWprUDVDZUVadUFaaGlyMEp1QVBoc0pBTkt6RXRmMEo1WGxkNGM1QXFUWkhuREJ2ZEFFeTVDTkx0dWFmVWZMaXVwYkk2MDZvQ000UXpDczAxR1JiTTBMYTMyY1hhWis4b0piTW5JMTZrN0txaUR1STE4cnRKR2k0MHdCbzd2MDRuUHo3SHp5SXM5ZVJiaTh3V1hJSzhiU3d6TUdrWHYza2xRWlNGZUVkbWpKdHBaR0cxZk9TVlNFZGFOSUgyanQ1b0R0RFlBQnNGSllPR3NlNXJyM2MxZHBaT2FkZWlUN0lyVkhSRVlHTk5iTXA1eUhUS3pleXBMZjNZQnBGNlJEcmYwQVhiVTEzTkEvVENrN2owV29acjA3blllOTlqTFJOWTFjTlVEdGtZK1kvOUFoMDVXZHk5WkpIc3FibDJtRHl5SGx3ZnF4dE9nOE5sODZEaG5ZNHplWkV0Z1hDYUZaeXRPSkR6M3BHU1Vyem1ya2RzOGc2TGVWVTJrZGFDbDZWR1NiWG95azRUSnBhTkJFOHAxVWxKTmFwZ0RkbEdVWDhJTUF2aUZSTFpQU0E0Wk42S2dwL3dkNVUzTndRWng0aFU4ckQ2SHNyZ013WUkrU0NoZ1hJQW03SElRQTNRYkIxcDU2M1BYV1pPdnBVRzcwT28vS1VFYTJMN1Qybk91TUVQT2lLVTUxek5lYll5SksrNHgyZXJiNW5lUVlWMytqWitBUjhjRVlrOUJpb3k5b1FsVUJiN0ZzY2ZtZ3VCRjU2QkxRcVNCclVrak5LUXJPOGliUTV5MGNnS250RytieXNWRURLcGZQNTBKS3VNNTB4b1lxMngxdXZuQW5wTFBYNHJJYnBCK284OUkzMnVHTVdxdEk3cTMzOTJ6N1AvS3ViWnZxZjhkWFBDZzNaZjFwbk5IVXQ2SUtva3ZsVkZ6WDI2OGVmZy9WMVZWdHJxSmgzRWZ0RUxubTVrWE5aK2ZuaElPSmNFWVdYNkY2bXl0WHd5enpIOXdQOWpqWU8wN1I3V1ZZWVZmM0xLcWlmQTZBQzgvVHR2T21ZWm5DeWpyQWswajJqckZzWlJpZFFmajU4eDFBd2xEYXJsM25yZlB0dWhqZTNYVlBXd1FhK2p2V2VVZTZNdnRjU0dMYUk3bnNVS29yN1hoaytoOGt5cUVtRzlqc2ZQaWR6RGcwK0drU3MrWkZWazJUMTNZS1VHQkxENTJVYUdtMEg2RUtYRWhmUEFGVFFicENjRVFyeUtpQ0RscTdKSnJEQ2pGNWZsN2l6YmxyaFVZOGNnRzcySG5qb2VlMU1Ka1IyZDVYbVBDMlZZalE4SW5UREd3NHdiYk1oTkErMWpkcW9JVjNFNnMzeXNBd2RBS0F6MVk0NS9tWjd3RkJ5T1o4bk1HS2xycDNNR00yY293Y3pSVzhLeXAybXQ3ZWxDbWJMZHplSDB6aTVLbUVzOURXM3ZVTHJBRHMxM3dtOS9WbERseno1Vk1pdnJnTjRPR3RLRlU0cVh4UlVCSU5DLzRzbFZBTTNHMTdSb2tDaWYxWE9HWEhERkZCaFhnSFoxZ1pIUnZwZWxZeVZaT0hDYWVRQWwzbFh0Yy82NFJXRXMvbmtpVDdtZXlrakZYN0x1eS84bktRS2VtT244M3Z3dDRHRHpZL2VidXNQdThNQkhnY2pNeS9od3dmVk5mT2w3KzNkSjhSTnZiMG50SlMrWVpKS0pjZDh6dHppVVF2TnlBdlhaSWFudE5Fakt1N1EvUXptYUhRY1ZPWi9LVDFHT0RPYmJ6QmMremwwVjRpMEpaNE9kSVViN1FJQkxYUnhMWjM4NFROR3VDSnp5cW42RytoRmIxM2YzNTBKNkppUlp2MHJHQ3ZvQytjbGNJSFdwREoyMnY3anp5emRhUzM5VFVmLzIvb0VuaE40NEVOMnF6SlB4M3BpRTIvck52RFU5dVluOHRUK0t6ejF2NXp4VmdDTkUyMzNjUkxaOXpBU2lGaURLYURFUlhodkdwakt1TkNXb25CYnlOVFFwUGNNTDhKaUJ4L2l1cnUrM09EZS9xd09kN0w3L2gvZWl0T0lrd1hGTk9yaGxUU0lBb1dvWFpUdFFWNUxkU1R5STBuTE9ZYk9QZWhONjFnL0U5QlQrTnBwTzFJMFIzaWlkdnFXQ1JydC9JMktqektpeUJIMExkRG5ydklEY2FOS29mOUVzV1gvSGhndGZrMnVBUTlxcmcvUFBremhtL2lyRHovK1NKL1E4czF6My83MmcvZWVPYk9MbXFHTitucW84NVdBd1FpSVEvNGUzTEs5NU5HTkxGMXNqQUN0anBSUUJPVkdxV0NJbUR6Ni9iODlBTGVSL2hRQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVl6VzhjdHhYZnJQWkxLMXV5TENkdUVpQ1pBR2xQR3hYb3BZZWVwUFZHRW1KRmhqZUJjcVZtT0R0RXVLVEE0V2k4UGVXVVcvK0RYbkx4cFFpYWM0RmV1cmZrMXY0L1NSOW4rUGl4V3FjMU1ONTV2L2RJUHI3djBjdG5YLzFoL05XNDArbDBPenM3M1U1M0IxNTdYZmp2clU2dnMydCtYM1U2TzBmdzBvZmZoL0E3Z09jbmVQNE56NC93L0EyZVA4UHo5NDJGQTA3dktDL2g3UkU4LzdGbzd5VExTS2Z6alhuZlczKzcvb0h5RzFvb2JhR0hDS2xDSnhjV2ZEOENMeElpc21SR1ZGWlhQTGNpdjR0RkpzbjZXNTRybGxyWkxON3dJSlpHZU56Q3BTWWlSbXJDczFqbm1oSmVXR2pYbkpYejlXdVVHUmtnWHRQU2lUdnFZNFFtb0IxdmJqSkpya3BPV28ydnltVWxjUG5ramJJVEsyalhCRWUrNTllOFlkZEdhN2lHaXJWbWdscjZ0dzI5RW1LU3pHa3FZZjF6a3EwU21TZTZvTWtsVlNram9yVENmUkRtSkNSb3NDMm41dVp0QUl4T2FKa0d4d0Evb3NIa3NEKy84WGZadDRqMTFvYWNvaGc3SDdWSTQ0bkpyeW03WndVVjAwVU1GWUU5eGdncEdnc3BtcmxJZWhCQWlMM3RNWFA0bDBKUjBNVXlQM1JNVUZHcTdBMHE3bG94bHNiYUJMRnBqMjdqeWdlMnd5NGw1N0hpOWYzYjFaSnZJajZwUHZCSUV6L2JzK2I5clZKRzBRUjl2bnZDMDZJMU53WUJ6MEw2MFFsNHc5cnJETXlsc1lhYzhBSnd2TjNKa3BQMTl6Zkp0Q0pxL1IwYTRnamhKY1Q1bWN3VllabGJMN0tpRXE3MkNFSHMrL0FVYkdTMnRocWVVZ25YTXZadWdYRUxOTmF3T2h0RWJDd1JzUUNzOE1jTlR5dTFDT1NuaEdiZ0dZNHE5S2ZnRDQ3Q1FOU2M0ZHJCbElxOEtuRm5vSFNUSTA1WTFLWUF0ZVFUU3pibW4xUHk2cVpTeU90TnFRek9rTndyTkRKa1V6TkMydDluRDJtZnZLQ1d5cHlOK2xOV2xzUWRKQ3J0ZHBJMDNHa0l0UEIrSEUzLzlWY1J4Tm5iU0RjWG1LNEVoWGhhV3Vad1dxMS84RW9EcVl2d0RqVkxHMm1rWWZXQzhUS2tBMDBHUUhzbkQwMW5DQXlBamNMU1FlTzRNTFZYdUZvN1p3dnFsUmlBM0FZVkhSSFkyREJydGdpWlhybXhKYjI5aDdNb1NrZFkvd082YUdxNm8wV1lWbkNhaUZhcmVIVzZDSHZ2VTZSdEdydHFnTm9oR3pQL3NVZWdLNzlRNjljaWttMWJyZzBtajF3RTU4ZmFwb3ZRY09raWFHaEhzMnhCVkZNZ1dzMllRQ3MrOXF3WGxLUTByN2piTVl1czAxQk9wUU9rbFJRbHl6QzVuc3pBWWFxdFJWTXBjbHFXVW1HZENuZ3pubEhFRHdQOGtpaTlRa1lmR0Q2cFo3THdGK3pQNU8wdGNlYVJLcVVpakw1M0E2Z2RZNlJhMHJBQVdjRHRPQUxnTmdpMjNzenpkbVl1VThlZkdxTlhZVlNlY1dKMHNiM256R1NjaEFkZGNXWnlyc0ljRzF2U2Q3eWo4L1YzUE0rZzRyZDYxajRCSDUwVEJUMEc2ckl4UkNuUkZnY1doeCthUzRtWEhnT3RDNUlHdGVTY2t0QXN2MEc2UGN0SElDcDdUc1dDbFRvZzFjcjVmR1JKMTVuT3VkUkYwK090Vjg2bGNwWjZlbDdCOUFOMUh2cEdjOXdKRDFYcG4xZSsvdTFjWlA3VlRUT0R6OFQ2SHhvTk9YaGVaVFIxTGVpU2FNYjlxc3NLKy9YVHo4SDZwcXB0TkZUTXU0aDlxbGFDYmVWY2xYNStPSXc0MTBUakpYcFhxWFkxL0NyUDhmM1F2S09Od3pUdFhiRVNvMnB3VlFiMWN3aFVZSjZCblRjZHN4MmNyQ01zaVhTL1ZkYXRES01US0Q4ZmZ0QlNNSlRXNjlkNTQzejczZzV2YnJ1YVZjRUd2bzcxWDFEaGpMN2ZFQmkyaUI1NEZDcUsrMTRadllUSk1xaEpMZTEzUG5wSkZnSWFmRFNJV1BNanF5TEoraTlMd2pBa1JpOVpHaHB0RitqQ2xCSVh6d0NVMEc2UW5CTUs4am9nZzVadXlEcXd3cHplM0REYzJUU3Q4S2duRGtBM2V3ODg5cnhtSnBNeXU3L0tjSjR6clRrTmp3amQ4STREMnJaWkU1cUgya1p0dENWZHhKck44ckFNSFFKZ010V09PZjVtKzhEUWFyVllKREJpcGE2ZHpEbk5uS09IYzAxdkN5cWNwbmQzVEFlejVZZmJ3Mm1TWERNWUMzM05iYTdRT01CT3pmZEM3MkJlMDVWSVBwWHE2NXNBSHMxcnBzTko1WXVDeW1CUUdIeXhnbXJnWnNOcldoUklESzdaZ2hNM1RBRVY1aFdRVFcxd1pLVHZOZU9ja2FVTHA3RURYT1pkVno3clI5Y1F6dTBuVC9ReDMwODVLZkZiM24zaDV5VFYwQnM3blorRHZ3MGNibi9NZHQxZjdBNkhlQnlNeklMQmh3K3EyODZYdnJmM25oRTM5ZmFmVWFaOHd5U2xUazdFZ3J2RjR3YWFrMWV1eVl6T2FHMUdWTnloOXhuTTBlZzRxTXovMUdhTWNHWnV2OEZ3N2VmUVhTSFNWbmc2MENWdXRBY0V0TkRsalhMeVJ5ODRFWm9zcUtENjk2QVh2WE45ZjI4dW9XTkdtZzJ1WWF5Z3I1eVh3QVZHazdLMTA4NHZ2MmJwVG1QcGJ6cm1YL2RQOEp6Q0F4K3kzYko5T3RZVDIzamR1OEJUTzl1ZnlGTUhiL0RVLzNMR3V3RTBTWXpkSjBsazM2TklJR0lOWjRBU0YrSDlXV0NxMW9XMkZJWGJRcWFHSm4zUThpSXNkdkFScnJ2dnl5M3VIY3lyY0NlNzcvL2hyVGlOQkZsU1RLTStYc21BS0ZESXlrWFpQdVMxMHNjeVAxYVVMVEIwSGtCdjJzUUdtWVNlSWpaTzIxV3lQc1lUamRPN2JkQVk1MjlWZkp3UlRZNmhiNEUrOTVVZnlsdk5wUGtUUmRmK1BUQmEvSmJhQUE0cVlRN1BQa25obS9qclQvNW9EbWpZN2ZQUS9nNkM5MzU3WkE4VlF4TU56RXpuQ3dHSENSQm4vSDI0WkhQSDQxdkZYR2lNQVMyUHRkUUU1Y2FwNUlpMGFmVHpmd0ZhTkZMai9SUUFBQT09In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["house"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["start.of.reign"],"name":[3],"type":["int"],"align":["right"]},{"label":["end.of.reign"],"name":[4],"type":["int"],"align":["right"]},{"label":["domain"],"name":[5],"type":["fctr"],"align":["left"]}],"data":[{"1":"Wehha","2":"Wuffingas","3":"NA","4":"571","5":"East Anglia","_rn_":"1"},{"1":"Wuffa","2":"Wuffingas","3":"571","4":"578","5":"East Anglia","_rn_":"2"},{"1":"Tytila","2":"Wuffingas","3":"578","4":"616","5":"East Anglia","_rn_":"3"},{"1":"Rædwald","2":"Wuffingas","3":"616","4":"627","5":"East Anglia","_rn_":"4"},{"1":"Eorpwald","2":"Wuffingas","3":"627","4":"627","5":"East Anglia","_rn_":"5"},{"1":"Ricberht","2":"Wuffingas","3":"627","4":"630","5":"East Anglia","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
@@ -361,92 +429,628 @@ head(english_monarchs)</code></pre>
 <pre class="r"><code>library(stringr)
 english_monarchs$domain</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuICBbNV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuICBbOV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFsxM10gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFsxN10gRWFzdCBBbmdsaWEsIE1lcmNpYSAgICAgICBFYXN0IEFuZ2xpYSwgS2VudCwgTWVyY2lhIEVhc3QgQW5nbGlhLCBLZW50LCBNZXJjaWEgRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYVxuIFsyMV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSwgS2VudCwgTWVyY2lhIEVhc3QgQW5nbGlhLCBLZW50LCBNZXJjaWEgRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYVxuIFsyNV0gRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYSBFYXN0IEFuZ2xpYSwgTWVyY2lhICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFsyOV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFszM10gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFszN10gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs0MV0gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs0NV0gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs0OV0gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs1M10gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs1N10gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs2MV0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs2NV0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs2OV0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs3M10gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs3N10gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs4MV0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50LCBXZXNzZXggICAgICAgICAgICAgIEtlbnQsIE1lcmNpYSwgV2Vzc2V4ICAgICAgS2VudCwgV2Vzc2V4ICAgICAgICAgICAgIFxuIFs4NV0gS2VudCwgV2Vzc2V4ICAgICAgICAgICAgICBLZW50LCBXZXNzZXggICAgICAgICAgICAgIEtlbnQsIFdlc3NleCAgICAgICAgICAgICAgS2VudCwgV2Vzc2V4ICAgICAgICAgICAgIFxuIFs4OV0gS2VudCwgV2Vzc2V4ICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuIFs5M10gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSwgTm9ydGh1bWJyaWEgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuIFs5N10gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzEwMV0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzEwNV0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzEwOV0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzExM10gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgQmVybmljaWEgICAgICAgICAgICAgICAgIFxuWzExN10gQmVybmljaWEgICAgICAgICAgICAgICAgICBCZXJuaWNpYSAgICAgICAgICAgICAgICAgIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgQmVybmljaWEgICAgICAgICAgICAgICAgIFxuWzEyMV0gQmVybmljaWEgICAgICAgICAgICAgICAgICBCZXJuaWNpYSAgICAgICAgICAgICAgICAgIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgQmVybmljaWEgICAgICAgICAgICAgICAgIFxuWzEyNV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzEyOV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBCZXJuaWNpYSAgICAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzEzM10gRGVpcmEgICAgICAgICAgICAgICAgICAgICBEZWlyYSAgICAgICAgICAgICAgICAgICAgIERlaXJhICAgICAgICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzEzN10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBEZWlyYSAgICAgICAgICAgICAgICAgICAgIERlaXJhICAgICAgICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE0MV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE0NV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE0OV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE1M10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE1N10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE2MV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE2NV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE2OV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE3M10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE3N10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE4MV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE4NV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzE4OV0gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzE5M10gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzE5N10gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIwMV0gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIwNV0gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIwOV0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIxM10gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIxN10gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIyMV0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIyNV0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIyOV0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIzM10gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzIzN10gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI0MV0gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI0NV0gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI0OV0gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI1M10gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI1N10gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICBcbjE1IExldmVsczogQmVybmljaWEgRGVpcmEgRWFzdCBBbmdsaWEgRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYSBFYXN0IEFuZ2xpYSwgTWVyY2lhIEVuZ2xhbmQgRXNzZXggLi4uIFdlc3NleFxuIn0= -->
-<pre><code>  [1] East Anglia               East Anglia               East Anglia               East Anglia              
-  [5] East Anglia               East Anglia               East Anglia               East Anglia              
-  [9] East Anglia               East Anglia               East Anglia               East Anglia              
- [13] East Anglia               East Anglia               East Anglia               East Anglia              
- [17] East Anglia, Mercia       East Anglia, Kent, Mercia East Anglia, Kent, Mercia East Anglia, Kent, Mercia
- [21] East Anglia               East Anglia, Kent, Mercia East Anglia, Kent, Mercia East Anglia, Kent, Mercia
- [25] East Anglia, Kent, Mercia East Anglia, Mercia       East Anglia               East Anglia              
- [29] East Anglia               East Anglia               East Anglia               East Anglia              
- [33] East Anglia               East Anglia               East Anglia               East Anglia              
- [37] Essex                     Essex                     Essex                     Essex                    
- [41] Essex                     Essex                     Essex                     Essex                    
- [45] Essex                     Essex                     Essex                     Essex                    
- [49] Essex                     Essex                     Essex                     Essex                    
- [53] Essex                     Essex                     Kent                      Kent                     
- [57] Kent                      Kent                      Kent                      Kent                     
- [61] Kent                      Kent                      Kent                      Kent                     
- [65] Kent                      Kent                      Kent                      Kent                     
- [69] Kent                      Kent                      Kent                      Kent                     
- [73] Kent                      Kent                      Kent                      Kent                     
- [77] Kent                      Kent                      Kent                      Kent                     
- [81] Kent                      Kent, Wessex              Kent, Mercia, Wessex      Kent, Wessex             
- [85] Kent, Wessex              Kent, Wessex              Kent, Wessex              Kent, Wessex             
- [89] Kent, Wessex              Mercia                    Mercia                    Mercia                   
- [93] Mercia                    Mercia                    Mercia, Northumbria       Mercia                   
- [97] Mercia                    Mercia                    Mercia                    Mercia                   
-[101] Mercia                    Mercia                    Mercia                    Mercia                   
-[105] Mercia                    Mercia                    Mercia                    Mercia                   
-[109] Mercia                    Mercia                    Mercia                    Mercia                   
-[113] Mercia                    Mercia                    Mercia                    Bernicia                 
-[117] Bernicia                  Bernicia                  Bernicia                  Bernicia                 
-[121] Bernicia                  Bernicia                  Bernicia                  Bernicia                 
-[125] Northumbria               Northumbria               Bernicia                  Northumbria              
-[129] Northumbria               Bernicia                  Northumbria               Northumbria              
-[133] Deira                     Deira                     Deira                     Northumbria              
-[137] Northumbria               Deira                     Deira                     Northumbria              
-[141] Northumbria               Northumbria               Northumbria               Northumbria              
-[145] Northumbria               Northumbria               Northumbria               Northumbria              
-[149] Northumbria               Northumbria               Northumbria               Northumbria              
-[153] Northumbria               Northumbria               Northumbria               Northumbria              
-[157] Northumbria               Northumbria               Northumbria               Northumbria              
-[161] Northumbria               Northumbria               Northumbria               Northumbria              
-[165] Northumbria               Northumbria               Northumbria               Northumbria              
-[169] Northumbria               Northumbria               Northumbria               Northumbria              
-[173] Northumbria               Northumbria               Northumbria               Northumbria              
-[177] Northumbria               Northumbria               Northumbria               Northumbria              
-[181] Northumbria               Northumbria               Northumbria               Northumbria              
-[185] Northumbria               Sussex                    Sussex                    Sussex                   
-[189] Sussex                    Sussex                    Sussex                    Sussex                   
-[193] Sussex                    Sussex                    Sussex                    Sussex                   
-[197] Sussex                    Sussex                    Sussex                    Sussex                   
-[201] Sussex                    Sussex                    Sussex                    Sussex                   
-[205] Sussex                    Sussex                    Sussex                    Wessex                   
-[209] Wessex                    Wessex                    Wessex                    Wessex                   
-[213] Wessex                    Wessex                    Wessex                    Wessex                   
-[217] Wessex                    Wessex                    Wessex                    Wessex                   
-[221] Wessex                    Wessex                    Wessex                    Wessex                   
-[225] Wessex                    Wessex                    Wessex                    Wessex                   
-[229] Wessex                    Wessex                    Wessex                    Wessex                   
-[233] Wessex                    Wessex                    Wessex                    England                  
-[237] England                   England                   England                   England                  
-[241] England                   England                   England                   England                  
-[245] England                   England                   England                   England                  
-[249] England                   England                   England                   England                  
-[253] England                   England                   England                   England                  
-[257] England                   England                   England                  
-15 Levels: Bernicia Deira East Anglia East Anglia, Kent, Mercia East Anglia, Mercia England Essex ... Wessex</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICBcbiAgWzRdIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgXG4gIFs3XSBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFsxMF0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICBcbiBbMTNdIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgXG4gWzE2XSBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhLCBNZXJjaWEgICAgICAgRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYVxuIFsxOV0gRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYSBFYXN0IEFuZ2xpYSwgS2VudCwgTWVyY2lhIEVhc3QgQW5nbGlhICAgICAgICAgICAgICBcbiBbMjJdIEVhc3QgQW5nbGlhLCBLZW50LCBNZXJjaWEgRWFzdCBBbmdsaWEsIEtlbnQsIE1lcmNpYSBFYXN0IEFuZ2xpYSwgS2VudCwgTWVyY2lhXG4gWzI1XSBFYXN0IEFuZ2xpYSwgS2VudCwgTWVyY2lhIEVhc3QgQW5nbGlhLCBNZXJjaWEgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFsyOF0gRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICBcbiBbMzFdIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgICBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgXG4gWzM0XSBFYXN0IEFuZ2xpYSAgICAgICAgICAgICAgIEVhc3QgQW5nbGlhICAgICAgICAgICAgICAgRWFzdCBBbmdsaWEgICAgICAgICAgICAgIFxuIFszN10gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICBcbiBbNDBdIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgXG4gWzQzXSBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs0Nl0gRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICBcbiBbNDldIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgICBFc3NleCAgICAgICAgICAgICAgICAgICAgXG4gWzUyXSBFc3NleCAgICAgICAgICAgICAgICAgICAgIEVzc2V4ICAgICAgICAgICAgICAgICAgICAgRXNzZXggICAgICAgICAgICAgICAgICAgIFxuIFs1NV0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICBcbiBbNThdIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgXG4gWzYxXSBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs2NF0gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICBcbiBbNjddIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgXG4gWzcwXSBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs3M10gS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICBcbiBbNzZdIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgICBLZW50ICAgICAgICAgICAgICAgICAgICAgXG4gWzc5XSBLZW50ICAgICAgICAgICAgICAgICAgICAgIEtlbnQgICAgICAgICAgICAgICAgICAgICAgS2VudCAgICAgICAgICAgICAgICAgICAgIFxuIFs4Ml0gS2VudCwgV2Vzc2V4ICAgICAgICAgICAgICBLZW50LCBNZXJjaWEsIFdlc3NleCAgICAgIEtlbnQsIFdlc3NleCAgICAgICAgICAgICBcbiBbODVdIEtlbnQsIFdlc3NleCAgICAgICAgICAgICAgS2VudCwgV2Vzc2V4ICAgICAgICAgICAgICBLZW50LCBXZXNzZXggICAgICAgICAgICAgXG4gWzg4XSBLZW50LCBXZXNzZXggICAgICAgICAgICAgIEtlbnQsIFdlc3NleCAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuIFs5MV0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICBcbiBbOTRdIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhLCBOb3J0aHVtYnJpYSAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgXG4gWzk3XSBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzEwMF0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICBcblsxMDNdIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgXG5bMTA2XSBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgIFxuWzEwOV0gTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgIE1lcmNpYSAgICAgICAgICAgICAgICAgICBcblsxMTJdIE1lcmNpYSAgICAgICAgICAgICAgICAgICAgTWVyY2lhICAgICAgICAgICAgICAgICAgICBNZXJjaWEgICAgICAgICAgICAgICAgICAgXG5bMTE1XSBNZXJjaWEgICAgICAgICAgICAgICAgICAgIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgQmVybmljaWEgICAgICAgICAgICAgICAgIFxuWzExOF0gQmVybmljaWEgICAgICAgICAgICAgICAgICBCZXJuaWNpYSAgICAgICAgICAgICAgICAgIEJlcm5pY2lhICAgICAgICAgICAgICAgICBcblsxMjFdIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgQmVybmljaWEgICAgICAgICAgICAgICAgICBCZXJuaWNpYSAgICAgICAgICAgICAgICAgXG5bMTI0XSBCZXJuaWNpYSAgICAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzEyN10gQmVybmljaWEgICAgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxMzBdIEJlcm5pY2lhICAgICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTMzXSBEZWlyYSAgICAgICAgICAgICAgICAgICAgIERlaXJhICAgICAgICAgICAgICAgICAgICAgRGVpcmEgICAgICAgICAgICAgICAgICAgIFxuWzEzNl0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIERlaXJhICAgICAgICAgICAgICAgICAgICBcblsxMzldIERlaXJhICAgICAgICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTQyXSBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE0NV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxNDhdIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTUxXSBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE1NF0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxNTddIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTYwXSBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE2M10gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxNjZdIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTY5XSBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE3Ml0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxNzVdIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgXG5bMTc4XSBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgIFxuWzE4MV0gTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBOb3J0aHVtYnJpYSAgICAgICAgICAgICAgIE5vcnRodW1icmlhICAgICAgICAgICAgICBcblsxODRdIE5vcnRodW1icmlhICAgICAgICAgICAgICAgTm9ydGh1bWJyaWEgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgXG5bMTg3XSBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzE5MF0gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICBcblsxOTNdIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgXG5bMTk2XSBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzE5OV0gU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICBcblsyMDJdIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgICBTdXNzZXggICAgICAgICAgICAgICAgICAgXG5bMjA1XSBTdXNzZXggICAgICAgICAgICAgICAgICAgIFN1c3NleCAgICAgICAgICAgICAgICAgICAgU3Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIwOF0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICBcblsyMTFdIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgXG5bMjE0XSBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIxN10gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICBcblsyMjBdIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgXG5bMjIzXSBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIyNl0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICBcblsyMjldIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBXZXNzZXggICAgICAgICAgICAgICAgICAgXG5bMjMyXSBXZXNzZXggICAgICAgICAgICAgICAgICAgIFdlc3NleCAgICAgICAgICAgICAgICAgICAgV2Vzc2V4ICAgICAgICAgICAgICAgICAgIFxuWzIzNV0gV2Vzc2V4ICAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICBcblsyMzhdIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgXG5bMjQxXSBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI0NF0gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICBcblsyNDddIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgXG5bMjUwXSBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgIFxuWzI1M10gRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgIEVuZ2xhbmQgICAgICAgICAgICAgICAgICBcblsyNTZdIEVuZ2xhbmQgICAgICAgICAgICAgICAgICAgRW5nbGFuZCAgICAgICAgICAgICAgICAgICBFbmdsYW5kICAgICAgICAgICAgICAgICAgXG5bMjU5XSBFbmdsYW5kICAgICAgICAgICAgICAgICAgXG4xNSBMZXZlbHM6IEJlcm5pY2lhIERlaXJhIEVhc3QgQW5nbGlhIEVhc3QgQW5nbGlhLCBLZW50LCBNZXJjaWEgLi4uIFdlc3NleFxuIn0= -->
+<pre><code>  [1] East Anglia               East Anglia               East Anglia              
+  [4] East Anglia               East Anglia               East Anglia              
+  [7] East Anglia               East Anglia               East Anglia              
+ [10] East Anglia               East Anglia               East Anglia              
+ [13] East Anglia               East Anglia               East Anglia              
+ [16] East Anglia               East Anglia, Mercia       East Anglia, Kent, Mercia
+ [19] East Anglia, Kent, Mercia East Anglia, Kent, Mercia East Anglia              
+ [22] East Anglia, Kent, Mercia East Anglia, Kent, Mercia East Anglia, Kent, Mercia
+ [25] East Anglia, Kent, Mercia East Anglia, Mercia       East Anglia              
+ [28] East Anglia               East Anglia               East Anglia              
+ [31] East Anglia               East Anglia               East Anglia              
+ [34] East Anglia               East Anglia               East Anglia              
+ [37] Essex                     Essex                     Essex                    
+ [40] Essex                     Essex                     Essex                    
+ [43] Essex                     Essex                     Essex                    
+ [46] Essex                     Essex                     Essex                    
+ [49] Essex                     Essex                     Essex                    
+ [52] Essex                     Essex                     Essex                    
+ [55] Kent                      Kent                      Kent                     
+ [58] Kent                      Kent                      Kent                     
+ [61] Kent                      Kent                      Kent                     
+ [64] Kent                      Kent                      Kent                     
+ [67] Kent                      Kent                      Kent                     
+ [70] Kent                      Kent                      Kent                     
+ [73] Kent                      Kent                      Kent                     
+ [76] Kent                      Kent                      Kent                     
+ [79] Kent                      Kent                      Kent                     
+ [82] Kent, Wessex              Kent, Mercia, Wessex      Kent, Wessex             
+ [85] Kent, Wessex              Kent, Wessex              Kent, Wessex             
+ [88] Kent, Wessex              Kent, Wessex              Mercia                   
+ [91] Mercia                    Mercia                    Mercia                   
+ [94] Mercia                    Mercia, Northumbria       Mercia                   
+ [97] Mercia                    Mercia                    Mercia                   
+[100] Mercia                    Mercia                    Mercia                   
+[103] Mercia                    Mercia                    Mercia                   
+[106] Mercia                    Mercia                    Mercia                   
+[109] Mercia                    Mercia                    Mercia                   
+[112] Mercia                    Mercia                    Mercia                   
+[115] Mercia                    Bernicia                  Bernicia                 
+[118] Bernicia                  Bernicia                  Bernicia                 
+[121] Bernicia                  Bernicia                  Bernicia                 
+[124] Bernicia                  Northumbria               Northumbria              
+[127] Bernicia                  Northumbria               Northumbria              
+[130] Bernicia                  Northumbria               Northumbria              
+[133] Deira                     Deira                     Deira                    
+[136] Northumbria               Northumbria               Deira                    
+[139] Deira                     Northumbria               Northumbria              
+[142] Northumbria               Northumbria               Northumbria              
+[145] Northumbria               Northumbria               Northumbria              
+[148] Northumbria               Northumbria               Northumbria              
+[151] Northumbria               Northumbria               Northumbria              
+[154] Northumbria               Northumbria               Northumbria              
+[157] Northumbria               Northumbria               Northumbria              
+[160] Northumbria               Northumbria               Northumbria              
+[163] Northumbria               Northumbria               Northumbria              
+[166] Northumbria               Northumbria               Northumbria              
+[169] Northumbria               Northumbria               Northumbria              
+[172] Northumbria               Northumbria               Northumbria              
+[175] Northumbria               Northumbria               Northumbria              
+[178] Northumbria               Northumbria               Northumbria              
+[181] Northumbria               Northumbria               Northumbria              
+[184] Northumbria               Northumbria               Sussex                   
+[187] Sussex                    Sussex                    Sussex                   
+[190] Sussex                    Sussex                    Sussex                   
+[193] Sussex                    Sussex                    Sussex                   
+[196] Sussex                    Sussex                    Sussex                   
+[199] Sussex                    Sussex                    Sussex                   
+[202] Sussex                    Sussex                    Sussex                   
+[205] Sussex                    Sussex                    Sussex                   
+[208] Wessex                    Wessex                    Wessex                   
+[211] Wessex                    Wessex                    Wessex                   
+[214] Wessex                    Wessex                    Wessex                   
+[217] Wessex                    Wessex                    Wessex                   
+[220] Wessex                    Wessex                    Wessex                   
+[223] Wessex                    Wessex                    Wessex                   
+[226] Wessex                    Wessex                    Wessex                   
+[229] Wessex                    Wessex                    Wessex                   
+[232] Wessex                    Wessex                    Wessex                   
+[235] Wessex                    England                   England                  
+[238] England                   England                   England                  
+[241] England                   England                   England                  
+[244] England                   England                   England                  
+[247] England                   England                   England                  
+[250] England                   England                   England                  
+[253] England                   England                   England                  
+[256] England                   England                   England                  
+[259] England                  
+15 Levels: Bernicia Deira East Anglia East Anglia, Kent, Mercia ... Wessex</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlwbGVfa2luZ2RvbXMgPC0gc3RyX2RldGVjdChlbmdsaXNoX21vbmFyY2hzJGRvbWFpbiwgZml4ZWQoXCIsXCIpKVxuZW5nbGlzaF9tb25hcmNoc1ttdWx0aXBsZV9raW5nZG9tcywgYyhcIm5hbWVcIiwgXCJkb21haW5cIildXG5gYGAifQ== -->
 <pre class="r"><code>multiple_kingdoms &lt;- str_detect(english_monarchs$domain, fixed(&quot;,&quot;))
 english_monarchs[multiple_kingdoms, c(&quot;name&quot;, &quot;domain&quot;)]</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MTh9LCJyZGYiOiJINHNJQUFBQUFBQUFCbjFZUzI4Yk54QldiT3RoNWVIWVRwb1hrR3lCdGtCYnhZZWloMTRkUmJHTnhIRmdwWFY2S3VoZFNrdUVJZzN1YmphNjlaUmIvMERiU3k2NUZjaTV4K29uOVAra0hlNXl5Rm5ieVdHME85OE15ZUZ3T0RPcnc0Y3Z2dXUvNkxkYXJhWFdjaHQrbCtGMVpRbCtMclJXV3F2MiticlZXdDZzRkZyTGwrRzVBZlM3b3orQUJOQVRvSDMzSEFIOUFKUVEraGJvYTZCdmdEcEE5NERlblZxb0kva3JMak40dXdyMHIwTlh0cE9FdFZxLzJ2ZUxpemVMOTF3ZTg5VGtEcnFNa0VuemFNK0JkeHJnWHNSVUVvMllTY3BDVHB6S1YwMlZRYlI0SXlkR3hFNDNhVTY0MXRSR3VGL0RXYzVVRXltWlRKbzJsNXpKMUVHcmRxMkpYTHhEblo0Rm1tTnFQdkpMZllIUUFLeVQxVTRHMFVFbVdXM3hRVFlyRkE0ZmZGUjM0QlRkR0xMazdURG1JN05XVnNNMlROTnFvYmpqdjZ6NHVWS0RhTXhqRGVPZnNHUWU2VW1VcHp6YTV5WVdUR1ZPdVEzS2tsR0drMmtsdHp1dkE2QzN6Yk9ZTEFQeUJnOHVoL25sY2RqTEZZZTQwenFsWnpqR3p1YzFVcDNFNEZQR1huU0tSdVJwRTBxSlAvb0lHZDVVTWp6eGtYU0pRSWhkRDVoZC9FZGxPTmppaFBlOEVFelVKdm1JaWF0T1RjUk5hMGhzdXFYcnVBcUI3YkY5TFdYVDhQTHM3a290VHlQaFV0ME5TQlUvNTkrYU8rZHFXVU1qUFBQVmJSbW50YnN4Q0dSQythdmJjQnJPWHp2Z3JoeHp5TFpNQWNmZGJjOGtXL3gxSEEwTFpoWnYwUkdiQ004Z3puZjB4RENSK1BFcVNRdmxjNDlTekwxM0g0Q1A3TlRPd2dkY3c3YXN2MnVnWHdPVk41ek5GbEduaHFpbUFvd0l5M1VmRkdaSzlJZU1KM0F5RWsxb0QrRThKQ29EVTBxQll6dERyaVpGaGpNRGwxZDN4Q3VyMGlhZ21yM20yTXI5WTg1ZUh4Y0daU3REcnNrYVdnYURlcGF0Y2dibHczNHVJaDh1TDVobEV1K2o5bEJrR2ZNTHFTTDNNMmxPWitvQ3I4STU5b2IvL0tsSW5GMUh2dHJBY0s0NHhOUE1DYnZEWXZFK0dBMXNudEk5bENLdXRKR0gwVk1oTThvVFN6ckFoMFB1MnNwQUhJQ0Z3dkdrY096WjNLdDhyaDJMS1E5R2RFRHZGTmRZZ3ZqWUNrc3hwY0pnWE4reHdkL2RVU05LZTVqL0NaOVdPZDN6aWw0cldFMDFScHZtNkhoS2ErOE41TjAxOXRrQXJVTXgzdnlOZ0VCVmZtWVc3MVJEdHk2NUxwZ0Nza2ZXYjFvYlQ2bmo0aWtwYUp1alpNcE1sU0JxeTRSQ0wyNEUwVFBPWWo0cHBKOHhhWGluNHJ4SmE4Z2JyVEtSNE9XNk5vSURNM1V1R21vMTRWbW1EZVlwSWh2SmhDTytUdkI5WnZJNUN0b2dDSmQ2cE5Pd3dmWkluNXd3N3g1dFlxNW85TjBpVU4zR2FEUGpOQUU1d00vWUErQ0VCTnZLS01pV1IvNm05aDlacHhjMEtuY2tzN2E0MnJOamI1d0d3cVBZc1hldXdEdldkMnlvZUp1N2k3ZHlra0RHciswc3d3Vzh1c3NNMUJqSXk5WVJtVVpmckRrY0hueWlOVzY2RDN5ZXNwamtrbDNPcUZ0dUlsK3ZGU0lRamQzbGFpcXluTEJtN3MrODUxaGZtWGFsenRPcXhydFQyZFhHZStyR2JnSGREK1I1cUJ2VmN0dVNtdExlTFVMK1c5NUx3cXZ2WmpxUDFlTHZIQjNaZVZJa1BQWWxhSi9sUW9aUit3WFc2eHRQd2ZzMnE1MHFxSGp2R3VJSFpxN0V1WktETFBRUDZ3M0pFY3R4RXlzSGNlNXorTUZrZ3UvcjloMTlUSy9weW9ISU1LbzZCeG5KbjEzZ2lIczZydC8wd3JweGNnZmhXT1RidGJGK0pJMU80RUovZUxmbW9Da3RGKzhtMWVHNzk3cDU4OU9Wb2lBVGhEeldmc2FWZC9xVmlzR3dSWFF0b0pCUi9QZEs3eEE2UzVLVGFqN012SG5JcGdvS2ZLTVJjZTVIVWNHaXhXOHpKakFrZW9jaXBrNWJCVDYxcWNUSE13QVpsQnRreDR5RGZrNVlVdEl0V3hJdmpQbnhzY0NaYmRHaVMxM3pBQjV6T0lHTklLdDZNcTJUczZPczVJbkljOG5wRXZRWVB2TkFYVFpMeGlmVTJrWVpyVmtmc1hheUNVMUQ2d0RZbStyYW5MQ3pLeURJelh3NmphREZpbjA1R1V1ZStJUHVqbk4ra25MbExYMzFTdVNrdDd4M2ZqZ05vaU1CYldISXVkVVdxZ053WGZPWjBGc2JsM3l1b2tmYXZEd21jRzljaXB4MktzOVRya21qMEhrK2gyemdlOE1qbnFiSWRJN0VWRExmVEFGSDd4V3dWVzd3Yk1QZUl5R2xZRE1mVG4wUCtKdDNWSVJiM3p1Q2NLNC9lUm9mOCsxWXNneS81ZjBYL29URk9kVEdWdXNEK1MraGJYUEVKOGpLN1I4VXErNTVIbDJxbDEvNno2MjRodVpCaTYwRWZDaWhXUSs1TUtHR3NpeVB0dFZVZXZrdEFnMml4OUJGRDl5WEZsN1poa0pEMUIwQnlyeWYyNk1zNDY4eEI5cXA4RUxRYVNGZU9ORzdWTXNhV0tkcEFJNTdxcUh3RmJOajQwVVh6MEtkY1VGbmN2Tld2bHBHWDUxN09zM0RWR3pHOFRDWGNFc1d4S0dKaGhTbFRnMWJOYnJjd3FGNDJ1dnVhZjlSdW1adnZDMWZRRGV0OTRGdUF4MENqWUdlQS8wSTlCUFFFZEFMb0orQmZ2bklEdm9KeTlrV3BGRXc3T3d1dXZva0Y5cCtNUzl0dXJDaWd5K1lVOEJhb2F6eHlmMFlQdEZlM3YvZWhkb0ZSNWZkYzRPOEw5VkxycUJoYmZTUGJUSDgxMWhiUWtPQ0xlY1ZjRkxsbzYwVEkzeU05QUhOdG5LZE05VHJ4MW9pVXUydDllRi9SaUxsVTd3VEFBQT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MTh9LCJyZGYiOiJINHNJQUFBQUFBQUFBMzFZUzNNVU54QmViTy9EeThQWWh2Q3Fna2xWa3Fva2l3ODVjVFhMWXJ2QW1QS1NtSnhTOG94MlI0VldjbWxtR1BhV0U3ZjhnU1FYTHR4U3hUbkg3RS9JL3lGcHphaWxIdHR3NkozcHIxdFNxOVhxN3RuRFJ5OS82TC9zdDFxdHBkYnk4bEpyYVJsZVY1Ymc1MEpycGJWcW4yOWFyZVhOU3FHMWZCbWVHMEMvTy9vRFNBQTlCZHAzenhIUUE2Q0UwUGRBM3dKOUI5UUJ1Z2YwL3RSQ0hjbGZjNW5CMjFXZ2Z4MjZzcDBrck5YNjFiNWZYTHhkZk9EeW1LY21kOUJsaEV5YVIzc092Tk1BOXlLbWttakVURklXY3VKVXZtbXFES0xGV3preEluYTZTWFBDdGFZMnd2MGF6bkttbWtqSlpOSzB1ZVJNcGc1YXRXdE41T0k5NnZRczBCeFQ4NUZmNml1RUJtQ2RySFl5aUE0eXlXcUxEN0pab1hENDRKTzZBNmZveHBBbGI0Y3huNWkxc2hxMllacFdDOFVkLzNYRno1VWFSR01lYXhqL2xDWHpTRStpUE9YUlBqZXhZQ3B6eW0xUWxvd3luRXdydWQxNUhRQzliWjdGWkJtUU4zaHdPY3d2ajhOZXJqakVuZFlwUGNNeGRyNnNrZW9rQnA4ejlxSlROQ0pQbTFCSy9ORkh5UENta3VHSmo2UkxCRUxzZXNEczRqOHF3OEVXSjd6bmhXQ2lOc2tuVEZ4MWFpSnVXa05pMHkxZHgxVUliSS90YXltYmhwZG5kMWRxZVJvSmwrcHVRS3I0T2YvVzNEbFh5eG9hNFptdmJzczRyZDJOUVNBVHlsL2RodE53L3RvQmQrV1lRN1psQ2pqdWJuc20yZUt2NDJoWU1MTjRoNDdZUkhnR2NiNmpKNGFKeEk5WFNWb29uM3VVWXU2OSt4QjhaS2QyRmo3a0dyWmwvVjBEL1Jxb3ZPRnN0b2c2TlVRMUZXQkVXSzc3c0RCVG9qOWtQSUdUa1doQ2V3am5JVkVabUZJS0hOc1pjalVwTXB3WnVMeTZJMTVabFRZQjFldzF4MWJ1SDNQMjVyZ3dLRnNaY2szVzBESVkxTE5zbFRNb0gvWnpFZmx3ZWNFc2szZ2Z0WWNpeTVoZlNCVzVuMGx6T2xNWGVCWE9zVGY4NTA5RjR1dzY4dFVHaG5QRklaNW1UdGdkRm9zUHdXaGc4NVR1b1JSeHBZMDhqSjRLbVZHZVdOSUJQaHh5MTFZRzRnQXNGSTRuaFdQUDVsN2xjKzFZVEhrd29nTjZwN2pHRXNUSFZsaUtLUlVHNC9xT0RmN3VqaHBSMnNQOFQvaTB5dW1lVi9SYXdXcXFNZG8wUjhkVFdudHZJTyt1c2M4R2FCMks4ZVp2QkFTcThuT3plSzhhdW5YSmRjRVVrRDJ5ZnRQYWVFb2RGMDlKUWRzY0pWTm1xZ1JSV3lZVWVuRWppSjV6RnZOSklmMk1TY003RmVkTldrUGVhSldKQkMvWHRSRWNtS2x6MFZDckNjOHliVEJQRWRsSUpoenhkWUx2TTVQUFVkQUdRYmpVSTUyR0RiWkgrdVNFZWZkb0UzTkZvKzhXZ2VvMlJwc1pwd25JQVg3R0hnQW5KTmhXUmtHMlBQSTN0Zi9ZT3IyZ1Via2ptYlhGMVo0ZGUrTTBFQjdGanIxekJkNnh2bU5EeGR2Y1hieVRrd1F5Zm0xbkdTN2cxVjFtb01aQVhyYU95RFQ2WXMzaDhPQVRyWEhUZmVEemxNVWtsK3h5UnQxeUUvbDZyUkNCYU93dVYxT1I1WVExYzMvbVBjZjZ5clFyZFo1V05kNmR5cTQyM2xNM2Rndm9maURQUTkyb2x0dVcxSlQyYmhIeTMvSmVFbDU5TjlONW9oWi81K2pJenRNaTRiRXZRZnNzRnpLTTJpK3dYdDk0QnQ2M1dlMVVRY1Y3MXhBL05ITWx6cFVjWktGL1dHOUlqbGlPbTFnNWlIT2Z3dzhtRTN4ZnQrL29ZM3BOVnc1RWhsSFZPY2hJL3V3Q1I5elRjZjJtRjlhTmt6c0l4eUxmcm8zMUkybDBBaGY2dzdzMUIwMXB1WGcvcVE3ZnZkZk5tNSt1RkFXWklPU3g5bk91dk5PdlZBeUdMYUpyQVlXTTRyOVhlb2ZRV1pLY1ZQTmg1czFETmxWUTRCdU5pSE0vaWdvV0xYNmJNWUVoMFRzVU1YWGFLdkNwVFNVK25nSElvTndnTzJZYzlIUENrcEp1MlpKNFljeVBqd1hPYklzV1hlcWFCL0NZd3dsc0JGblZrMm1kbkIxbEpVOUZua3RPbDZESDhJVUg2ckpaTWo2aDFqYkthTTM2aUxXVFRXZ2FXZ2ZBM2xUWDVvU2RYUUZCYnViVGFRUXRWdXpMeVZqeXhCOTBkNXp6azVRcmIrbnIxeUludmVXOTg4TnBFQjBKYUF0RHpxMjJVQjJBNjVyUGhON2F1T1J6RlQzVzV0VXhnWHZqVXVTMFUzbVJjazBhaGM2TE9XUUQzeHNlOFRSRnBuTWtwcEw1WmdvNGVxK0FyWEtEWnh2Mkhna3BCWnY1Y09wN3dOKzhveUxjK3Q0UmhIUDl5ZFA0bUcvSGttWDRMZSsvOENjc3pxRTJ0bG9meVg4SmJac2pQa05XYnYrZ1dIWFA4K2hTdmZ6U2YyN0ZOVFFQV213bDRFTUp6WHJFaFFrMWxHVjV0SzJtMHN0dkVXZ1FQWUV1ZXVDK3RQREtOaFFhb3U0SVVPYjkzQjVsR1grRE9kQk9oUmVDVGd2eHdvbmVwVnJXd0RwTkEzRGNNdzJGcjVnZEd5KzZlQmJxakFzNms1dTM4dFV5K3VyYzAya2VwbUl6am9lNWhGdXlJQTVOTktRb2RXcllxdEhsRmc3RjAxNTNUL3VQMGpWNzQyMzVBcnBwdlE5MEcrZ1FhQXowQXVoSG9KK0Fqb0JlQXYwTTlNc25kdEJQV002MklJMkNZV2QzMGRVbnVkRDJpM2xwMDRVVkhYekJuQUxXQ21XTlQrN0g4SW4yNnY0REYyb1hIRjEyenczeXZsUXZ1WUtHdGRFL3RzWHdYMk50Q1EwSnRweFh3RW1WajdaT2pQQXgwZ2MwMjhwMXpsQ3ZIMnVKU0xXMzFzZi9BYnppcUUyOEV3QUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["domain"],"name":[2],"type":["fctr"],"align":["left"]}],"data":[{"1":"Offa","2":"East Anglia, Mercia","_rn_":"17"},{"1":"Offa","2":"East Anglia, Kent, Mercia","_rn_":"18"},{"1":"Offa and Ecgfrith","2":"East Anglia, Kent, Mercia","_rn_":"19"},{"1":"Ecgfrith","2":"East Anglia, Kent, Mercia","_rn_":"20"},{"1":"C<U+009C>nwulf","2":"East Anglia, Kent, Mercia","_rn_":"22"},{"1":"C<U+009C>nwulf and Cynehelm","2":"East Anglia, Kent, Mercia","_rn_":"23"},{"1":"C<U+009C>nwulf","2":"East Anglia, Kent, Mercia","_rn_":"24"},{"1":"Ceolwulf","2":"East Anglia, Kent, Mercia","_rn_":"25"},{"1":"Beornwulf","2":"East Anglia, Mercia","_rn_":"26"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Wessex","_rn_":"82"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Mercia, Wessex","_rn_":"83"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Wessex","_rn_":"84"},{"1":"Æthelwulf and Æðelstan I","2":"Kent, Wessex","_rn_":"85"},{"1":"Æthelwulf","2":"Kent, Wessex","_rn_":"86"},{"1":"Æthelwulf and Æðelberht III","2":"Kent, Wessex","_rn_":"87"},{"1":"Æðelberht III","2":"Kent, Wessex","_rn_":"88"},{"1":"Æthelred I","2":"Kent, Wessex","_rn_":"89"},{"1":"Oswiu","2":"Mercia, Northumbria","_rn_":"95"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[18]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["domain"],"name":[2],"type":["fctr"],"align":["left"]}],"data":[{"1":"Offa","2":"East Anglia, Mercia","_rn_":"17"},{"1":"Offa","2":"East Anglia, Kent, Mercia","_rn_":"18"},{"1":"Offa and Ecgfrith","2":"East Anglia, Kent, Mercia","_rn_":"19"},{"1":"Ecgfrith","2":"East Anglia, Kent, Mercia","_rn_":"20"},{"1":"C\\u009cnwulf","2":"East Anglia, Kent, Mercia","_rn_":"22"},{"1":"C\\u009cnwulf and Cynehelm","2":"East Anglia, Kent, Mercia","_rn_":"23"},{"1":"C\\u009cnwulf","2":"East Anglia, Kent, Mercia","_rn_":"24"},{"1":"Ceolwulf","2":"East Anglia, Kent, Mercia","_rn_":"25"},{"1":"Beornwulf","2":"East Anglia, Mercia","_rn_":"26"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Wessex","_rn_":"82"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Mercia, Wessex","_rn_":"83"},{"1":"Ecgbehrt and Æthelwulf","2":"Kent, Wessex","_rn_":"84"},{"1":"Æthelwulf and Æðelstan I","2":"Kent, Wessex","_rn_":"85"},{"1":"Æthelwulf","2":"Kent, Wessex","_rn_":"86"},{"1":"Æthelwulf and Æðelberht III","2":"Kent, Wessex","_rn_":"87"},{"1":"Æðelberht III","2":"Kent, Wessex","_rn_":"88"},{"1":"Æthelred I","2":"Kent, Wessex","_rn_":"89"},{"1":"Oswiu","2":"Mercia, Northumbria","_rn_":"95"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[18]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>This time, since we are looking for two things, it is easier to specify a regular expression rather than a fixed string. The pipe character, |, has the same meaning in regular expressions as it does in R: it means “or”.</p>
+<p>In this next example, to prevent excessive output we just return the name column and ignore missing values (with is.na):</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlwbGVfcnVsZXJzIDwtIHN0cl9kZXRlY3QoZW5nbGlzaF9tb25hcmNocyRuYW1lLCBcIix8YW5kXCIpXG5lbmdsaXNoX21vbmFyY2hzJG5hbWVbbXVsdGlwbGVfcnVsZXJzICYgIWlzLm5hKG11bHRpcGxlX3J1bGVycyldXG5gYGAifQ== -->
+<pre class="r"><code>multiple_rulers &lt;- str_detect(english_monarchs$name, &quot;,|and&quot;)
+english_monarchs$name[multiple_rulers &amp; !is.na(multiple_rulers)]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBTaWdlYmVyaHQgYW5kIEVjZ3JpYyAgICAgICAgICAgICAgICAgICAgICAgXG4gWzJdIEh1biwgQmVvbm5hIGFuZCBBbGJlcmh0ICAgICAgICAgICAgICAgICAgICBcbiBbM10gT2ZmYSBhbmQgRWNnZnJpdGggICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs0XSBDXFx1MDA5Y253dWxmIGFuZCBDeW5laGVsbSAgICAgICAgICAgICAgICAgIFxuIFs1XSBTaWdoZXJlIGFuZCBTZWJiaSAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzZdIFNpZ2VoZWFyZCBhbmQgU3dhZWZyZWQgICAgICAgICAgICAgICAgICAgICBcbiBbN10gRW9yY2VuYmVyaHQgYW5kIEVvcm1lbnJlZCAgICAgICAgICAgICAgICAgIFxuIFs4XSBPc3dpbmUsIFN3w6ZmYmVocnQsIFN3w6ZmaGVhcmQgICAgICAgICAgICAgICBcbiBbOV0gU3fDpmZiZWhydCwgU3fDpmZoZWFyZCwgV2lodHJlZCAgICAgICAgICAgICAgXG5bMTBdIMOGw7BlbGJlcmh0IElJLCDDhmxmcmljIGFuZCBFYWRiZXJodCBJICAgICAgICBcblsxMV0gw4bDsGVsYmVyaHQgSUkgYW5kIEVhcmR3dWxmICAgICAgICAgICAgICAgICAgXG5bMTJdIEVhZGJlcmh0IElJLCBFYW5tdW5kIGFuZCBTaWdlcmVkICAgICAgICAgICBcblsxM10gSGVhYmVyaHQgYW5kIEVjZ2JlaHJ0IElJICAgICAgICAgICAgICAgICAgIFxuWzE0XSBFY2diZWhydCBhbmQgw4Z0aGVsd3VsZiAgICAgICAgICAgICAgICAgICAgIFxuWzE1XSBFY2diZWhydCBhbmQgw4Z0aGVsd3VsZiAgICAgICAgICAgICAgICAgICAgIFxuWzE2XSBFY2diZWhydCBhbmQgw4Z0aGVsd3VsZiAgICAgICAgICAgICAgICAgICAgIFxuWzE3XSDDhnRoZWx3dWxmIGFuZCDDhsOwZWxzdGFuIEkgICAgICAgICAgICAgICAgICAgXG5bMThdIMOGdGhlbHd1bGYgYW5kIMOGw7BlbGJlcmh0IElJSSAgICAgICAgICAgICAgICBcblsxOV0gUGVuZGEgYW5kIEVvd2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwXSBQZW5kYSBhbmQgUGVhZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjFdIMOGdGhlbHJlZCwgTG9yZCBvZiB0aGUgTWVyY2lhbnMgICAgICAgICAgICAgXG5bMjJdIMOGdGhlbGZsw6ZkLCBMYWR5IG9mIHRoZSBNZXJjaWFucyAgICAgICAgICAgIFxuWzIzXSDDhmxmd3lubiwgU2Vjb25kIExhZHkgb2YgdGhlIE1lcmNpYW5zICAgICAgIFxuWzI0XSBIw6FsZmRhbiBhbmQgRW93aWxzICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI1XSBOb8OwaGVsbSBhbmQgV2F0dCAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI2XSBOb8OwaGVsbSBhbmQgQnJ5bmkgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI3XSBOb8OwaGVsbSBhbmQgT3NyaWMgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI4XSBOb8OwaGVsbSBhbmQgw4bDsGVsc3RhbiAgICAgICAgICAgICAgICAgICAgICAgXG5bMjldIMOGbGZ3YWxkLCBPc2xhYyBhbmQgT3NtdW5kICAgICAgICAgICAgICAgICAgXG5bMzBdIMOGbGZ3YWxkLCBFYWxkd3VsZiwgT3NsYWMgYW5kIE9zbXVuZCAgICAgICAgXG5bMzFdIMOGbGZ3YWxkLCBFYWxkd3VsZiwgT3NsYWMsIE9zbXVuZCBhbmQgT3N3YWxkXG5bMzJdIENlbndhbGggYW5kIFNlYXhidXJoICAgICAgICAgICAgICAgICAgICAgICBcbjIxMSBMZXZlbHM6IEFkZGEgw4bDsGVsYmVocnQgw4bDsGVsYmVyaHQgSSAuLi4gV3VsZmhlcmVcbiJ9 -->
+<pre><code> [1] Sigeberht and Ecgric                       
+ [2] Hun, Beonna and Alberht                    
+ [3] Offa and Ecgfrith                          
+ [4] C\u009cnwulf and Cynehelm                  
+ [5] Sighere and Sebbi                          
+ [6] Sigeheard and Swaefred                     
+ [7] Eorcenberht and Eormenred                  
+ [8] Oswine, Swæfbehrt, Swæfheard               
+ [9] Swæfbehrt, Swæfheard, Wihtred              
+[10] Æðelberht II, Ælfric and Eadberht I        
+[11] Æðelberht II and Eardwulf                  
+[12] Eadberht II, Eanmund and Sigered           
+[13] Heaberht and Ecgbehrt II                   
+[14] Ecgbehrt and Æthelwulf                     
+[15] Ecgbehrt and Æthelwulf                     
+[16] Ecgbehrt and Æthelwulf                     
+[17] Æthelwulf and Æðelstan I                   
+[18] Æthelwulf and Æðelberht III                
+[19] Penda and Eowa                             
+[20] Penda and Peada                            
+[21] Æthelred, Lord of the Mercians             
+[22] Æthelflæd, Lady of the Mercians            
+[23] Ælfwynn, Second Lady of the Mercians       
+[24] Hálfdan and Eowils                         
+[25] Noðhelm and Watt                           
+[26] Noðhelm and Bryni                          
+[27] Noðhelm and Osric                          
+[28] Noðhelm and Æðelstan                       
+[29] Ælfwald, Oslac and Osmund                  
+[30] Ælfwald, Ealdwulf, Oslac and Osmund        
+[31] Ælfwald, Ealdwulf, Oslac, Osmund and Oswald
+[32] Cenwalh and Seaxburh                       
+211 Levels: Adda Æðelbehrt Æðelberht I ... Wulfhere</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>If we wanted to split the name column into individual rulers, then we could use str_split (or strsplit from base R, which does the same thing) in much the same way. str_split accepts a vector and returns a list, since each input string can be split into a vector of possibly differing lengths.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5kaXZpZHVhbF9ydWxlcnMgPC0gc3RyX3NwbGl0KGVuZ2xpc2hfbW9uYXJjaHMkbmFtZSwgXCIsIHwgYW5kIFwiKVxuaGVhZChpbmRpdmlkdWFsX3J1bGVyc1tzYXBwbHkoaW5kaXZpZHVhbF9ydWxlcnMsIGxlbmd0aCkgPiAxXSlcbmBgYCJ9 -->
+<pre class="r"><code>individual_rulers &lt;- str_split(english_monarchs$name, &quot;, | and &quot;)
+head(individual_rulers[sapply(individual_rulers, length) &gt; 1])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSBcIlNpZ2ViZXJodFwiIFwiRWNncmljXCIgICBcblxuW1syXV1cblsxXSBcIkh1blwiICAgICBcIkJlb25uYVwiICBcIkFsYmVyaHRcIlxuXG5bWzNdXVxuWzFdIFwiT2ZmYVwiICAgICBcIkVjZ2ZyaXRoXCJcblxuW1s0XV1cblsxXSBcIkNcXHUwMDljbnd1bGZcIiBcIkN5bmVoZWxtXCIgICAgXG5cbltbNV1dXG5bMV0gXCJTaWdoZXJlXCIgXCJTZWJiaVwiICBcblxuW1s2XV1cblsxXSBcIlNpZ2VoZWFyZFwiIFwiU3dhZWZyZWRcIiBcbiJ9 -->
+<pre><code>[[1]]
+[1] &quot;Sigeberht&quot; &quot;Ecgric&quot;   
+
+[[2]]
+[1] &quot;Hun&quot;     &quot;Beonna&quot;  &quot;Alberht&quot;
+
+[[3]]
+[1] &quot;Offa&quot;     &quot;Ecgfrith&quot;
+
+[[4]]
+[1] &quot;C\u009cnwulf&quot; &quot;Cynehelm&quot;    
+
+[[5]]
+[1] &quot;Sighere&quot; &quot;Sebbi&quot;  
+
+[[6]]
+[1] &quot;Sigeheard&quot; &quot;Swaefred&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now, we can count the strings types in each list of strings by writing functions to return counts to categories.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5nbGlzaF9tb25hcmNocyRuYW1lXG5gYGAifQ== -->
+<pre class="r"><code>english_monarchs$name</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gV2VoaGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICBbMl0gV3VmZmEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICBbM10gVHl0aWxhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICBbNF0gUsOmZHdhbGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgWzVdIEVvcnB3YWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgWzZdIFJpY2Jlcmh0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgWzddIFNpZ2ViZXJodCBhbmQgRWNncmljICAgICAgICAgICAgICAgICAgICAgICBcbiAgWzhdIEVjZ3JpYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgWzldIEFubmEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMTBdIMOGdGhlbGhlcmUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzExXSDDhnRoZWx3b2xkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsxMl0gRWFsZHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsxM10gw4ZsZndhbGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMTRdIEh1biwgQmVvbm5hIGFuZCBBbGJlcmh0ICAgICAgICAgICAgICAgICAgICBcbiBbMTVdIMOGdGhlbHJlZCBJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzE2XSDDhnRoZWxiZXJodCBJSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsxN10gT2ZmYSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsxOF0gT2ZmYSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsxOV0gT2ZmYSBhbmQgRWNnZnJpdGggICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyMF0gRWNnZnJpdGggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyMV0gRWFkd2FsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyMl0gQ1xcdTAwOWNud3VsZiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMjNdIENcXHUwMDljbnd1bGYgYW5kIEN5bmVoZWxtICAgICAgICAgICAgICAgICAgXG4gWzI0XSBDXFx1MDA5Y253dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyNV0gQ2VvbHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyNl0gQmVvcm53dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyN10gw4Z0aGVsc3RhbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMjhdIMOGdGhlbHdlYXJkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzI5XSBFZG11bmQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzMwXSA8TkE+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzMxXSBPc3dhbGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzMyXSDDhnRoZWxyZWQgSUkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFszM10gR3V0aHJ1bSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFszNF0gRW9ocmljICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFszNV0gw4Z0aGVsd29sZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMzZdIEd1dGhydW0gSUkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMzddIEFlc2N3aW5lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMzhdIFNsZWRkYSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbMzldIFNhZWJlcnQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDBdIFNhZXdhcmQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDFdIFNpZ2ViZXJodCB0aGUgTGl0dGxlICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDJdIFNpZ2ViZXJodCB0aGUgR29vZCAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDNdIFN3aXRoZWxtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDRdIFNpZ2hlcmUgYW5kIFNlYmJpICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDVdIFNlYmJpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDZdIFNpZ2VoZWFyZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDddIFNpZ2VoZWFyZCBhbmQgU3dhZWZyZWQgICAgICAgICAgICAgICAgICAgICBcbiBbNDhdIE9mZmEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNDldIFNhZWxyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTBdIFN3YWVmYmVydCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTFdIDxOQT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTJdIFN2dml0aHJlZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTNdIFNpZ2VyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTRdIFNpZ2VyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTVdIEhlbmdpc3QgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTZdIEhvcnNhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTddIE9pc2MgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNThdIE9jdGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNTldIEVvcm1lbnJpYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNjBdIMOGw7BlbGJlcmh0IEkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs2MV0gRWFkYmFsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs2Ml0gw4bDsGVsd2FsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzYzXSBFb3JjZW5iZXJodCBhbmQgRW9ybWVucmVkICAgICAgICAgICAgICAgICAgXG4gWzY0XSBFb3JjZW5iZXJodCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzY1XSBFY2diZWhydCBJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzY2XSBIbG90aGhlcmUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzY3XSBFYWRyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzY4XSBNdWwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzY5XSBTd8OmZmhlYXJkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs3MF0gT3N3aW5lLCBTd8OmZmJlaHJ0LCBTd8OmZmhlYXJkICAgICAgICAgICAgICAgXG4gWzcxXSBTd8OmZmJlaHJ0LCBTd8OmZmhlYXJkLCBXaWh0cmVkICAgICAgICAgICAgICBcbiBbNzJdIFdpaHRyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbNzNdIMOGw7BlbGJlcmh0IElJLCDDhmxmcmljIGFuZCBFYWRiZXJodCBJICAgICAgICBcbiBbNzRdIMOGw7BlbGJlcmh0IElJIGFuZCBFYXJkd3VsZiAgICAgICAgICAgICAgICAgIFxuIFs3NV0gRWFkYmVyaHQgSUksIEVhbm11bmQgYW5kIFNpZ2VyZWQgICAgICAgICAgIFxuIFs3Nl0gSGVhYmVyaHQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs3N10gSGVhYmVyaHQgYW5kIEVjZ2JlaHJ0IElJICAgICAgICAgICAgICAgICAgIFxuIFs3OF0gRWFsaG11bmQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs3OV0gRWNnYmVocnQgSUlJIFByw6ZuICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbODBdIEN1w7ByZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzgxXSBCYWxkcmVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzgyXSBFY2diZWhydCBhbmQgw4Z0aGVsd3VsZiAgICAgICAgICAgICAgICAgICAgIFxuIFs4M10gRWNnYmVocnQgYW5kIMOGdGhlbHd1bGYgICAgICAgICAgICAgICAgICAgICBcbiBbODRdIEVjZ2JlaHJ0IGFuZCDDhnRoZWx3dWxmICAgICAgICAgICAgICAgICAgICAgXG4gWzg1XSDDhnRoZWx3dWxmIGFuZCDDhsOwZWxzdGFuIEkgICAgICAgICAgICAgICAgICAgXG4gWzg2XSDDhnRoZWx3dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs4N10gw4Z0aGVsd3VsZiBhbmQgw4bDsGVsYmVyaHQgSUlJICAgICAgICAgICAgICAgIFxuIFs4OF0gw4bDsGVsYmVyaHQgSUlJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzg5XSDDhnRoZWxyZWQgSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5MF0gQ2VhcmwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5MV0gUGVuZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5Ml0gUGVuZGEgYW5kIEVvd2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5M10gUGVuZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5NF0gUGVuZGEgYW5kIFBlYWRhICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5NV0gT3N3aXUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5Nl0gV3VsZmhlcmUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs5N10gw4Z0aGVscmVkIEkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbOThdIENvZW5yZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBbOTldIENlb2xyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMDBdIENlb2x3YWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMDFdIMOGdGhlbGJhbGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTAyXSBCZW9ybnJlZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTAzXSBMdWRlY2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTA0XSBXaWdsYWYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTA1XSBXaWdsYWYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTA2XSBXaWdtdW5kICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTA3XSBXaWdzdGFuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTA4XSDDhmxmZmzDpmQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMDldIEJlb3JodHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMTBdIEJ1cmdyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMTFdIENlb2x3dWxmIElJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMTJdIDxOQT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMTNdIMOGdGhlbHJlZCwgTG9yZCBvZiB0aGUgTWVyY2lhbnMgICAgICAgICAgICAgXG5bMTE0XSDDhnRoZWxmbMOmZCwgTGFkeSBvZiB0aGUgTWVyY2lhbnMgICAgICAgICAgICBcblsxMTVdIMOGbGZ3eW5uLCBTZWNvbmQgTGFkeSBvZiB0aGUgTWVyY2lhbnMgICAgICAgXG5bMTE2XSBFc2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTE3XSBFb3BwYSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTE4XSBJZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTE5XSBHbGFwcGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTIwXSBBZGRhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTIxXSDDhnRoZWxyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEyMl0gVGhlb2RyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEyM10gRnJpdGh1d2FsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEyNF0gSHVzc2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEyNV0gw4Z0aGVsZnJpdGggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMjZdIEVkd2luICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMjddIEVhbmZyaXRoICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMjhdIE9zd2FsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMjldIE9zd2l1ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzBdIE9zd2l1ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzFdIE9zd2l1ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzJdIE9zd2l1ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzNdIMOGbGxhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTM0XSDDhnRoZWxyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEzNV0gT3NyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEzNl0gT3N3aW5lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEzN10gw4Z0aGVsd29sZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzhdIEFsY2hmcml0aCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxMzldIMOGbGZ3aW5lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQwXSBFY2dmcml0aCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQxXSBBbGRmcml0aCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQyXSBFYWR3dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQzXSBPc3JlZCBJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ0XSBDb2VucmVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ1XSBPc3JpYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ2XSBDb2Vsd3VsZiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ3XSBDb2Vsd3VsZiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ4XSBFYWRiZXJodCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTQ5XSBPc3d1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTUwXSDDhnRoZWx3YWxkIE1vbGwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE1MV0gQWxocmVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE1Ml0gw4Z0aGVscmVkIEkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNTNdIMOGdGhlbHdhbGQgSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTU0XSBPc3JlZCBJSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTU1XSDDhnRoZWxyZWQgSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE1Nl0gT3NiYWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE1N10gRWFyZHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE1OF0gw4ZsZndhbGQgSUkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNTldIEVhcmR3dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNjBdIEVhbnJlZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNjFdIMOGdGhlbHJlZCBJSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTYyXSBSw6Zkd3VsZiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE2M10gw4Z0aGVscmVkIElJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNjRdIE9zYmVyaHQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNjVdIMOGbGxlIElJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTY2XSBPc2Jlcmh0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTY3XSBFY2diZXJodCBJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTY4XSBSaWNzaWdlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTY5XSBFY2diZXJodCBJSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTcwXSBHdcOwcm/DsHIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNzFdIFNpZ2Zyb8OwciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTcyXSBLbsO6dHIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE3M10gw4Z0aGVsd29sZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxNzRdIEjDoWxmZGFuIGFuZCBFb3dpbHMgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTc1XSBFYWR3dWxmIElJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTc2XSBFYWxkcmVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTc3XSBSYWduYWxsIHVhIMONbWFpciAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE3OF0gU2lndHJ5Z2cgQ2FlY2ggICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE3OV0gQW1sYcOtYiBtYWMgR29mcmFpZCAgICAgICAgICAgICAgICAgICAgICAgICBcblsxODBdIEFtbGHDrWIgQ3VhcsOhbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4MV0gUmFnbmFsbCBtYWMgR29mcmFpZCAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4Ml0gRXJpYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4M10gQW1sYcOtYiBDdWFyw6FuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTg0XSBFcmljICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTg1XSBFYWRyZWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTg2XSDDhmxsZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4N10gQ2lzc2EgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4OF0gPE5BPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE4OV0gw4bDsGVsd2VhbGggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTkwXSBFYWR3dWxmICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTkxXSBFY2d3YWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTkyXSBCZXJodGh1biAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTkzXSBBbmRodW4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTk0XSBOb8OwaGVsbSBhbmQgV2F0dCAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzE5NV0gTm/DsGhlbG0gYW5kIEJyeW5pICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxOTZdIE5vw7BoZWxtIGFuZCBPc3JpYyAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMTk3XSBOb8OwaGVsbSBhbmQgw4bDsGVsc3RhbiAgICAgICAgICAgICAgICAgICAgICAgXG5bMTk4XSDDhsOwZWxzdGFuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsxOTldIDxOQT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMDBdIDxOQT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMDFdIMOGw7BlbGJlaHJ0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwMl0gT3NtdW5kICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwM10gw4ZsZndhbGQsIE9zbGFjIGFuZCBPc211bmQgICAgICAgICAgICAgICAgICBcblsyMDRdIMOGbGZ3YWxkLCBFYWxkd3VsZiwgT3NsYWMgYW5kIE9zbXVuZCAgICAgICAgXG5bMjA1XSDDhmxmd2FsZCwgRWFsZHd1bGYsIE9zbGFjLCBPc211bmQgYW5kIE9zd2FsZFxuWzIwNl0gRWFsZHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwN10gPE5BPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwOF0gQ2VyZGljICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIwOV0gQ3lucmljICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxMF0gQ2Vhd2xpbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxMV0gQ2VvbCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxMl0gQ2VvbHd1bGYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxM10gQ3luZWdpbHMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxNF0gQ3dpY2hlbG0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxNV0gQ2Vud2FsaCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxNl0gUGVuZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxN10gQ2Vud2FsaCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIxOF0gQ2Vud2FsaCBhbmQgU2VheGJ1cmggICAgICAgICAgICAgICAgICAgICAgIFxuWzIxOV0gQ2VuZnVzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIyMF0gw4ZzY3dpbmUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMjFdIENlbnR3aW5lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMjJdIENhZWR3YWxsYSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMjNdIEluZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMjRdIMOGdGhlbGhlYXJkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjI1XSBDdXRocmVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjI2XSBTaWdlYmVyaHQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjI3XSBDeW5ld3VsZiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjI4XSBCZW9yaHRyaWMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjI5XSBFY2diZWhydCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjMwXSDDhnRoZWxiYWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIzMV0gw4Z0aGVsYnJldCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzJdIEFsZnJlZCB0aGUgR3JlYXQgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzNdIEVkd2FyZCB0aGUgRWxkZXIgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzRdIMOGbGZ3ZWFyZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjM1XSDDhnRoZWxzdGFuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzIzNl0gw4Z0aGVsc3RhbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzddIEVkbXVuZCBJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzhdIEVhZHJlZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyMzldIEVhZHdpZyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNDBdIEVkZ2FyIHRoZSBQZWFjZWZ1bCAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNDFdIEVkd2FyZCB0aGUgTWFydHlyICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNDJdIMOGdGhlbHJlZCB0aGUgVW5yZWFkeSAgICAgICAgICAgICAgICAgICAgICAgXG5bMjQzXSBTd2V5biBGb3JrYmVhcmQgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjQ0XSDDhnRoZWxyZWQgdGhlIFVucmVhZHkgICAgICAgICAgICAgICAgICAgICAgIFxuWzI0NV0gRWRtdW5kIElyb25zaWRlICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI0Nl0gQ251dCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI0N10gSGFyb2xkIEhhcmVmb290ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI0OF0gSGFydGhhY251dCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI0OV0gRWR3YXJkIHRoZSBDb25mZXNzb3IgICAgICAgICAgICAgICAgICAgICAgIFxuWzI1MF0gSGFyb2xkIEdvZHdpbnNvbiAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI1MV0gRWRnYXIgdGhlIMOGdGhlbGluZyAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTJdIFdpbGxpYW0gSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTNdIFdpbGxpYW0gSUkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTRdIEhlbnJ5IEkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTVdIFN0ZXBoZW4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTZdIE1hdGlsZGEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTddIFN0ZXBoZW4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNThdIEhlbnJ5IElJICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcblsyNTldIFJpY2hhcmQgSSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbjIxMSBMZXZlbHM6IEFkZGEgw4bDsGVsYmVocnQgw4bDsGVsYmVyaHQgSSAuLi4gV3VsZmhlcmVcbiJ9 -->
+<pre><code>  [1] Wehha                                      
+  [2] Wuffa                                      
+  [3] Tytila                                     
+  [4] Rædwald                                    
+  [5] Eorpwald                                   
+  [6] Ricberht                                   
+  [7] Sigeberht and Ecgric                       
+  [8] Ecgric                                     
+  [9] Anna                                       
+ [10] Æthelhere                                  
+ [11] Æthelwold                                  
+ [12] Ealdwulf                                   
+ [13] Ælfwald                                    
+ [14] Hun, Beonna and Alberht                    
+ [15] Æthelred I                                 
+ [16] Æthelberht II                              
+ [17] Offa                                       
+ [18] Offa                                       
+ [19] Offa and Ecgfrith                          
+ [20] Ecgfrith                                   
+ [21] Eadwald                                    
+ [22] C\u009cnwulf                               
+ [23] C\u009cnwulf and Cynehelm                  
+ [24] C\u009cnwulf                               
+ [25] Ceolwulf                                   
+ [26] Beornwulf                                  
+ [27] Æthelstan                                  
+ [28] Æthelweard                                 
+ [29] Edmund                                     
+ [30] &lt;NA&gt;                                       
+ [31] Oswald                                     
+ [32] Æthelred II                                
+ [33] Guthrum                                    
+ [34] Eohric                                     
+ [35] Æthelwold                                  
+ [36] Guthrum II                                 
+ [37] Aescwine                                   
+ [38] Sledda                                     
+ [39] Saebert                                    
+ [40] Saeward                                    
+ [41] Sigeberht the Little                       
+ [42] Sigeberht the Good                         
+ [43] Swithelm                                   
+ [44] Sighere and Sebbi                          
+ [45] Sebbi                                      
+ [46] Sigeheard                                  
+ [47] Sigeheard and Swaefred                     
+ [48] Offa                                       
+ [49] Saelred                                    
+ [50] Swaefbert                                  
+ [51] &lt;NA&gt;                                       
+ [52] Svvithred                                  
+ [53] Sigeric                                    
+ [54] Sigered                                    
+ [55] Hengist                                    
+ [56] Horsa                                      
+ [57] Oisc                                       
+ [58] Octa                                       
+ [59] Eormenric                                  
+ [60] Æðelberht I                                
+ [61] Eadbald                                    
+ [62] Æðelwald                                   
+ [63] Eorcenberht and Eormenred                  
+ [64] Eorcenberht                                
+ [65] Ecgbehrt I                                 
+ [66] Hlothhere                                  
+ [67] Eadric                                     
+ [68] Mul                                        
+ [69] Swæfheard                                  
+ [70] Oswine, Swæfbehrt, Swæfheard               
+ [71] Swæfbehrt, Swæfheard, Wihtred              
+ [72] Wihtred                                    
+ [73] Æðelberht II, Ælfric and Eadberht I        
+ [74] Æðelberht II and Eardwulf                  
+ [75] Eadberht II, Eanmund and Sigered           
+ [76] Heaberht                                   
+ [77] Heaberht and Ecgbehrt II                   
+ [78] Ealhmund                                   
+ [79] Ecgbehrt III Præn                          
+ [80] Cuðred                                     
+ [81] Baldred                                    
+ [82] Ecgbehrt and Æthelwulf                     
+ [83] Ecgbehrt and Æthelwulf                     
+ [84] Ecgbehrt and Æthelwulf                     
+ [85] Æthelwulf and Æðelstan I                   
+ [86] Æthelwulf                                  
+ [87] Æthelwulf and Æðelberht III                
+ [88] Æðelberht III                              
+ [89] Æthelred I                                 
+ [90] Cearl                                      
+ [91] Penda                                      
+ [92] Penda and Eowa                             
+ [93] Penda                                      
+ [94] Penda and Peada                            
+ [95] Oswiu                                      
+ [96] Wulfhere                                   
+ [97] Æthelred I                                 
+ [98] Coenred                                    
+ [99] Ceolred                                    
+[100] Ceolwald                                   
+[101] Æthelbald                                  
+[102] Beornred                                   
+[103] Ludeca                                     
+[104] Wiglaf                                     
+[105] Wiglaf                                     
+[106] Wigmund                                    
+[107] Wigstan                                    
+[108] Ælfflæd                                    
+[109] Beorhtwulf                                 
+[110] Burgred                                    
+[111] Ceolwulf II                                
+[112] &lt;NA&gt;                                       
+[113] Æthelred, Lord of the Mercians             
+[114] Æthelflæd, Lady of the Mercians            
+[115] Ælfwynn, Second Lady of the Mercians       
+[116] Esa                                        
+[117] Eoppa                                      
+[118] Ida                                        
+[119] Glappa                                     
+[120] Adda                                       
+[121] Æthelric                                   
+[122] Theodric                                   
+[123] Frithuwald                                 
+[124] Hussa                                      
+[125] Æthelfrith                                 
+[126] Edwin                                      
+[127] Eanfrith                                   
+[128] Oswald                                     
+[129] Oswiu                                      
+[130] Oswiu                                      
+[131] Oswiu                                      
+[132] Oswiu                                      
+[133] Ælla                                       
+[134] Æthelric                                   
+[135] Osric                                      
+[136] Oswine                                     
+[137] Æthelwold                                  
+[138] Alchfrith                                  
+[139] Ælfwine                                    
+[140] Ecgfrith                                   
+[141] Aldfrith                                   
+[142] Eadwulf                                    
+[143] Osred I                                    
+[144] Coenred                                    
+[145] Osric                                      
+[146] Coelwulf                                   
+[147] Coelwulf                                   
+[148] Eadberht                                   
+[149] Oswulf                                     
+[150] Æthelwald Moll                             
+[151] Alhred                                     
+[152] Æthelred I                                 
+[153] Æthelwald I                                
+[154] Osred II                                   
+[155] Æthelred I                                 
+[156] Osbald                                     
+[157] Eardwulf                                   
+[158] Ælfwald II                                 
+[159] Eardwulf                                   
+[160] Eanred                                     
+[161] Æthelred II                                
+[162] Rædwulf                                    
+[163] Æthelred II                                
+[164] Osberht                                    
+[165] Ælle II                                    
+[166] Osberht                                    
+[167] Ecgberht I                                 
+[168] Ricsige                                    
+[169] Ecgberht II                                
+[170] Guðroðr                                    
+[171] Sigfroðr                                   
+[172] Knútr                                      
+[173] Æthelwold                                  
+[174] Hálfdan and Eowils                         
+[175] Eadwulf II                                 
+[176] Ealdred                                    
+[177] Ragnall ua Ímair                           
+[178] Sigtrygg Caech                             
+[179] Amlaíb mac Gofraid                         
+[180] Amlaíb Cuarán                              
+[181] Ragnall mac Gofraid                        
+[182] Eric                                       
+[183] Amlaíb Cuarán                              
+[184] Eric                                       
+[185] Eadred                                     
+[186] Ælle                                       
+[187] Cissa                                      
+[188] &lt;NA&gt;                                       
+[189] Æðelwealh                                  
+[190] Eadwulf                                    
+[191] Ecgwald                                    
+[192] Berhthun                                   
+[193] Andhun                                     
+[194] Noðhelm and Watt                           
+[195] Noðhelm and Bryni                          
+[196] Noðhelm and Osric                          
+[197] Noðhelm and Æðelstan                       
+[198] Æðelstan                                   
+[199] &lt;NA&gt;                                       
+[200] &lt;NA&gt;                                       
+[201] Æðelbehrt                                  
+[202] Osmund                                     
+[203] Ælfwald, Oslac and Osmund                  
+[204] Ælfwald, Ealdwulf, Oslac and Osmund        
+[205] Ælfwald, Ealdwulf, Oslac, Osmund and Oswald
+[206] Ealdwulf                                   
+[207] &lt;NA&gt;                                       
+[208] Cerdic                                     
+[209] Cynric                                     
+[210] Ceawlin                                    
+[211] Ceol                                       
+[212] Ceolwulf                                   
+[213] Cynegils                                   
+[214] Cwichelm                                   
+[215] Cenwalh                                    
+[216] Penda                                      
+[217] Cenwalh                                    
+[218] Cenwalh and Seaxburh                       
+[219] Cenfus                                     
+[220] Æscwine                                    
+[221] Centwine                                   
+[222] Caedwalla                                  
+[223] Ine                                        
+[224] Æthelheard                                 
+[225] Cuthred                                    
+[226] Sigeberht                                  
+[227] Cynewulf                                   
+[228] Beorhtric                                  
+[229] Ecgbehrt                                   
+[230] Æthelbald                                  
+[231] Æthelbret                                  
+[232] Alfred the Great                           
+[233] Edward the Elder                           
+[234] Ælfweard                                   
+[235] Æthelstan                                  
+[236] Æthelstan                                  
+[237] Edmund I                                   
+[238] Eadred                                     
+[239] Eadwig                                     
+[240] Edgar the Peaceful                         
+[241] Edward the Martyr                          
+[242] Æthelred the Unready                       
+[243] Sweyn Forkbeard                            
+[244] Æthelred the Unready                       
+[245] Edmund Ironside                            
+[246] Cnut                                       
+[247] Harold Harefoot                            
+[248] Harthacnut                                 
+[249] Edward the Confessor                       
+[250] Harold Godwinson                           
+[251] Edgar the Ætheling                         
+[252] William I                                  
+[253] William II                                 
+[254] Henry I                                    
+[255] Stephen                                    
+[256] Matilda                                    
+[257] Stephen                                    
+[258] Henry II                                   
+[259] Richard I                                  
+211 Levels: Adda Æðelbehrt Æðelberht I ... Wulfhere</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXAgPC0gYyhcIkVkXCIsIFwiRWNcIiwgXCJSaVwiKSAjY2FuIGFsc28gdXNlIGxhcGx5IGZyb20gcGx5clxuc2FwcGx5KFxuICBhcCxcbiAgZnVuY3Rpb24oYXApXG4gICAge1xuICAgIHN1bShzdHJfY291bnQoZW5nbGlzaF9tb25hcmNocyRuYW1lLCBhcCkpXG4gICAgfVxuKVxuYGBgIn0= -->
+<pre class="r"><code>ap &lt;- c(&quot;Ed&quot;, &quot;Ec&quot;, &quot;Ri&quot;) #can also use laply from plyr
+sapply(
+  ap,
+  function(ap)
+    {
+    sum(str_count(english_monarchs$name, ap))
+    }
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRWQgRWMgUmkgXG5OQSBOQSBOQSBcbiJ9 -->
+<pre><code>Ed Ec Ri 
+NA NA NA </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>It looks like the standard modern Latin spelling is most common in this dataset. If we want to replace the eths and thorns, we can use str_replace_all (a variant function, str_replace, replaces only the first match).</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZnJ1aXRzIDwtIGMoXCJvbmUgYXBwbGVcIiwgXCJ0d28gcGVhcnNcIiwgXCJ0aHJlZSBiYW5hbmFzXCIpXG5zdHJfcmVwbGFjZShmcnVpdHMsIFwiW2FlaW91XVwiLCBcIi1cIilcbmBgYCJ9 -->
+<pre class="r"><code>fruits &lt;- c(&quot;one apple&quot;, &quot;two pears&quot;, &quot;three bananas&quot;)
+str_replace(fruits, &quot;[aeiou]&quot;, &quot;-&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiLW5lIGFwcGxlXCIgICAgIFwidHctIHBlYXJzXCIgICAgIFwidGhyLWUgYmFuYW5hc1wiXG4ifQ== -->
+<pre><code>[1] &quot;-ne apple&quot;     &quot;tw- pears&quot;     &quot;thr-e bananas&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHJpbmdyKVxuZW5nbGlzaF9tb25hcmNocyRuZXdfbmFtZSA8LSBzdHJfcmVwbGFjZV9hbGwoZW5nbGlzaF9tb25hcmNocyRuYW1lLCBcIlvDsMO+XVwiLCBcInRoXCIpXG5nZW5kZXIgPC0gYyggXCJNQUxFXCIsIFwiTWFsZVwiLCBcIm1hbGVcIiwgXCJNXCIsIFwiRkVNQUxFXCIsIFwiRmVtYWxlXCIsIFwiZmVtYWxlXCIsIFwiZlwiLCBOQSApXG5jbGVhbl9nZW5kZXIgPC0gc3RyX3JlcGxhY2UoZ2VuZGVyLCByZWdleChcIl5mKGVtYWxlKT8kXCIsaWdub3JlX2Nhc2UgPSBUUlVFKSwgXCJGZW1hbGVcIilcbmNsZWFuX2dlbmRlclxuYGBgIn0= -->
+<pre class="r"><code>library(stringr)
+english_monarchs$new_name &lt;- str_replace_all(english_monarchs$name, &quot;[ðþ]&quot;, &quot;th&quot;)
+gender &lt;- c( &quot;MALE&quot;, &quot;Male&quot;, &quot;male&quot;, &quot;M&quot;, &quot;FEMALE&quot;, &quot;Female&quot;, &quot;female&quot;, &quot;f&quot;, NA )
+clean_gender &lt;- str_replace(gender, regex(&quot;^f(emale)?$&quot;,ignore_case = TRUE), &quot;Female&quot;)
+clean_gender</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiTUFMRVwiICAgXCJNYWxlXCIgICBcIm1hbGVcIiAgIFwiTVwiICAgICAgXCJGZW1hbGVcIiBcIkZlbWFsZVwiIFwiRmVtYWxlXCIgXCJGZW1hbGVcIiBOQSAgICAgIFxuIn0= -->
+<pre><code>[1] &quot;MALE&quot;   &quot;Male&quot;   &quot;male&quot;   &quot;M&quot;      &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; NA      </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5fZ2VuZGVyIDwtIHN0cl9yZXBsYWNlKGdlbmRlciwgcmVnZXgoXCJebShhbGUpPyRcIixpZ25vcmVfY2FzZSA9IFRSVUUpLCBcIk1hbGVcIilcbmNsZWFuX2dlbmRlclxuYGBgIn0= -->
+<pre class="r"><code>clean_gender &lt;- str_replace(gender, regex(&quot;^m(ale)?$&quot;,ignore_case = TRUE), &quot;Male&quot;)
+clean_gender</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiTWFsZVwiICAgXCJNYWxlXCIgICBcIk1hbGVcIiAgIFwiTWFsZVwiICAgXCJGRU1BTEVcIiBcIkZlbWFsZVwiIFwiZmVtYWxlXCIgXCJmXCIgICAgICBOQSAgICAgIFxuIn0= -->
+<pre><code>[1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;FEMALE&quot; &quot;Female&quot; &quot;female&quot; &quot;f&quot;      NA      </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3JlcGxhY2UoXCJUb3lvdGEgc3ViYXJ1IG9uIHRhcm1hYyByb2FkIHdpdGggbXkgVEFcIiwgcmVnZXgoXCJ0YVwiLGlnbm9yZV9jYXNlID0gRkFMU0UpLCBcInRBXCIpXG5gYGAifQ== -->
+<pre class="r"><code>str_replace(&quot;Toyota subaru on tarmac road with my TA&quot;, regex(&quot;ta&quot;,ignore_case = FALSE), &quot;tA&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiVG95b3RBIHN1YmFydSBvbiB0YXJtYWMgcm9hZCB3aXRoIG15IFRBXCJcbiJ9 -->
+<pre><code>[1] &quot;ToyotA subaru on tarmac road with my TA&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3JlcGxhY2VfYWxsKFwiVG95b3RhIHN1YmFydSBvbiB0YXJtYWMgcm9hZCB3aXRoIG15IFRBXCIsIHJlZ2V4KFwidGFcIixpZ25vcmVfY2FzZSA9IEZBTFNFKSwgXCJ0QVwiKVxuYGBgIn0= -->
+<pre class="r"><code>str_replace_all(&quot;Toyota subaru on tarmac road with my TA&quot;, regex(&quot;ta&quot;,ignore_case = FALSE), &quot;tA&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiVG95b3RBIHN1YmFydSBvbiB0QXJtYWMgcm9hZCB3aXRoIG15IFRBXCJcbiJ9 -->
+<pre><code>[1] &quot;ToyotA subaru on tArmac road with my TA&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>More information on string replacement can be found <a href="https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf">here</a>.</p>
+</div>
+<div id="editing-columns" class="section level2">
+<h2>Editing Columns</h2>
+<p>Suppose we want to add a column to the english_monarchs data frame denoting the number of years the rulers were in power. We can use standard assignment to achieve this:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5nbGlzaF9tb25hcmNocyRsZW5ndGgub2YucmVpZ24ueWVhcnMgPC1cbiAgZW5nbGlzaF9tb25hcmNocyRlbmQub2YucmVpZ24gLSBlbmdsaXNoX21vbmFyY2hzJHN0YXJ0Lm9mLnJlaWduXG5gYGAifQ== -->
+<pre class="r"><code>english_monarchs$length.of.reign.years &lt;-
+  english_monarchs$end.of.reign - english_monarchs$start.of.reign</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This works, but the repetition of the data frame variable names makes this a lot of effort to type and to read. The with function makes things easier by letting you call variables directly. It takes a data frame OR environment and an expression to evaluate:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5nbGlzaF9tb25hcmNocyRsZW5ndGgub2YucmVpZ24ueWVhcnMgPC0gd2l0aChcbiAgZW5nbGlzaF9tb25hcmNocyxcbiAgZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ25cbilcbmBgYCJ9 -->
+<pre class="r"><code>english_monarchs$length.of.reign.years &lt;- with(
+  english_monarchs,
+  end.of.reign - start.of.reign
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This is less clunky to write, and gives us exactly what we wanted!</p>
+<p>The within() function works similarly, but returns the entire dataframe!</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5nbGlzaF9tb25hcmNocyA8LSB3aXRoaW4oXG4gIGVuZ2xpc2hfbW9uYXJjaHMsXG4gIHtcbiAgICBsZW5ndGgub2YucmVpZ24ueWVhcnMgPC0gZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ25cbiAgfVxuKVxuYGBgIn0= -->
+<pre class="r"><code>english_monarchs &lt;- within(
+  english_monarchs,
+  {
+    length.of.reign.years &lt;- end.of.reign - start.of.reign
+  }
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This becomes less clunky if we have many columns to edit and replace:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5nbGlzaF9tb25hcmNocyA8LSB3aXRoaW4oXG4gIGVuZ2xpc2hfbW9uYXJjaHMsXG4gIHtcbiAgICBsZW5ndGgub2YucmVpZ24ueWVhcnMgPC0gZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ25cbiAgICByZWlnbi53YXMubW9yZS50aGFuLjMwLnllYXJzIDwtIGxlbmd0aC5vZi5yZWlnbi55ZWFycyA+IDMwXG4gIH1cbilcbmBgYCJ9 -->
+<pre class="r"><code>english_monarchs &lt;- within(
+  english_monarchs,
+  {
+    length.of.reign.years &lt;- end.of.reign - start.of.reign
+    reign.was.more.than.30.years &lt;- length.of.reign.years &gt; 30
+  }
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A good heuristic is that if you are creating or changing one column, then use with; if you want to manipulate several columns at once, then use within.</p>
+<p>An alternative approach is taken by the mutate function in the plyr package, which accepts new and revised columns as name-value pairs:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnN0YWxsLnBhY2thZ2VzKFwicGx5clwiKVxubGlicmFyeShcInBseXJcIilcbmVuZ2xpc2hfbW9uYXJjaHMgPC0gbXV0YXRlKFxuICBlbmdsaXNoX21vbmFyY2hzLFxuICBsZW5ndGgub2YucmVpZ24ueWVhcnMgICAgICAgID0gZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ24sXG4gIHJlaWduLndhcy5tb3JlLnRoYW4uMzAueWVhcnMgPSBsZW5ndGgub2YucmVpZ24ueWVhcnMgPiAzMFxuKVxuYGBgIn0= -->
+<pre class="r"><code># install.packages(&quot;plyr&quot;)
+library(&quot;plyr&quot;)
+english_monarchs &lt;- mutate(
+  english_monarchs,
+  length.of.reign.years        = end.of.reign - start.of.reign,
+  reign.was.more.than.30.years = length.of.reign.years &gt; 30
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The red deer dataset that we saw in the previous chapter contains measurements of the endocranial volume for each deer using four different techniques. For some but not all of the deer, a second measurement was taken to test the repeatability of the technique. This means that some of the rows have missing values. The complete.cases function tells us which rows are free of missing values:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcImRlZXJfZW5kb2NyYW5pYWxfdm9sdW1lXCIsIHBhY2thZ2UgPSBcImxlYXJuaW5nclwiKVxuaGFzX2FsbF9tZWFzdXJlbWVudHMgPC0gY29tcGxldGUuY2FzZXMoZGVlcl9lbmRvY3JhbmlhbF92b2x1bWUpXG5kZWVyX2VuZG9jcmFuaWFsX3ZvbHVtZVtoYXNfYWxsX21lYXN1cmVtZW50cywgXVxuYGBgIn0= -->
+<pre class="r"><code>data(&quot;deer_endocranial_volume&quot;, package = &quot;learningr&quot;)
+has_all_measurements &lt;- complete.cases(deer_endocranial_volume)
+deer_endocranial_volume[has_all_measurements, ]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6OX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMlV2Vy9UUUJqR0w3YlRmTkJTcENJWWtKQTZJWUVhc09PU2RDU09RaHNRVkNIUWhvckJkZHpXNnNXdUhJY2lNVElnMFlVRkNTRWhnVmo0TXhnWjJCblkrQXRBYkF5RngvRzlaOGZETC9mY3ZlOTdmdTRydmZhMlVkMnVNc1lVcHFvS1UxUklUY0ZQZ1dtc0VyZlBHRk9YSU1wb0Y5REdnM0hCR1JDUFR5dEFFVnlZRmpKMk1UZkpISGVmdW53TWRRNHNpMUhsbGltVTJ0TDFWQnFwYktTeVNWVXRReXBUcWpTNkpwUm02Y1lOS3JlTVZaSnRnNnBLN1ExTFgyM1VSYmVJcmtteE9YUWF6VVltMU16bXJjbVpPeVpKcFNQZDNqYWxuMjVkS2dvcmQrUUs3K2xrVjkwMFpIbFBHbGQ2TjZXUzRmNDZMVWJaU3BWTUhNajlHZFJ6NTFCMHVEMm1ZNUNIczJjN1VSQkNuUUp4eElYSG9BYWVnM2ZnRFhnSlBvQk44Q1NUZXg5Y0FRZmdOVGdCb2FqcEFpZk4xWDVpQVgvdzBZZmdHNGh3RHRmQVZjUytndStaZVpmUi9rVzdBMTZBSWZnRTNvSkw0SExPNzNWd0RONkxuRmZnSXhpQTNVeHVWL2dkQ2E4bm9vNzhqakorZjhIdmIvZ013QmV3RDYvd1Zlb2o5aG44eUcreGI0OWMydUl5M2JRSGh4UE9OOXFVOHlqZ1ZwOWk2TFJjZTBpbmdlN2RyWFhSbTBldjQvbDI2SEx1WlRLc1BoMXlXWlFibWVsUWIrUnNWY0xndUViVzZCbVhrbWM5ODZUblJYd1JuRThtVWYvbGJreDFhRWQyYlMvRWRNbXRtZmxVS1RpS3ZNREhoNVFsOGIrUUxZNXZ4c3pBNHNTUGpRMVhuSU9KZjdoaUNETUZ3WUpvS3hsZFRqNnBrYkVpYlkzcjczdStTOXZNN1YyWGk4NVpiTUIwL2JXajBQTWpXZ2xHeDdVb2lHektxem9CcDVIa1JaeitCNmoxcGV3bEJRQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["SkullID"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["VolCT"],"name":[2],"type":["int"],"align":["right"]},{"label":["VolBead"],"name":[3],"type":["int"],"align":["right"]},{"label":["VolLWH"],"name":[4],"type":["int"],"align":["right"]},{"label":["VolFinarelli"],"name":[5],"type":["int"],"align":["right"]},{"label":["VolCT2"],"name":[6],"type":["int"],"align":["right"]},{"label":["VolBead2"],"name":[7],"type":["int"],"align":["right"]},{"label":["VolLWH2"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"C120","2":"346","3":"335","4":"1250","5":"289","6":"346","7":"330","8":"1264","_rn_":"7"},{"1":"C25","2":"302","3":"295","4":"1011","5":"250","6":"303","7":"295","8":"1009","_rn_":"8"},{"1":"F7","2":"379","3":"360","4":"1621","5":"347","6":"375","7":"365","8":"1647","_rn_":"9"},{"1":"B12","2":"410","3":"400","4":"1740","5":"387","6":"413","7":"395","8":"1728","_rn_":"10"},{"1":"B17","2":"405","3":"395","4":"1652","5":"356","6":"408","7":"395","8":"1639","_rn_":"11"},{"1":"B18","2":"391","3":"370","4":"1835","5":"419","6":"394","7":"375","8":"1825","_rn_":"12"},{"1":"J7","2":"416","3":"405","4":"1834","5":"408","6":"417","7":"405","8":"1876","_rn_":"13"},{"1":"A4","2":"336","3":"330","4":"1224","5":"283","6":"345","7":"330","8":"1192","_rn_":"15"},{"1":"K2","2":"349","3":"355","4":"1239","5":"286","6":"354","7":"365","8":"1243","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[9]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The na.omit function provides a shortcut to this, removing any rows of a data frame where there are missing values; by contrast, na.fail function spits out “failure” whenever the dataframe has a missing value:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmEub21pdChkZWVyX2VuZG9jcmFuaWFsX3ZvbHVtZSlcbmBgYCJ9 -->
+<pre class="r"><code>na.omit(deer_endocranial_volume)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6OX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzV1V6MDhUUVJUSGQyZGJXaW8vVkZUd3Q1eE1ORlIzdGxnNFNoc0VORXF3Q21nOExPMENEZHRkVWhZeDhlakJSQzVlVEl5SmljYUxmNFpIRDk0OWVQTXYwSGp6Z0g2M3ZQZDJhZlR3Mlhrejg5N01tMzN6bllYcWtpNHNGUXpEVUlabEtVTlpNRE1LSDlQSUdMMXgrOFF3ckNFWWViVDlhT1BCT09BUWlNYzdFU0FMVG5RQ0RXTzRhNUVlMzN2cytWdXdEb05SR2xYWFMyUlpVN2FkbURveHk0azV3VkZUV3F5U1dNbnNKRm1aaXEydmNuaEZqN05aMVJ5VnE4NVc3UEd5UTkwc3VpV2U2MEduUEZGT1RVMmsvU1psNWVrU20ycGFzcjFSa256bUhMRjRXdDJVRTk2Mk9WMXJYa3Y0Z2lTdUZxNkpKZE8xR1Q2TVdrd3NjVnlXLzdQc2ROVWhXL2ZkTFM2REZHZlZyVWRoRzlZZW9CS2JEMEFSUEFWdndDdndITHdEOCtCUnl2Y091QWpXd1V1d0M5b1VNd2ZxaVcvbU93N3dDNXZlQTE5QWhEcGNCcGN3OXhsOFRhMDdpdlkzMm9mZ0dXaUFEK0ExT0EzT2RlVjdCZXlBdCtUekFyd0h5MkFsNVR0SCtiWW8xMTJLNDN4YnFYeC9JTitmeURNRW44QWFja1ZldVJybVBvSnYzYjg0Y0ZzZS8rSTgzN1M3Rzl1K1AxdGxuL3VoWDZueEhEcFRudHZnYXFCN2EzR0dlbjNvVFRjRHQrMzVmalBsVWFseGtmTVVybFBMSVY1M3BkVWJ1RVdVdVJrR0pPTVJrcXJxa25BUEdLRDBqNENqSlBQakpPOWhpajBKVGdIVXdUZ0R6b0s0SHVmQmhZN0lPd2xrL3RCYUkveWVzTkJOenRoa2haZ3NQcE52dFNtWDJoYXAyOG1ZQ0NwNUhFUlBTdHRpaVNDMGlGRWVBU1V2ZzlLeXNraFJhVmxaeThxT3FOT1JQUnpad3lIUldYeHlMa0VtYkRXamZaVWRMRTA3M0NueXJlRVhOdGU1UFFkZjJ6NmFId1RIL3JOSm9lRkdibkcxamVYK3NWVXUzSXl2QURaU1ExVHZkSEFzMmdNRGc5dEJuRmhqckw2K0hXeU1hVXJHSlBxcDdVM1orYTY2Wi9uV2VzRmFNL0JZQWI2NzR2blVHY0FQNkp5L3VObHVCaEdmQktOYnhTaU1YUFlyMUVPZlIvWWZxNzIvYUxVdm9jQUdBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["SkullID"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["VolCT"],"name":[2],"type":["int"],"align":["right"]},{"label":["VolBead"],"name":[3],"type":["int"],"align":["right"]},{"label":["VolLWH"],"name":[4],"type":["int"],"align":["right"]},{"label":["VolFinarelli"],"name":[5],"type":["int"],"align":["right"]},{"label":["VolCT2"],"name":[6],"type":["int"],"align":["right"]},{"label":["VolBead2"],"name":[7],"type":["int"],"align":["right"]},{"label":["VolLWH2"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"C120","2":"346","3":"335","4":"1250","5":"289","6":"346","7":"330","8":"1264","_rn_":"7"},{"1":"C25","2":"302","3":"295","4":"1011","5":"250","6":"303","7":"295","8":"1009","_rn_":"8"},{"1":"F7","2":"379","3":"360","4":"1621","5":"347","6":"375","7":"365","8":"1647","_rn_":"9"},{"1":"B12","2":"410","3":"400","4":"1740","5":"387","6":"413","7":"395","8":"1728","_rn_":"10"},{"1":"B17","2":"405","3":"395","4":"1652","5":"356","6":"408","7":"395","8":"1639","_rn_":"11"},{"1":"B18","2":"391","3":"370","4":"1835","5":"419","6":"394","7":"375","8":"1825","_rn_":"12"},{"1":"J7","2":"416","3":"405","4":"1834","5":"408","6":"417","7":"405","8":"1876","_rn_":"13"},{"1":"A4","2":"336","3":"330","4":"1224","5":"283","6":"345","7":"330","8":"1192","_rn_":"15"},{"1":"K2","2":"349","3":"355","4":"1239","5":"286","6":"354","7":"365","8":"1243","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[9]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmEuZmFpbChkZWVyX2VuZG9jcmFuaWFsX3ZvbHVtZSlcbmBgYCJ9 -->
+<pre class="r"><code>na.fail(deer_endocranial_volume)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gbmEuZmFpbC5kZWZhdWx0KGRlZXJfZW5kb2NyYW5pYWxfdm9sdW1lKSA6IFxuICBtaXNzaW5nIHZhbHVlcyBpbiBvYmplY3RcbiJ9 -->
+<pre><code>Error in na.fail.default(deer_endocranial_volume) : 
+  missing values in object</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Both these functions can accept vectors as well, removing missing values or failing, as in the data frame case.</p>
+<p>You can use multiple imputation to fill in missing values in a statistically sound way. This is beyond the scope of the book, but the mice and mix packages are good places to start.</p>
+</div>
+<div id="converting-wide-and-long-forms" class="section level2">
+<h2>Converting Wide and Long Forms</h2>
+<p>The red deer dataset contains measurements of the volume of deer skulls obtained in four different ways. Each measurement for a particular deer is given in its own column.</p>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlI6IERhdGEgQW5hbHlzaXMgV29ya2Zsb3ciDQphdXRob3I6IE1lbmcgSHN1YW4gSHNpZWgNCm91dHB1dDoNCiAgaHRtbF9ub3RlYm9vazoNCiAgICB0aGVtZTogdW5pdGVkDQogICAgdG9jOiB5ZXMNCi0tLQ0KDQpXZSB3aWxsIG5vdyBnZXQgaW50byBkYXRhIHNjaWVuY2UgdXNpbmcgUi4gVGhpcyBhc3N1bWVzIGEgbG90IG9mIG1hdHVyaXR5IGluIHRoZSBsYW5ndWFnZTsgcGxlYXNlIGNvbnN1bHQgdGhlIHByZXZpb3VzIG5vdGVib29rcyBpZiB5b3UncmUgdW5zdXJlIGFib3V0IHNvbWUgb2YgdGhlIHRlY2huaXF1ZXMgcHJlc2VudGVkIGhlcmUuDQoNCiMgRGF0YSBUeXBlcw0KDQpPbmUgb2YgdGhlIHBhY2thZ2VzIGluIHRoZSBiYXNlIFIgZGlzdHJpYnV0aW9uIGlzIGNhbGxlZCBkYXRhc2V0cywgYW5kIGl0IGlzIGVudGlyZWx5IGZpbGxlZCB3aXRoIGV4YW1wbGUgZGF0YXNldHMuIFdoaWxlIHlvdeKAmWxsIGJlIGx1Y2t5IGlmIGFueSBvZiB0aGVtIGFyZSBzdWl0ZWQgdG8geW91ciBwYXJ0aWN1bGFyIGFyZWEgb2YgcmVzZWFyY2gsIHRoZXkgYXJlIGlkZWFsIGZvciB0ZXN0aW5nIHlvdXIgY29kZSBhbmQgZm9yIGV4cGxvcmluZyBuZXcgdGVjaG5pcXVlcy4NCg0KYGBge3J9DQpkYXRhKCkNCmRhdGEoImtpZG5leSIsIHBhY2thZ2UgPSAic3Vydml2YWwiKQ0Ka2lkbmV5DQpgYGANCg0KTGV0J3MgYmUgcmVhbDogd2UgY2Fubm90IGV4cGVjdCB0byB1c2UgdGhlc2UgZGF0YXNldHMgb3RoZXIgdGhhbiB0ZXN0aW5nIHB1cnBvc2VzLiBBcyBzdWNoLCB0aGUgbW9yZSBpbnRlcmVzdGluZyBxdWVzdGlvbiBpcyAqKmhvdyBjYW4gd2UgaW1wb3J0IGRhdGFzZXRzIGFuZCB3b3JrIHdpdGggdGhlbSBmcm9tIHRoZXJlKiouIFRoZXJlIGFyZSBtYW55LCBtYW55IGZvcm1hdHMgYW5kIHN0YW5kYXJkcyBvZiB0ZXh0IGRvY3VtZW50cyBmb3Igc3RvcmluZyBkYXRhLiBDb23igJAgbW9uIGZvcm1hdHMgZm9yIHN0b3JpbmcgZGF0YSBhcmUgZGVsaW1pdGVyLXNlcGFyYXRlZCB2YWx1ZXMgKENTViBvciB0YWItZGVsaW1pdGVkKSwgZVh0ZW5zaWJsZSBNYXJrdXAgTGFuZ3VhZ2UgKFhNTCksIEphdmFTY3JpcHQgT2JqZWN0IE5vdGF0aW9uIChKU09OKSwgYW5kIFlBTUwgKHdoaWNoIHJlY3Vyc2l2ZWx5IHN0YW5kcyBmb3IgWUFNTCBBaW7igJl0IE1hcmt1cCBMYW5ndWFnZSkuIE90aGVyIHNvdXJjZXMgb2YgdGV4dCBkYXRhIGFyZSBsZXNzIHdlbGwtc3RydWN0dXJlZOKAlGEgYm9vaywgZm9yIGV4YW1wbGUsIGNvbnRhaW5zIHRleHQgZGF0YSB3aXRob3V0IGFueSBmb3JtYWwgKHRoYXQgaXMsIHN0YW5kYXJkaXplZCBhbmQgbWFjaGluZSBwYXJzYWJsZSkgc3RydWN0dXJlLiANCg0KVGhlIG1haW4gYWR2YW50YWdlIG9mIHN0b3JpbmcgZGF0YSBpbiB0ZXh0IGZpbGVzIGlzIHRoYXQgdGhleSBjYW4gYmUgcmVhZCBieSBtb3JlIG9yIGxlc3MgYWxsIG90aGVyIGRhdGEgYW5hbHlzaXMgc29mdHdhcmUgYW5kIGJ5IGh1bWFucy4gVGhpcyBtYWtlcyB5b3VyIGRhdGEgbW9yZSB3aWRlbHkgcmV1c2FibGUgYnkgb3RoZXJzLg0KDQojIyBDU1YNCg0KUmVjdGFuZ3VsYXIgKHNwcmVhZHNoZWV0LWxpa2UpIGRhdGEgaXMgY29tbW9ubHkgc3RvcmVkIGluIGRlbGltaXRlZC12YWx1ZSBmaWxlcywgcGFy4oCQIHRpY3VsYXJseSBjb21tYS1zZXBhcmF0ZWQgdmFsdWVzIChDU1YpIGFuZCB0YWItZGVsaW1pdGVkIHZhbHVlcyBmaWxlcy4gVGhlIHJlYWQudGFibGUgZnVuY3Rpb24gcmVhZHMgdGhlc2UgZGVsaW1pdGVkIGZpbGVzIGFuZCBzdG9yZXMgdGhlIHJlc3VsdHMgaW4gYSBkYXRhIGZyYW1lLiBJbiBpdHMgc2ltcGxlc3QgZm9ybSwgaXQganVzdCB0YWtlcyB0aGUgcGF0aCB0byBhIHRleHQgZmlsZSBhbmQgaW1wb3J0cyB0aGUgY29udGVudHMuDQoNCkV4YW1wbGU6DQoNCmBgYHtyfQ0KbGlicmFyeShsZWFybmluZ3IpDQpkZWVyX2ZpbGUgPC0gc3lzdGVtLmZpbGUoDQogICJleHRkYXRhIiwNCiAgIlJlZERlZXJFbmRvY3JhbmlhbFZvbHVtZS5kbG0iLA0KICBwYWNrYWdlID0gImxlYXJuaW5nciINCiAgKQ0KZGVlcl9kYXRhIDwtIHJlYWQudGFibGUoZGVlcl9maWxlLCBoZWFkZXIgPSBUUlVFLCBmaWxsID0gVFJVRSkNCnN0cihkZWVyX2RhdGEsIHZlYy5sZW4gPSAxKSAjdmVjLmxlbiBhbHRlcnMgdGhlIGFtb3VudCBvZiBvdXRwdXQNCmhlYWQoZGVlcl9kYXRhKQ0KYGBgDQoNCk5vdGljZSB0aGF0IHRoZSBjbGFzcyBvZiBlYWNoIGNvbHVtbiBoYXMgYmVlbiBhdXRvbWF0aWNhbGx5IGRldGVybWluZWQsIGFuZCByb3cgYW5kIGNvbHVtbiBuYW1lcyBoYXZlIGJlZW4gYXV0b21hdGljYWxseSBhc3NpZ25lZC4gVGhlIGNvbHVtbiBuYW1lcyBhcmUgKGJ5IGRlZmF1bHQpIGZvcmNlZCB0byBiZSB2YWxpZCB2YXJpYWJsZSBuYW1lcyAodmlhIG1ha2UubmFtZXMpLCBhbmQgaWYgcm93IG5hbWVzIGFyZW7igJl0IHByb3ZpZGVkIHRoZSByb3dzIGFyZSBzaW1wbHkgbnVtYmVyZWQgMSwgMiwgMywgYW5kIHNvIG9uLg0KDQpUaGVyZSBhcmUgbG90cyBvZiBhcmd1bWVudHMgdG8gc3BlY2lmeSBob3cgdGhlIGZpbGUgd2lsbCBiZSByZWFkOyBwZXJoYXBzIHRoZSBtb3N0IGltcG9ydGFudCBpcyBzZXAsIHdoaWNoIGRldGVybWluZXMgdGhlIGNoYXJhY3RlciB0byB1c2UgYXMgYSBzZXBhcmF0b3IgYmV0d2VlbiBmaWVsZHMuIFlvdSBjYW4gYWxzbyBzcGVjaWZ5IGhvdyBtYW55IGxpbmVzIG9mIGRhdGEgdG8gcmVhZCB2aWEgbnJvdywgYW5kIGhvdyBtYW55IGxpbmVzIGF0IHRoZSBzdGFydCBvZiB0aGUgZmlsZSB0byBza2lwLiBNb3JlIGFkdmFuY2VkIG9wdGlvbnMgaW5jbHVkZSB0aGUgYWJpbGl0eSB0byBvdmVycmlkZSB0aGUgZGVmYXVsdCByb3cgbmFtZXMsIGNvbHVtbiBuYW1lcywgYW5kIGNsYXNzZXMsIGFuZCB0byBzcGVjaWZ5IHRoZSBjaGFyYWN0ZXIgZW5jb2Rpbmcgb2YgdGhlIGlucHV0IGZpbGUgYW5kIGhvdyBzdHJpbmcgaW5wdXQgY29sdW1ucyBzaG91bGQgYmUgZGVjbGFyZWQuDQoNCkV4YW1wbGUgb24gd2h5IGl0IGlzIGltcG9ydGFudCB3aGF0IGlzIHJlYWQ6DQoNCmBgYHtyfQ0KY3JhYl9maWxlIDwtIHN5c3RlbS5maWxlKA0KICAiZXh0ZGF0YSIsDQogICJjcmFidGFnLmNzdiIsDQogIHBhY2thZ2UgPSAibGVhcm5pbmdyIg0KICApDQooY3JhYl9pZF9ibG9jayA8LSByZWFkLmNzdigNCiAgY3JhYl9maWxlLCBoZWFkZXIgPSBGQUxTRSwgc2tpcCA9IDMsDQogIG5yb3cgPSAyDQogICkNCikNCmBgYA0KDQpBbmQgbm93IHdlIGNhbiBidWlsZCBhIHByb3BlciBkYXRhc2V0Og0KDQpgYGB7cn0NCihjcmFiX3RhZ19ub3RlYm9vayA8LSByZWFkLmNzdigNCiAgY3JhYl9maWxlLA0KICBoZWFkZXIgPSBGQUxTRSwNCiAgc2tpcCA9IDgsDQogIG5yb3cgPSA1DQogICkNCikNCmBgYA0KDQpgYGB7cn0NCihjcmFiX2xpZmV0aW1lX25vdGVib29rIDwtIHJlYWQuY3N2KA0KICBjcmFiX2ZpbGUsDQogIGhlYWRlciA9IEZBTFNFLA0KICBza2lwID0gMTUsDQogIG5yb3cgPSAzIA0KICApDQopDQpgYGANCg0KRm9yIHJlYWxseSBsb3ctbGV2ZWwgY29udHJvbCB3aGVuIGltcG9ydGluZyB0aGlzIHNvcnQgb2YgZmlsZSwgeW91IGNhbiB1c2UgdGhlIHNjYW4gZnVuY3Rpb24sIG9uIHdoaWNoIHJlYWQudGFibGUgaXMgYmFzZWQuIE9yZGluYXJpbHksIHlvdSBzaG91bGQgbmV2ZXIgaGF2ZSB0byByZXNvcnQgdG8gc2NhbiwgYnV0IGl0IGNhbiBiZSB1c2VmdWwgZm9yIG1hbGZvcm1lZCBvciBub25zdGFuZGFyZCBmaWxlcy4NCg0KVGhlIG9wcG9zaXRlIHRhc2ssIHdyaXRpbmcgZmlsZXMsIGlzIGdlbmVyYWxseSBzaW1wbGVyIHRoYW4gcmVhZGluZyBmaWxlcywgc2luY2UgeW91IGRvbuKAmXQgbmVlZCB0byB3b3JyeSBhYm91dCBvZGRpdGllcyBpbiB0aGUgZmlsZeKAlHlvdSB1c3VhbGx5IHdhbnQgdG8gY3JlYXRlIHNvbWV0aGluZyBzdGFuZGFyZC4gcmVhZC50YWJsZSBhbmQgcmVhZC5jc3YgaGF2ZSB0aGUgb2J2aW91c2x5IG5hbWVkIGNvdW50ZXJwYXJ0cyB3cml0ZS50YWJsZSBhbmQgd3JpdGUuY3N2Lg0KDQpGaW5hbGx5LCBmdW5jdGlvbnMgdGFrZSBhIGRhdGEgZnJhbWUgYW5kIGEgZmlsZSBwYXRoIHRvIHdyaXRlIHRvOg0KDQpgYGB7cn0NCndyaXRlLmNzdigNCiAgY3JhYl9saWZldGltZV9ub3RlYm9vaywgIkRhdGEvQ2xlYW5lZC9jcmFiIGxpZmV0aW1lIGRhdGEuY3N2Iiwgcm93Lm5hbWVzID0gRkFMU0UsDQogIGZpbGVFbmNvZGluZyA9ICJ1dGY4Ig0KKQ0KYGBgDQoNCg0KYGBge3J9DQpsaWJyYXJ5KHhsc3gpDQpiaWtlX2ZpbGUgPC0gc3lzdGVtLmZpbGUoDQogICJleHRkYXRhIiwNCiAgIkFscGUgZCdIdWV6LnhscyIsDQogIHBhY2thZ2UgPSAibGVhcm5pbmdyIg0KICApDQoNCmJpa2VfZGF0YSA8LSByZWFkLnhsc3gyKA0KICBiaWtlX2ZpbGUsDQogIHNoZWV0SW5kZXggPSAxLA0KICBzdGFydFJvdyA9MiwNCiAgZW5kUm93ID0gMzgsDQogIGNvbEluZGV4ID0gMjo4LA0KICBjb2xDbGFzc2VzID0gYygNCiAgICAiY2hhcmFjdGVyIiwgIm51bWVyaWMiLCAiY2hhcmFjdGVyIiwgImludGVnZXIiLA0KICAgICJjaGFyYWN0ZXIiLCAiY2hhcmFjdGVyIiwgImNoYXJhY3RlciINCiAgICApDQopDQoNCmhlYWQoYmlrZV9kYXRhKQ0KYGBgDQoNCkhvd2V2ZXIsIHdlIHdpbGwgd29yayBtb3N0bHkgd2l0aCBkYXRhc2V0cyB0aGF0IGNhbiBiZSBpbXBvcnRlZCBlYXNpbHkgd2l0aCBmdW5jdGlvbnMgc3VjaCBhcyByZWFkLmNzdigpLg0KDQoNCiMgRGF0YSBDbGVhbmluZw0KDQpBZnRlciBvbmUgaW1wb3J0cyB0aGUgZGF0YXNldCwgb25lIG5lZWRzIHRvIGJlIGV4dHJhIGNhcmVmdWwgYWJvdXQgd2hhdCBpcyBmZWFzaWJsZSBpbiBhIGRhdGFzZXQgYW5kIHdoYXQgaXMgbm90LiBJdCdzIGFsbW9zdCBhbHdheXMgdGhlIHdyb25nIG9uZSBmb3Igd2hhdCB5b3Ugd2FudCB0byBkbyB3aXRoIGl0LCBhbmQgbm8gbWF0dGVyIHdobyBnYXZlIGl0IHRvIHlvdSwgaXQgaXMgYWxtb3N0IGFsd2F5cyBkaXJ0eS4gQ2xlYW5pbmcgYW5kIHRyYW5zZm9ybWluZyBkYXRhIG1heSBub3QgYmUgdGhlIGZ1biBwYXJ0IG9mIGRhdGEgYW5hbHlzaXMsIGJ1dCB5b3Ugd2lsbCBwcm9iYWJseSBzcGVuZCBtb3JlIG9mIHlvdXIgbGlmZSB0aGFuIHlvdSBjYXJlIHRvIGRvaW5nIGl0LiBGb3J0dW5hdGVseSwgUiBoYXMgYSB3aWRlIHNlbGVjdGlvbiBvZiB0b29scyB0byBoZWxwIHdpdGggdGhlc2UgdGFza3MuDQoNCiMjIENsZWFuaW5nIFN0cmluZ3MvVGV4dHMNCg0KU29tZXRoaW5nIHRoYXQgaXMgd2VsbC1jaGVyaXNoZWQgYnkgdGhlIGNvbW11bml0eSBvZiBkYXRhIGNsZWFuZXJzIGlzIHRoZSBhYmlsaXR5IHRvIGF1dG9tYXRlIHNvbWUgb2YgdGhlc2Ugb25lcm91cyB0YXNrcy4gT25lIG9mIHRoZXNlIHRvb2xzIGlzIHdyaXRpbmcgZnVuY3Rpb25zISBJZiB3ZSBhcmUgaW50ZXJlc3RlZCBpbiBjbGVhbmluZyBzdHJpbmdzLCB3ZSBjYW4gd3JpdGUgYSBmdW5jdGlvbiB0aGF0IGF1dG9tYXRpY2FsbHkgZG9lcyBpdCBmb3IgdXMuDQoNCkEgcXVpY2sgbm90ZTogdGhpcyBpcyBtb3N0IHVzZWZ1bCB3aGVuIHdlIGhhdmUgYSBjbGVhciBpZGVhIG9uIGhvdyB0aGUgZGF0YSBsb29rcyBsaWtlLiBJZiB3ZSBrbm93IHRoZSBkYXRhIGlzIG5vdCB2ZXJ5IGNvbXBsZXggaW4gdGVybXMgb2YgbWlzdGFrZXMsIGllLiB0aGVyZSBhcmUgbm90IHRoYXQgbWFueSAqdHlwZXMqIG9mIG1pc3Rha2VzICh0aGlzIGlzIE5FVkVSIHRoZSBjYXNlLCBieSB0aGUgd2F5KSwgdGhlbiBhIGNvdXBsZSBvZiBmdW5jdGlvbnMgd291bGQgc3VmZmljZSBpbiB0cmFuc2Zvcm1pbmcgdGhlIGV4aXN0aW5nIGRhdGEgdG8gdGhlIGRlc2lyYWJsZSBkYXRhIHR5cGVzLiBBIGZ1bmN0aW9uIHRoYXQgb25lIGNhbiB3cml0ZSBpcyBzb21ldGhpbmcgbGlrZSB0aGUgZm9sbG93aW5nOg0KDQpgYGB7cn0NCnluX3RvX2xvZ2ljYWwgPC0gZnVuY3Rpb24oeCl7DQogIHkgPC0gcmVwLmludChOQSwgbGVuZ3RoKHgpKQ0KICB5W3ggPT0gIlkiXSA8LSBUUlVFDQogIHlbeCA9PSAiTiJdIDwtIEZBTFNFDQogIHkNCn0NCmBgYA0KYGBge3J9DQpsaWJyYXJ5KCJsZWFybmluZ3IiKQ0KYWxwZV9kX2h1ZXogPC0gbGVhcm5pbmdyOjphbHBlX2RfaHVleg0KYWxwZV9kX2h1ZXoNCmFscGVfZF9odWV6JERydWdVc2UgPC0geW5fdG9fbG9naWNhbChhbHBlX2RfaHVleiREcnVnVXNlKQ0KYWxwZV9kX2h1ZXoNCmBgYA0KDQpUaGlzIGRpcmVjdCByZXBsYWNlbWVudCBvZiBvbmUgc3RyaW5nIHdpdGggYW5vdGhlciBkb2Vzbid0IHNjYWxlIHZlcnkgd2VsbCB0byBoYXZpbmcgbG90cyBvZiBjaG9pY2VzIG9mIHN0cmluZy4gSWYgeW91IGhhdmUgdGVuIHRob3VzYW5kIHBvc3NpYmxlIGlucHV0cywgdGhlbiBhIGZ1bmN0aW9uIHRvIGNoYW5nZSBlYWNoIG9uZSB3b3VsZCBiZSB2ZXJ5IGhhcmQgdG8gd3JpdGUgd2l0aG91dCBlcnJvcnMsIGFuZCBldmVuIGhhcmRlciB0byBtYWludGFpbi4NCg0KRm9ydHVuYXRlbHksIG11Y2ggbW9yZSBzb3BoaXN0aWNhdGVkIG1hbmlwdWxhdGlvbiBpcyBwb3NzaWJsZSwgYW5kIGl0IGlzIHJlbGF0aXZlbHkgZWFzeSB0byBkZXRlY3QsIGV4dHJhY3QsIGFuZCByZXBsYWNlIHBhcnRzIG9mIHN0cmluZ3MgdGhhdCBtYXRjaCBhIHBhdHRlcm4uIFIgaGFzIGEgc3VpdGUgb2YgYnVpbHRpbiBmdW5jdGlvbnMgZm9yIGhhbmRsaW5nIHRoZXNlIHRhc2tzLCAobG9vc2VseSkgYmFzZWQgdXBvbiB0aGUgVW5peCBncmVwIHRvb2wuIFRoZXkgYWNjZXB0IGEgc3RyaW5nIHRvIG1hbmlwdWxhdGUgYW5kIGEgcmVndWxhciBleHByZXNzaW9uIHRvIG1hdGNoLiBBcyBtZW50aW9uZWQgaW4gQ2hhcHRlciAxLCByZWd1bGFyIGV4cHJlc3Npb25zIGFyZSBwYXR0ZXJucyB0aGF0IHByb3ZpZGUgYSBmbGV4aWJsZSBtZWFucyBvZiBkZXNjcmliaW5nIHRoZSBjb250ZW50cyBvZiBhIHN0cmluZy4gVGhleSBhcmUgdmVyeSB1c2VmdWwgZm9yIG1hdGNoaW5nIGNvbXBsZXggc3RyaW5nLWRhdGEgdHlwZXMgbGlrZSBwaG9uZSBudW1iZXJzIG9yIGVtYWlsIGFkZHJlc3Nlcy4NCg0KDQpUaGUgZ3JlcCwgZ3JlcGwsIGFuZCByZWdleHByIGZ1bmN0aW9ucyBhbGwgZmluZCBzdHJpbmdzIHRoYXQgbWF0Y2ggYSBwYXR0ZXJuLCBhbmQgc3ViIGFuZCBnc3ViIHJlcGxhY2UgbWF0Y2hpbmcgc3RyaW5ncy4gSW4gY2xhc3NpYyBSIHN0eWxlLCB0aGVzZSBmdW5jdGlvbnMgYXJlIG1ldGljdWxvdXNseSBjb3JyZWN0IGFuZCB2ZXJ5IHBvd2VyZnVsLCBidXQgc3VmZmVyIGZyb20gZnVubnkgbmFtaW5nIGNvbnZlbnRpb25zLCBxdWlya3kgYXJndW1lbnQgb3JkZXJpbmcsIGFuZCBvZGQgcmV0dXJuIHZhbHVlcyB0aGF0IGhhdmUgYXJpc2VuIGZvciBoaXN0b3JpY2FsIHJlYXNvbnMuDQoNCkZvcnR1bmF0ZWx5LCBpbiB0aGUgc2FtZSB3YXkgdGhhdCBwbHlyIHByb3ZpZGVzIGEgY29uc2lzdGVudCB3cmFwcGVyIGFyb3VuZCBhcHBseSBmdW5jdGlvbnMgYW5kIGx1YnJpZGF0ZSBwcm92aWRlcyBhIGNvbnNpc3RlbnQgd3JhcHBlciBhcm91bmQgdGhlIGRhdGUtdGltZSBmdW5jdGlvbnMsIHRoZSBzdHJpbmdyIHBhY2thZ2UgcHJvdmlkZXMgYSBjb25zaXN0ZW50IHdyYXBwZXIgYXJvdW5kIHRoZSBzdHJpbmcgbWFuaXB1bGF0aW9uIGZ1bmN0aW9ucy4gVGhlIGRpZmZlcmVuY2UgaXMgdGhhdCB3aGlsZSB5b3Ugd2lsbCBvY2Nhc2lvbmFsbHkgbmVlZCB0byB1c2UgYSBiYXNlIGFwcGx5IG9yIGRhdGUtdGltZSBmdW5jdGlvbiwgc3RyaW5nciBpcyBhZHZhbmNlZCBlbm91Z2ggdGhhdCB5b3Ugc2hvdWxkbid0IG5lZWQgdG8gYm90aGVyIHdpdGggZ3JlcCBhdCBhbGwuIFNvLCB0YWtlIGEgbG9vayBhdCB0aGUgP2dyZXAgaGVscCBwYWdlLCBidXQgZG9uJ3QgZGV2b3RlIHRvbyBtdWNoIG9mIHlvdXIgYnJhaW4gdG8gaXQuDQoNCk5vdywgdGhlIG5leHQgZXhhbXBsZToNCg0KYGBge3J9DQpkYXRhKGVuZ2xpc2hfbW9uYXJjaHMsIHBhY2thZ2UgPSAibGVhcm5pbmdyIikNCmhlYWQoZW5nbGlzaF9tb25hcmNocykNCmBgYA0KDQpPbmUgb2YgdGhlIHByb2JsZW1zIHdpdGggaGlzdG9yeSBpcyB0aGF0IHRoZXJlIGlzIGFuIGF3ZnVsIGxvdCBvZiBpdCAoUFJFQUNILCBhbSBJIHJpdGU/KS4gRm9ydHVuYXRlbHksIG9kZCBvciBtZXNzeSBkYXRhIGNhbiBiZSBhIHJlYWxseSBnb29kIGluZGljYXRvciBvZiB0aGUgaW50ZXJlc3RpbmcgYml0cyBvZiBoaXN0b3J5LCBzbyB3ZSBjYW4gbmFycm93IGl0IGRvd24gdG8gdGhlIGdvb2Qgc3R1ZmYuIEZvciBleGFtcGxlLCBhbHRob3VnaCB0aGVyZSB3ZXJlIHNldmVuIHRlcnJpdG9yaWVzIHRoYXQgY2FtZSB0b2dldGhlciB0byBmb3JtIEVuZ2xhbmQsIHRoZWlyIGJvdW5kYXJpZXMgd2VyZSBmYXIgZnJvbSBmaXhlZCwgYW5kIHNvbWV0aW1lcyBvbmUga2luZ2RvbSB3b3VsZCBjb25xdWVyIGFub3RoZXIuIFdlIGNhbiBmaW5kIHRoZXNlIGNvbnZlcmdlbmNlcyBieSBzZWFyY2hpbmcgZm9yIGNvbW1hcyBpbiB0aGUgZG9tYWluIGNvbHVtbi4gVG8gZGV0ZWN0IGEgcGF0dGVybiwgd2UgdXNlIHRoZSBzdHJfZGV0ZWN0IGZ1bmN0aW9uLiBUaGUgZml4ZWQgZnVuY3Rpb24gdGVsbHMgc3RyX2RldGVjdCB0aGF0IHdlIGFyZSBsb29raW5nIGZvciBhIGZpeGVkIHN0cmluZyAoYSBjb21tYSkgcmF0aGVyIHRoYW4gYSByZWd1bGFyIGV4cHJlc3Npb24uIHN0cl9kZXRlY3QgcmV0dXJucyBhIGxvZ2ljYWwgdmVjdG9yIHRoYXQgd2UgY2FuIHVzZSBmb3IgYW4gaW5kZXg6DQoNCmBgYHtyfQ0KbGlicmFyeShzdHJpbmdyKQ0KZW5nbGlzaF9tb25hcmNocyRkb21haW4NCm11bHRpcGxlX2tpbmdkb21zIDwtIHN0cl9kZXRlY3QoZW5nbGlzaF9tb25hcmNocyRkb21haW4sIGZpeGVkKCIsIikpDQplbmdsaXNoX21vbmFyY2hzW211bHRpcGxlX2tpbmdkb21zLCBjKCJuYW1lIiwgImRvbWFpbiIpXQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUjogRGF0YSBBbmFseXNpcyBXb3JrZmxvdyIKYXV0aG9yOiBNZW5nIEhzdWFuIEhzaWVoCm91dHB1dDoKICBodG1sX25vdGVib29rOgogICAgdGhlbWU6IHVuaXRlZAogICAgdG9jOiB5ZXMKLS0tCgpXZSB3aWxsIG5vdyBnZXQgaW50byBkYXRhIHNjaWVuY2UgdXNpbmcgUi4gVGhpcyBhc3N1bWVzIGEgbG90IG9mIG1hdHVyaXR5IGluIHRoZSBsYW5ndWFnZTsgcGxlYXNlIGNvbnN1bHQgdGhlIHByZXZpb3VzIG5vdGVib29rcyBpZiB5b3UncmUgdW5zdXJlIGFib3V0IHNvbWUgb2YgdGhlIHRlY2huaXF1ZXMgcHJlc2VudGVkIGhlcmUuCgojIERhdGEgVHlwZXMKCk9uZSBvZiB0aGUgcGFja2FnZXMgaW4gdGhlIGJhc2UgUiBkaXN0cmlidXRpb24gaXMgY2FsbGVkIGRhdGFzZXRzLCBhbmQgaXQgaXMgZW50aXJlbHkgZmlsbGVkIHdpdGggZXhhbXBsZSBkYXRhc2V0cy4gV2hpbGUgeW914oCZbGwgYmUgbHVja3kgaWYgYW55IG9mIHRoZW0gYXJlIHN1aXRlZCB0byB5b3VyIHBhcnRpY3VsYXIgYXJlYSBvZiByZXNlYXJjaCwgdGhleSBhcmUgaWRlYWwgZm9yIHRlc3RpbmcgeW91ciBjb2RlIGFuZCBmb3IgZXhwbG9yaW5nIG5ldyB0ZWNobmlxdWVzLgoKYGBge3J9CmRhdGEoKQpkYXRhKCJraWRuZXkiLCBwYWNrYWdlID0gInN1cnZpdmFsIikKa2lkbmV5CmBgYAoKTGV0J3MgYmUgcmVhbDogd2UgY2Fubm90IGV4cGVjdCB0byB1c2UgdGhlc2UgZGF0YXNldHMgb3RoZXIgdGhhbiB0ZXN0aW5nIHB1cnBvc2VzLiBBcyBzdWNoLCB0aGUgbW9yZSBpbnRlcmVzdGluZyBxdWVzdGlvbiBpcyAqKmhvdyBjYW4gd2UgaW1wb3J0IGRhdGFzZXRzIGFuZCB3b3JrIHdpdGggdGhlbSBmcm9tIHRoZXJlKiouIFRoZXJlIGFyZSBtYW55LCBtYW55IGZvcm1hdHMgYW5kIHN0YW5kYXJkcyBvZiB0ZXh0IGRvY3VtZW50cyBmb3Igc3RvcmluZyBkYXRhLiBDb23igJAgbW9uIGZvcm1hdHMgZm9yIHN0b3JpbmcgZGF0YSBhcmUgZGVsaW1pdGVyLXNlcGFyYXRlZCB2YWx1ZXMgKENTViBvciB0YWItZGVsaW1pdGVkKSwgZVh0ZW5zaWJsZSBNYXJrdXAgTGFuZ3VhZ2UgKFhNTCksIEphdmFTY3JpcHQgT2JqZWN0IE5vdGF0aW9uIChKU09OKSwgYW5kIFlBTUwgKHdoaWNoIHJlY3Vyc2l2ZWx5IHN0YW5kcyBmb3IgWUFNTCBBaW7igJl0IE1hcmt1cCBMYW5ndWFnZSkuIE90aGVyIHNvdXJjZXMgb2YgdGV4dCBkYXRhIGFyZSBsZXNzIHdlbGwtc3RydWN0dXJlZOKAlGEgYm9vaywgZm9yIGV4YW1wbGUsIGNvbnRhaW5zIHRleHQgZGF0YSB3aXRob3V0IGFueSBmb3JtYWwgKHRoYXQgaXMsIHN0YW5kYXJkaXplZCBhbmQgbWFjaGluZSBwYXJzYWJsZSkgc3RydWN0dXJlLiAKClRoZSBtYWluIGFkdmFudGFnZSBvZiBzdG9yaW5nIGRhdGEgaW4gdGV4dCBmaWxlcyBpcyB0aGF0IHRoZXkgY2FuIGJlIHJlYWQgYnkgbW9yZSBvciBsZXNzIGFsbCBvdGhlciBkYXRhIGFuYWx5c2lzIHNvZnR3YXJlIGFuZCBieSBodW1hbnMuIFRoaXMgbWFrZXMgeW91ciBkYXRhIG1vcmUgd2lkZWx5IHJldXNhYmxlIGJ5IG90aGVycy4KCiMjIENTVgoKUmVjdGFuZ3VsYXIgKHNwcmVhZHNoZWV0LWxpa2UpIGRhdGEgaXMgY29tbW9ubHkgc3RvcmVkIGluIGRlbGltaXRlZC12YWx1ZSBmaWxlcywgcGFy4oCQIHRpY3VsYXJseSBjb21tYS1zZXBhcmF0ZWQgdmFsdWVzIChDU1YpIGFuZCB0YWItZGVsaW1pdGVkIHZhbHVlcyBmaWxlcy4gVGhlIHJlYWQudGFibGUgZnVuY3Rpb24gcmVhZHMgdGhlc2UgZGVsaW1pdGVkIGZpbGVzIGFuZCBzdG9yZXMgdGhlIHJlc3VsdHMgaW4gYSBkYXRhIGZyYW1lLiBJbiBpdHMgc2ltcGxlc3QgZm9ybSwgaXQganVzdCB0YWtlcyB0aGUgcGF0aCB0byBhIHRleHQgZmlsZSBhbmQgaW1wb3J0cyB0aGUgY29udGVudHMuCgpFeGFtcGxlOgoKYGBge3J9CmxpYnJhcnkobGVhcm5pbmdyKQpkZWVyX2ZpbGUgPC0gc3lzdGVtLmZpbGUoCiAgImV4dGRhdGEiLAogICJSZWREZWVyRW5kb2NyYW5pYWxWb2x1bWUuZGxtIiwKICBwYWNrYWdlID0gImxlYXJuaW5nciIKICApCmRlZXJfZGF0YSA8LSByZWFkLnRhYmxlKGRlZXJfZmlsZSwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpCnN0cihkZWVyX2RhdGEsIHZlYy5sZW4gPSAxKSAjdmVjLmxlbiBhbHRlcnMgdGhlIGFtb3VudCBvZiBvdXRwdXQKaGVhZChkZWVyX2RhdGEpCmBgYAoKTm90aWNlIHRoYXQgdGhlIGNsYXNzIG9mIGVhY2ggY29sdW1uIGhhcyBiZWVuIGF1dG9tYXRpY2FsbHkgZGV0ZXJtaW5lZCwgYW5kIHJvdyBhbmQgY29sdW1uIG5hbWVzIGhhdmUgYmVlbiBhdXRvbWF0aWNhbGx5IGFzc2lnbmVkLiBUaGUgY29sdW1uIG5hbWVzIGFyZSAoYnkgZGVmYXVsdCkgZm9yY2VkIHRvIGJlIHZhbGlkIHZhcmlhYmxlIG5hbWVzICh2aWEgbWFrZS5uYW1lcyksIGFuZCBpZiByb3cgbmFtZXMgYXJlbuKAmXQgcHJvdmlkZWQgdGhlIHJvd3MgYXJlIHNpbXBseSBudW1iZXJlZCAxLCAyLCAzLCBhbmQgc28gb24uCgpUaGVyZSBhcmUgbG90cyBvZiBhcmd1bWVudHMgdG8gc3BlY2lmeSBob3cgdGhlIGZpbGUgd2lsbCBiZSByZWFkOyBwZXJoYXBzIHRoZSBtb3N0IGltcG9ydGFudCBpcyBzZXAsIHdoaWNoIGRldGVybWluZXMgdGhlIGNoYXJhY3RlciB0byB1c2UgYXMgYSBzZXBhcmF0b3IgYmV0d2VlbiBmaWVsZHMuIFlvdSBjYW4gYWxzbyBzcGVjaWZ5IGhvdyBtYW55IGxpbmVzIG9mIGRhdGEgdG8gcmVhZCB2aWEgbnJvdywgYW5kIGhvdyBtYW55IGxpbmVzIGF0IHRoZSBzdGFydCBvZiB0aGUgZmlsZSB0byBza2lwLiBNb3JlIGFkdmFuY2VkIG9wdGlvbnMgaW5jbHVkZSB0aGUgYWJpbGl0eSB0byBvdmVycmlkZSB0aGUgZGVmYXVsdCByb3cgbmFtZXMsIGNvbHVtbiBuYW1lcywgYW5kIGNsYXNzZXMsIGFuZCB0byBzcGVjaWZ5IHRoZSBjaGFyYWN0ZXIgZW5jb2Rpbmcgb2YgdGhlIGlucHV0IGZpbGUgYW5kIGhvdyBzdHJpbmcgaW5wdXQgY29sdW1ucyBzaG91bGQgYmUgZGVjbGFyZWQuCgpFeGFtcGxlIG9uIHdoeSBpdCBpcyBpbXBvcnRhbnQgd2hhdCBpcyByZWFkOgoKYGBge3J9CmNyYWJfZmlsZSA8LSBzeXN0ZW0uZmlsZSgKICAiZXh0ZGF0YSIsCiAgImNyYWJ0YWcuY3N2IiwKICBwYWNrYWdlID0gImxlYXJuaW5nciIKICApCihjcmFiX2lkX2Jsb2NrIDwtIHJlYWQuY3N2KAogIGNyYWJfZmlsZSwgaGVhZGVyID0gRkFMU0UsIHNraXAgPSAzLAogIG5yb3cgPSAyCiAgKQopCmBgYAoKQW5kIG5vdyB3ZSBjYW4gYnVpbGQgYSBwcm9wZXIgZGF0YXNldDoKCmBgYHtyfQooY3JhYl90YWdfbm90ZWJvb2sgPC0gcmVhZC5jc3YoCiAgY3JhYl9maWxlLAogIGhlYWRlciA9IEZBTFNFLAogIHNraXAgPSA4LAogIG5yb3cgPSA1CiAgKQopCmBgYAoKYGBge3J9CihjcmFiX2xpZmV0aW1lX25vdGVib29rIDwtIHJlYWQuY3N2KAogIGNyYWJfZmlsZSwKICBoZWFkZXIgPSBGQUxTRSwKICBza2lwID0gMTUsCiAgbnJvdyA9IDMgCiAgKQopCmBgYAoKRm9yIHJlYWxseSBsb3ctbGV2ZWwgY29udHJvbCB3aGVuIGltcG9ydGluZyB0aGlzIHNvcnQgb2YgZmlsZSwgeW91IGNhbiB1c2UgdGhlIHNjYW4gZnVuY3Rpb24sIG9uIHdoaWNoIHJlYWQudGFibGUgaXMgYmFzZWQuIE9yZGluYXJpbHksIHlvdSBzaG91bGQgbmV2ZXIgaGF2ZSB0byByZXNvcnQgdG8gc2NhbiwgYnV0IGl0IGNhbiBiZSB1c2VmdWwgZm9yIG1hbGZvcm1lZCBvciBub25zdGFuZGFyZCBmaWxlcy4KClRoZSBvcHBvc2l0ZSB0YXNrLCB3cml0aW5nIGZpbGVzLCBpcyBnZW5lcmFsbHkgc2ltcGxlciB0aGFuIHJlYWRpbmcgZmlsZXMsIHNpbmNlIHlvdSBkb27igJl0IG5lZWQgdG8gd29ycnkgYWJvdXQgb2RkaXRpZXMgaW4gdGhlIGZpbGXigJR5b3UgdXN1YWxseSB3YW50IHRvIGNyZWF0ZSBzb21ldGhpbmcgc3RhbmRhcmQuIHJlYWQudGFibGUgYW5kIHJlYWQuY3N2IGhhdmUgdGhlIG9idmlvdXNseSBuYW1lZCBjb3VudGVycGFydHMgd3JpdGUudGFibGUgYW5kIHdyaXRlLmNzdi4KCkZpbmFsbHksIGZ1bmN0aW9ucyB0YWtlIGEgZGF0YSBmcmFtZSBhbmQgYSBmaWxlIHBhdGggdG8gd3JpdGUgdG86CgpgYGB7cn0Kd3JpdGUuY3N2KAogIGNyYWJfbGlmZXRpbWVfbm90ZWJvb2ssICJEYXRhL0NsZWFuZWQvY3JhYiBsaWZldGltZSBkYXRhLmNzdiIsIHJvdy5uYW1lcyA9IEZBTFNFLAogIGZpbGVFbmNvZGluZyA9ICJ1dGY4IgopCmBgYAoKCmBgYHtyfQpsaWJyYXJ5KHhsc3gpCmJpa2VfZmlsZSA8LSBzeXN0ZW0uZmlsZSgKICAiZXh0ZGF0YSIsCiAgIkFscGUgZCdIdWV6LnhscyIsCiAgcGFja2FnZSA9ICJsZWFybmluZ3IiCiAgKQoKYmlrZV9kYXRhIDwtIHJlYWQueGxzeDIoCiAgYmlrZV9maWxlLAogIHNoZWV0SW5kZXggPSAxLAogIHN0YXJ0Um93ID0yLAogIGVuZFJvdyA9IDM4LAogIGNvbEluZGV4ID0gMjo4LAogIGNvbENsYXNzZXMgPSBjKAogICAgImNoYXJhY3RlciIsICJudW1lcmljIiwgImNoYXJhY3RlciIsICJpbnRlZ2VyIiwKICAgICJjaGFyYWN0ZXIiLCAiY2hhcmFjdGVyIiwgImNoYXJhY3RlciIKICAgICkKKQoKaGVhZChiaWtlX2RhdGEpCmBgYAoKSG93ZXZlciwgd2Ugd2lsbCB3b3JrIG1vc3RseSB3aXRoIGRhdGFzZXRzIHRoYXQgY2FuIGJlIGltcG9ydGVkIGVhc2lseSB3aXRoIGZ1bmN0aW9ucyBzdWNoIGFzIHJlYWQuY3N2KCkuCgoKIyBEYXRhIENsZWFuaW5nCgpBZnRlciBvbmUgaW1wb3J0cyB0aGUgZGF0YXNldCwgb25lIG5lZWRzIHRvIGJlIGV4dHJhIGNhcmVmdWwgYWJvdXQgd2hhdCBpcyBmZWFzaWJsZSBpbiBhIGRhdGFzZXQgYW5kIHdoYXQgaXMgbm90LiBJdCdzIGFsbW9zdCBhbHdheXMgdGhlIHdyb25nIG9uZSBmb3Igd2hhdCB5b3Ugd2FudCB0byBkbyB3aXRoIGl0LCBhbmQgbm8gbWF0dGVyIHdobyBnYXZlIGl0IHRvIHlvdSwgaXQgaXMgYWxtb3N0IGFsd2F5cyBkaXJ0eS4gQ2xlYW5pbmcgYW5kIHRyYW5zZm9ybWluZyBkYXRhIG1heSBub3QgYmUgdGhlIGZ1biBwYXJ0IG9mIGRhdGEgYW5hbHlzaXMsIGJ1dCB5b3Ugd2lsbCBwcm9iYWJseSBzcGVuZCBtb3JlIG9mIHlvdXIgbGlmZSB0aGFuIHlvdSBjYXJlIHRvIGRvaW5nIGl0LiBGb3J0dW5hdGVseSwgUiBoYXMgYSB3aWRlIHNlbGVjdGlvbiBvZiB0b29scyB0byBoZWxwIHdpdGggdGhlc2UgdGFza3MuCgojIyBDbGVhbmluZyBTdHJpbmdzL1RleHRzCgpTb21ldGhpbmcgdGhhdCBpcyB3ZWxsLWNoZXJpc2hlZCBieSB0aGUgY29tbXVuaXR5IG9mIGRhdGEgY2xlYW5lcnMgaXMgdGhlIGFiaWxpdHkgdG8gYXV0b21hdGUgc29tZSBvZiB0aGVzZSBvbmVyb3VzIHRhc2tzLiBPbmUgb2YgdGhlc2UgdG9vbHMgaXMgd3JpdGluZyBmdW5jdGlvbnMhIElmIHdlIGFyZSBpbnRlcmVzdGVkIGluIGNsZWFuaW5nIHN0cmluZ3MsIHdlIGNhbiB3cml0ZSBhIGZ1bmN0aW9uIHRoYXQgYXV0b21hdGljYWxseSBkb2VzIGl0IGZvciB1cy4KCkEgcXVpY2sgbm90ZTogdGhpcyBpcyBtb3N0IHVzZWZ1bCB3aGVuIHdlIGhhdmUgYSBjbGVhciBpZGVhIG9uIGhvdyB0aGUgZGF0YSBsb29rcyBsaWtlLiBJZiB3ZSBrbm93IHRoZSBkYXRhIGlzIG5vdCB2ZXJ5IGNvbXBsZXggaW4gdGVybXMgb2YgbWlzdGFrZXMsIGllLiB0aGVyZSBhcmUgbm90IHRoYXQgbWFueSAqdHlwZXMqIG9mIG1pc3Rha2VzICh0aGlzIGlzIE5FVkVSIHRoZSBjYXNlLCBieSB0aGUgd2F5KSwgdGhlbiBhIGNvdXBsZSBvZiBmdW5jdGlvbnMgd291bGQgc3VmZmljZSBpbiB0cmFuc2Zvcm1pbmcgdGhlIGV4aXN0aW5nIGRhdGEgdG8gdGhlIGRlc2lyYWJsZSBkYXRhIHR5cGVzLiBBIGZ1bmN0aW9uIHRoYXQgb25lIGNhbiB3cml0ZSBpcyBzb21ldGhpbmcgbGlrZSB0aGUgZm9sbG93aW5nOgoKYGBge3J9CnluX3RvX2xvZ2ljYWwgPC0gZnVuY3Rpb24oeCl7CiAgeSA8LSByZXAuaW50KE5BLCBsZW5ndGgoeCkpCiAgeVt4ID09ICJZIl0gPC0gVFJVRQogIHlbeCA9PSAiTiJdIDwtIEZBTFNFCiAgeQp9CmBgYApgYGB7cn0KbGlicmFyeSgibGVhcm5pbmdyIikKYWxwZV9kX2h1ZXogPC0gbGVhcm5pbmdyOjphbHBlX2RfaHVlegphbHBlX2RfaHVlegphbHBlX2RfaHVleiREcnVnVXNlIDwtIHluX3RvX2xvZ2ljYWwoYWxwZV9kX2h1ZXokRHJ1Z1VzZSkKYWxwZV9kX2h1ZXoKYGBgCgpUaGlzIGRpcmVjdCByZXBsYWNlbWVudCBvZiBvbmUgc3RyaW5nIHdpdGggYW5vdGhlciBkb2Vzbid0IHNjYWxlIHZlcnkgd2VsbCB0byBoYXZpbmcgbG90cyBvZiBjaG9pY2VzIG9mIHN0cmluZy4gSWYgeW91IGhhdmUgdGVuIHRob3VzYW5kIHBvc3NpYmxlIGlucHV0cywgdGhlbiBhIGZ1bmN0aW9uIHRvIGNoYW5nZSBlYWNoIG9uZSB3b3VsZCBiZSB2ZXJ5IGhhcmQgdG8gd3JpdGUgd2l0aG91dCBlcnJvcnMsIGFuZCBldmVuIGhhcmRlciB0byBtYWludGFpbi4KCkZvcnR1bmF0ZWx5LCBtdWNoIG1vcmUgc29waGlzdGljYXRlZCBtYW5pcHVsYXRpb24gaXMgcG9zc2libGUsIGFuZCBpdCBpcyByZWxhdGl2ZWx5IGVhc3kgdG8gZGV0ZWN0LCBleHRyYWN0LCBhbmQgcmVwbGFjZSBwYXJ0cyBvZiBzdHJpbmdzIHRoYXQgbWF0Y2ggYSBwYXR0ZXJuLiBSIGhhcyBhIHN1aXRlIG9mIGJ1aWx0aW4gZnVuY3Rpb25zIGZvciBoYW5kbGluZyB0aGVzZSB0YXNrcywgKGxvb3NlbHkpIGJhc2VkIHVwb24gdGhlIFVuaXggZ3JlcCB0b29sLiBUaGV5IGFjY2VwdCBhIHN0cmluZyB0byBtYW5pcHVsYXRlIGFuZCBhIHJlZ3VsYXIgZXhwcmVzc2lvbiB0byBtYXRjaC4gQXMgbWVudGlvbmVkIGluIENoYXB0ZXIgMSwgcmVndWxhciBleHByZXNzaW9ucyBhcmUgcGF0dGVybnMgdGhhdCBwcm92aWRlIGEgZmxleGlibGUgbWVhbnMgb2YgZGVzY3JpYmluZyB0aGUgY29udGVudHMgb2YgYSBzdHJpbmcuIFRoZXkgYXJlIHZlcnkgdXNlZnVsIGZvciBtYXRjaGluZyBjb21wbGV4IHN0cmluZy1kYXRhIHR5cGVzIGxpa2UgcGhvbmUgbnVtYmVycyBvciBlbWFpbCBhZGRyZXNzZXMuCgoKVGhlIGdyZXAsIGdyZXBsLCBhbmQgcmVnZXhwciBmdW5jdGlvbnMgYWxsIGZpbmQgc3RyaW5ncyB0aGF0IG1hdGNoIGEgcGF0dGVybiwgYW5kIHN1YiBhbmQgZ3N1YiByZXBsYWNlIG1hdGNoaW5nIHN0cmluZ3MuIEluIGNsYXNzaWMgUiBzdHlsZSwgdGhlc2UgZnVuY3Rpb25zIGFyZSBtZXRpY3Vsb3VzbHkgY29ycmVjdCBhbmQgdmVyeSBwb3dlcmZ1bCwgYnV0IHN1ZmZlciBmcm9tIGZ1bm55IG5hbWluZyBjb252ZW50aW9ucywgcXVpcmt5IGFyZ3VtZW50IG9yZGVyaW5nLCBhbmQgb2RkIHJldHVybiB2YWx1ZXMgdGhhdCBoYXZlIGFyaXNlbiBmb3IgaGlzdG9yaWNhbCByZWFzb25zLgoKRm9ydHVuYXRlbHksIGluIHRoZSBzYW1lIHdheSB0aGF0IHBseXIgcHJvdmlkZXMgYSBjb25zaXN0ZW50IHdyYXBwZXIgYXJvdW5kIGFwcGx5IGZ1bmN0aW9ucyBhbmQgbHVicmlkYXRlIHByb3ZpZGVzIGEgY29uc2lzdGVudCB3cmFwcGVyIGFyb3VuZCB0aGUgZGF0ZS10aW1lIGZ1bmN0aW9ucywgdGhlIHN0cmluZ3IgcGFja2FnZSBwcm92aWRlcyBhIGNvbnNpc3RlbnQgd3JhcHBlciBhcm91bmQgdGhlIHN0cmluZyBtYW5pcHVsYXRpb24gZnVuY3Rpb25zLiBUaGUgZGlmZmVyZW5jZSBpcyB0aGF0IHdoaWxlIHlvdSB3aWxsIG9jY2FzaW9uYWxseSBuZWVkIHRvIHVzZSBhIGJhc2UgYXBwbHkgb3IgZGF0ZS10aW1lIGZ1bmN0aW9uLCBzdHJpbmdyIGlzIGFkdmFuY2VkIGVub3VnaCB0aGF0IHlvdSBzaG91bGRuJ3QgbmVlZCB0byBib3RoZXIgd2l0aCBncmVwIGF0IGFsbC4gU28sIHRha2UgYSBsb29rIGF0IHRoZSA/Z3JlcCBoZWxwIHBhZ2UsIGJ1dCBkb24ndCBkZXZvdGUgdG9vIG11Y2ggb2YgeW91ciBicmFpbiB0byBpdC4KCk5vdywgdGhlIG5leHQgZXhhbXBsZToKCmBgYHtyfQpkYXRhKGVuZ2xpc2hfbW9uYXJjaHMsIHBhY2thZ2UgPSAibGVhcm5pbmdyIikKaGVhZChlbmdsaXNoX21vbmFyY2hzKQpgYGAKCk9uZSBvZiB0aGUgcHJvYmxlbXMgd2l0aCBoaXN0b3J5IGlzIHRoYXQgdGhlcmUgaXMgYW4gYXdmdWwgbG90IG9mIGl0IChQUkVBQ0gsIGFtIEkgcml0ZT8pLiBGb3J0dW5hdGVseSwgb2RkIG9yIG1lc3N5IGRhdGEgY2FuIGJlIGEgcmVhbGx5IGdvb2QgaW5kaWNhdG9yIG9mIHRoZSBpbnRlcmVzdGluZyBiaXRzIG9mIGhpc3RvcnksIHNvIHdlIGNhbiBuYXJyb3cgaXQgZG93biB0byB0aGUgZ29vZCBzdHVmZi4gRm9yIGV4YW1wbGUsIGFsdGhvdWdoIHRoZXJlIHdlcmUgc2V2ZW4gdGVycml0b3JpZXMgdGhhdCBjYW1lIHRvZ2V0aGVyIHRvIGZvcm0gRW5nbGFuZCwgdGhlaXIgYm91bmRhcmllcyB3ZXJlIGZhciBmcm9tIGZpeGVkLCBhbmQgc29tZXRpbWVzIG9uZSBraW5nZG9tIHdvdWxkIGNvbnF1ZXIgYW5vdGhlci4gV2UgY2FuIGZpbmQgdGhlc2UgY29udmVyZ2VuY2VzIGJ5IHNlYXJjaGluZyBmb3IgY29tbWFzIGluIHRoZSBkb21haW4gY29sdW1uLiBUbyBkZXRlY3QgYSBwYXR0ZXJuLCB3ZSB1c2UgdGhlIHN0cl9kZXRlY3QgZnVuY3Rpb24uIFRoZSBmaXhlZCBmdW5jdGlvbiB0ZWxscyBzdHJfZGV0ZWN0IHRoYXQgd2UgYXJlIGxvb2tpbmcgZm9yIGEgZml4ZWQgc3RyaW5nIChhIGNvbW1hKSByYXRoZXIgdGhhbiBhIHJlZ3VsYXIgZXhwcmVzc2lvbi4gc3RyX2RldGVjdCByZXR1cm5zIGEgbG9naWNhbCB2ZWN0b3IgdGhhdCB3ZSBjYW4gdXNlIGZvciBhbiBpbmRleDoKCmBgYHtyfQpsaWJyYXJ5KHN0cmluZ3IpCmVuZ2xpc2hfbW9uYXJjaHMkZG9tYWluCgptdWx0aXBsZV9raW5nZG9tcyA8LSBzdHJfZGV0ZWN0KGVuZ2xpc2hfbW9uYXJjaHMkZG9tYWluLCBmaXhlZCgiLCIpKQojIFRoZSBzdHJfZGV0ZWN0IGZ1bmN0aW9uIGxldHMgdXMgZGV0ZWN0IHRoZSBwYXR0ZXJucyBpbiBhIHBhcnRpY3VsYXIgbGlzdCBvZiBkYXRhc2V0LiBEYXRhIGNsZWFuaW5nIGlzIG9ubHkgcG9zc2libGUgd2hlbiB3ZSBrbm93IHdoYXQgaXMgaW4gb3VyIGRhdGFzZXQuCmVuZ2xpc2hfbW9uYXJjaHNbbXVsdGlwbGVfa2luZ2RvbXMsIGMoIm5hbWUiLCAiZG9tYWluIildCmBgYAoKVGhpcyB0aW1lLCBzaW5jZSB3ZSBhcmUgbG9va2luZyBmb3IgdHdvIHRoaW5ncywgaXQgaXMgZWFzaWVyIHRvIHNwZWNpZnkgYSByZWd1bGFyIGV4cHJlc3Npb24gcmF0aGVyIHRoYW4gYSBmaXhlZCBzdHJpbmcuIFRoZSBwaXBlIGNoYXJhY3RlciwgfCwgaGFzIHRoZSBzYW1lIG1lYW5pbmcgaW4gcmVndWxhciBleHByZXNzaW9ucyBhcyBpdCBkb2VzIGluIFI6IGl0IG1lYW5zICJvciIuCgpJbiB0aGlzIG5leHQgZXhhbXBsZSwgdG8gcHJldmVudCBleGNlc3NpdmUgb3V0cHV0IHdlIGp1c3QgcmV0dXJuIHRoZSBuYW1lIGNvbHVtbiBhbmQgaWdub3JlIG1pc3NpbmcgdmFsdWVzICh3aXRoIGlzLm5hKToKCmBgYHtyfQptdWx0aXBsZV9ydWxlcnMgPC0gc3RyX2RldGVjdChlbmdsaXNoX21vbmFyY2hzJG5hbWUsICIsfGFuZCIpCmVuZ2xpc2hfbW9uYXJjaHMkbmFtZVttdWx0aXBsZV9ydWxlcnMgJiAhaXMubmEobXVsdGlwbGVfcnVsZXJzKV0KYGBgCgpJZiB3ZSB3YW50ZWQgdG8gc3BsaXQgdGhlIG5hbWUgY29sdW1uIGludG8gaW5kaXZpZHVhbCBydWxlcnMsIHRoZW4gd2UgY291bGQgdXNlIHN0cl9zcGxpdCAob3Igc3Ryc3BsaXQgZnJvbSBiYXNlIFIsIHdoaWNoIGRvZXMgdGhlIHNhbWUgdGhpbmcpIGluIG11Y2ggdGhlIHNhbWUgd2F5LiBzdHJfc3BsaXQgYWNjZXB0cyBhIHZlY3RvciBhbmQgcmV0dXJucyBhIGxpc3QsIHNpbmNlIGVhY2ggaW5wdXQgc3RyaW5nIGNhbiBiZSBzcGxpdCBpbnRvIGEgdmVjdG9yIG9mIHBvc3NpYmx5IGRpZmZlcmluZyBsZW5ndGhzLgoKYGBge3J9CmluZGl2aWR1YWxfcnVsZXJzIDwtIHN0cl9zcGxpdChlbmdsaXNoX21vbmFyY2hzJG5hbWUsICIsIHwgYW5kICIpCmhlYWQoaW5kaXZpZHVhbF9ydWxlcnNbc2FwcGx5KGluZGl2aWR1YWxfcnVsZXJzLCBsZW5ndGgpID4gMV0pCmBgYAoKTm93LCB3ZSBjYW4gY291bnQgdGhlIHN0cmluZ3MgdHlwZXMgaW4gZWFjaCBsaXN0IG9mIHN0cmluZ3MgYnkgd3JpdGluZyBmdW5jdGlvbnMgdG8gcmV0dXJuIGNvdW50cyB0byBjYXRlZ29yaWVzLgoKYGBge3J9CmVuZ2xpc2hfbW9uYXJjaHMkbmFtZQphcCA8LSBjKCJFZCIsICJFYyIsICJSaSIpICNjYW4gYWxzbyB1c2UgbGFwbHkgZnJvbSBwbHlyCnNhcHBseSgKICBhcCwKICBmdW5jdGlvbihhcCkKICAgIHsKICAgIHN1bShzdHJfY291bnQoZW5nbGlzaF9tb25hcmNocyRuYW1lLCBhcCkpCiAgICB9CikKYGBgCgpJdCBsb29rcyBsaWtlIHRoZSBzdGFuZGFyZCBtb2Rlcm4gTGF0aW4gc3BlbGxpbmcgaXMgbW9zdCBjb21tb24gaW4gdGhpcyBkYXRhc2V0LiBJZiB3ZSB3YW50IHRvIHJlcGxhY2UgdGhlIGV0aHMgYW5kIHRob3Jucywgd2UgY2FuIHVzZSBzdHJfcmVwbGFjZV9hbGwgKGEgdmFyaWFudCBmdW5jdGlvbiwgc3RyX3JlcGxhY2UsIHJlcGxhY2VzIG9ubHkgdGhlIGZpcnN0IG1hdGNoKS4KCmBgYHtyfQpmcnVpdHMgPC0gYygib25lIGFwcGxlIiwgInR3byBwZWFycyIsICJ0aHJlZSBiYW5hbmFzIikKc3RyX3JlcGxhY2UoZnJ1aXRzLCAiW2FlaW91XSIsICItIikKYGBgCgoKYGBge3J9CmxpYnJhcnkoc3RyaW5ncikKZW5nbGlzaF9tb25hcmNocyRuZXdfbmFtZSA8LSBzdHJfcmVwbGFjZV9hbGwoZW5nbGlzaF9tb25hcmNocyRuYW1lLCAiW8Oww75dIiwgInRoIikKCmdlbmRlciA8LSBjKCAiTUFMRSIsICJNYWxlIiwgIm1hbGUiLCAiTSIsICJGRU1BTEUiLCAiRmVtYWxlIiwgImZlbWFsZSIsICJmIiwgTkEgKQoKY2xlYW5fZ2VuZGVyIDwtIHN0cl9yZXBsYWNlKGdlbmRlciwgcmVnZXgoIl5mKGVtYWxlKT8kIixpZ25vcmVfY2FzZSA9IFRSVUUpLCAiRmVtYWxlIikKY2xlYW5fZ2VuZGVyCgpjbGVhbl9nZW5kZXIgPC0gc3RyX3JlcGxhY2UoZ2VuZGVyLCByZWdleCgiXm0oYWxlKT8kIixpZ25vcmVfY2FzZSA9IFRSVUUpLCAiTWFsZSIpCmNsZWFuX2dlbmRlcgoKc3RyX3JlcGxhY2UoIlRveW90YSBzdWJhcnUgb24gdGFybWFjIHJvYWQgd2l0aCBteSBUQSIsIHJlZ2V4KCJ0YSIsaWdub3JlX2Nhc2UgPSBGQUxTRSksICJ0QSIpCnN0cl9yZXBsYWNlX2FsbCgiVG95b3RhIHN1YmFydSBvbiB0YXJtYWMgcm9hZCB3aXRoIG15IFRBIiwgcmVnZXgoInRhIixpZ25vcmVfY2FzZSA9IEZBTFNFKSwgInRBIikKYGBgCgpNb3JlIGluZm9ybWF0aW9uIG9uIHN0cmluZyByZXBsYWNlbWVudCBjYW4gYmUgZm91bmQgW2hlcmVdKGh0dHBzOi8vd3d3LnJzdHVkaW8uY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE2LzA5L1JlZ0V4Q2hlYXRzaGVldC5wZGYpLgoKCiMjIEVkaXRpbmcgQ29sdW1ucwoKU3VwcG9zZSB3ZSB3YW50IHRvIGFkZCBhIGNvbHVtbiB0byB0aGUgZW5nbGlzaF9tb25hcmNocyBkYXRhIGZyYW1lIGRlbm90aW5nIHRoZSBudW1iZXIgb2YgeWVhcnMgdGhlIHJ1bGVycyB3ZXJlIGluIHBvd2VyLiBXZSBjYW4gdXNlIHN0YW5kYXJkIGFzc2lnbm1lbnQgdG8gYWNoaWV2ZSB0aGlzOgoKYGBge3J9CmVuZ2xpc2hfbW9uYXJjaHMkbGVuZ3RoLm9mLnJlaWduLnllYXJzIDwtCiAgZW5nbGlzaF9tb25hcmNocyRlbmQub2YucmVpZ24gLSBlbmdsaXNoX21vbmFyY2hzJHN0YXJ0Lm9mLnJlaWduCmBgYAoKVGhpcyB3b3JrcywgYnV0IHRoZSByZXBldGl0aW9uIG9mIHRoZSBkYXRhIGZyYW1lIHZhcmlhYmxlIG5hbWVzIG1ha2VzIHRoaXMgYSBsb3Qgb2YgZWZmb3J0IHRvIHR5cGUgYW5kIHRvIHJlYWQuIFRoZSB3aXRoIGZ1bmN0aW9uIG1ha2VzIHRoaW5ncyBlYXNpZXIgYnkgbGV0dGluZyB5b3UgY2FsbCB2YXJpYWJsZXMgZGlyZWN0bHkuIEl0IHRha2VzIGEgZGF0YSBmcmFtZSBPUiBlbnZpcm9ubWVudCBhbmQgYW4gZXhwcmVzc2lvbiB0byBldmFsdWF0ZToKCmBgYHtyfQplbmdsaXNoX21vbmFyY2hzJGxlbmd0aC5vZi5yZWlnbi55ZWFycyA8LSB3aXRoKAogIGVuZ2xpc2hfbW9uYXJjaHMsCiAgZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ24KKQpgYGAKClRoaXMgaXMgbGVzcyBjbHVua3kgdG8gd3JpdGUsIGFuZCBnaXZlcyB1cyBleGFjdGx5IHdoYXQgd2Ugd2FudGVkIQoKVGhlIHdpdGhpbigpIGZ1bmN0aW9uIHdvcmtzIHNpbWlsYXJseSwgYnV0IHJldHVybnMgdGhlIGVudGlyZSBkYXRhZnJhbWUhCgpgYGB7cn0KZW5nbGlzaF9tb25hcmNocyA8LSB3aXRoaW4oCiAgZW5nbGlzaF9tb25hcmNocywKICB7CiAgICBsZW5ndGgub2YucmVpZ24ueWVhcnMgPC0gZW5kLm9mLnJlaWduIC0gc3RhcnQub2YucmVpZ24KICB9CikKYGBgCgpUaGlzIGJlY29tZXMgbGVzcyBjbHVua3kgaWYgd2UgaGF2ZSBtYW55IGNvbHVtbnMgdG8gZWRpdCBhbmQgcmVwbGFjZToKCmBgYHtyfQplbmdsaXNoX21vbmFyY2hzIDwtIHdpdGhpbigKICBlbmdsaXNoX21vbmFyY2hzLAogIHsKICAgIGxlbmd0aC5vZi5yZWlnbi55ZWFycyA8LSBlbmQub2YucmVpZ24gLSBzdGFydC5vZi5yZWlnbgogICAgcmVpZ24ud2FzLm1vcmUudGhhbi4zMC55ZWFycyA8LSBsZW5ndGgub2YucmVpZ24ueWVhcnMgPiAzMAogIH0KKQpgYGAKCkEgZ29vZCBoZXVyaXN0aWMgaXMgdGhhdCBpZiB5b3UgYXJlIGNyZWF0aW5nIG9yIGNoYW5naW5nIG9uZSBjb2x1bW4sIHRoZW4gdXNlIHdpdGg7IGlmIHlvdSB3YW50IHRvIG1hbmlwdWxhdGUgc2V2ZXJhbCBjb2x1bW5zIGF0IG9uY2UsIHRoZW4gdXNlIHdpdGhpbi4KCkFuIGFsdGVybmF0aXZlIGFwcHJvYWNoIGlzIHRha2VuIGJ5IHRoZSBtdXRhdGUgZnVuY3Rpb24gaW4gdGhlIHBseXIgcGFja2FnZSwgd2hpY2ggYWNjZXB0cyBuZXcgYW5kIHJldmlzZWQgY29sdW1ucyBhcyBuYW1lLXZhbHVlIHBhaXJzOgoKYGBge3J9CiMgaW5zdGFsbC5wYWNrYWdlcygicGx5ciIpCmxpYnJhcnkoInBseXIiKQplbmdsaXNoX21vbmFyY2hzIDwtIG11dGF0ZSgKICBlbmdsaXNoX21vbmFyY2hzLAogIGxlbmd0aC5vZi5yZWlnbi55ZWFycyAgICAgICAgPSBlbmQub2YucmVpZ24gLSBzdGFydC5vZi5yZWlnbiwKICByZWlnbi53YXMubW9yZS50aGFuLjMwLnllYXJzID0gbGVuZ3RoLm9mLnJlaWduLnllYXJzID4gMzAKKQpgYGAKClRoZSByZWQgZGVlciBkYXRhc2V0IHRoYXQgd2Ugc2F3IGluIHRoZSBwcmV2aW91cyBjaGFwdGVyIGNvbnRhaW5zIG1lYXN1cmVtZW50cyBvZiB0aGUgZW5kb2NyYW5pYWwgdm9sdW1lIGZvciBlYWNoIGRlZXIgdXNpbmcgZm91ciBkaWZmZXJlbnQgdGVjaG5pcXVlcy4gRm9yIHNvbWUgYnV0IG5vdCBhbGwgb2YgdGhlIGRlZXIsIGEgc2Vjb25kIG1lYXN1cmVtZW50IHdhcyB0YWtlbiB0byB0ZXN0IHRoZSByZXBlYXRhYmlsaXR5IG9mIHRoZSB0ZWNobmlxdWUuIFRoaXMgbWVhbnMgdGhhdCBzb21lIG9mIHRoZSByb3dzIGhhdmUgbWlzc2luZyB2YWx1ZXMuIFRoZSBjb21wbGV0ZS5jYXNlcyBmdW5jdGlvbiB0ZWxscyB1cyB3aGljaCByb3dzIGFyZSBmcmVlIG9mIG1pc3NpbmcgdmFsdWVzOgoKYGBge3J9CmRhdGEoImRlZXJfZW5kb2NyYW5pYWxfdm9sdW1lIiwgcGFja2FnZSA9ICJsZWFybmluZ3IiKQpoYXNfYWxsX21lYXN1cmVtZW50cyA8LSBjb21wbGV0ZS5jYXNlcyhkZWVyX2VuZG9jcmFuaWFsX3ZvbHVtZSkKZGVlcl9lbmRvY3JhbmlhbF92b2x1bWVbaGFzX2FsbF9tZWFzdXJlbWVudHMsIF0KYGBgCgpUaGUgbmEub21pdCBmdW5jdGlvbiBwcm92aWRlcyBhIHNob3J0Y3V0IHRvIHRoaXMsIHJlbW92aW5nIGFueSByb3dzIG9mIGEgZGF0YSBmcmFtZSB3aGVyZSB0aGVyZSBhcmUgbWlzc2luZyB2YWx1ZXM7IGJ5IGNvbnRyYXN0LCBuYS5mYWlsIGZ1bmN0aW9uIHNwaXRzIG91dCAiZmFpbHVyZSIgd2hlbmV2ZXIgdGhlIGRhdGFmcmFtZSBoYXMgYSBtaXNzaW5nIHZhbHVlOgoKCmBgYHtyfQpuYS5vbWl0KGRlZXJfZW5kb2NyYW5pYWxfdm9sdW1lKQpuYS5mYWlsKGRlZXJfZW5kb2NyYW5pYWxfdm9sdW1lKQpgYGAKCkJvdGggdGhlc2UgZnVuY3Rpb25zIGNhbiBhY2NlcHQgdmVjdG9ycyBhcyB3ZWxsLCByZW1vdmluZyBtaXNzaW5nIHZhbHVlcyBvciBmYWlsaW5nLCBhcyBpbiB0aGUgZGF0YSBmcmFtZSBjYXNlLgoKWW91IGNhbiB1c2UgbXVsdGlwbGUgaW1wdXRhdGlvbiB0byBmaWxsIGluIG1pc3NpbmcgdmFsdWVzIGluIGEgc3RhdGlzdGljYWxseSBzb3VuZCB3YXkuIFRoaXMgaXMgYmV5b25kIHRoZSBzY29wZSBvZiB0aGUgYm9vaywgYnV0IHRoZSBtaWNlIGFuZCBtaXggcGFja2FnZXMgYXJlIGdvb2QgcGxhY2VzIHRvIHN0YXJ0LgoKCiMjIENvbnZlcnRpbmcgV2lkZSBhbmQgTG9uZyBGb3JtcwoKVGhlIHJlZCBkZWVyIGRhdGFzZXQgY29udGFpbnMgbWVhc3VyZW1lbnRzIG9mIHRoZSB2b2x1bWUgb2YgZGVlciBza3VsbHMgb2J0YWluZWQgaW4gZm91ciBkaWZmZXJlbnQgd2F5cy4gRWFjaCBtZWFzdXJlbWVudCBmb3IgYSBwYXJ0aWN1bGFyIGRlZXIgaXMgZ2l2ZW4gaW4gaXRzIG93biBjb2x1bW4uCgoK</div>
 
 
 
