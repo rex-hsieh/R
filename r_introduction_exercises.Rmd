@@ -58,6 +58,27 @@ pets_proportions
 One can do a lot more things with this setup: professionally/academically, we can use this do something we call *bootstrapping*. The details of this will be left to the statistics classes you will take in the future.
 
 
+# Another Cute Example: Grading
+
+Grading is not fun, especially when we have to drop the lowest out of a bunch. Say we drop the lowest grade; how might we program that?
+
+Well, of a list of numbers, we want to delete the minimum of the list.
+
+```{r}
+grades = c(1,2,35,6,7,8,2,3,1,1)
+grades[-min(grades)]
+```
+
+This seems painless enough. However, what if we want to drop ALL absolutely lowest grades in the list? There is a novel way of doing this that, as far as I can tell, is the only way:
+
+```{r}
+grades = c(1,2,35,6,7,8,2,3,1,1)
+(lowest_grades <- grades[which(grades == min(grades))])
+grades[!grades %in% lowest_grades]
+```
+
+This is fun, right?? :)
+
 
 
 # Manipulating Workspace Variables
@@ -247,3 +268,49 @@ table(bonus)
 ```
 
 Once you generate a larger output, think about the probability of getting bonuses given the scores. Is it more likely to get a bonus of 0 than bonus of 1, for example? If not, what is happening in this simulation? Is this a close approximation of reality / probabilistic thought experiment? What if my sample is 1 million?
+
+```{r}
+y <- three_d6(1000000)
+# Use the cut() function!
+
+bonus <- cut(y,
+             c(2,3,5,7,12,15,17,18),  # cut by UPPER BOUNDS
+             labels = -3:3
+             )
+table(bonus)
+```
+
+
+# A Fun Counting Example: Sea Shells
+
+> This is the text for the famous "sea shells" tongue twister:
+
+> sea_shells <- c(
+  "She", "sells", "sea", "shells", "by", "the", "seashore",
+  "The", "shells", "she", "sells", "are", "surely", "seashells",
+  "So", "if", "she", "sells", "shells", "on", "the", "seashore",
+  "I'm", "sure", "she", "sells", "seashore", "shells"
+)
+
+> Use the nchar function to calculate the number of letters in each word. Now loop over possible word lengths, displaying a message about which words have that length. For example, at length six, you should state that the words "shells" and "surely" have six letters.
+
+
+```{r}
+sea_shells <- c(
+  "She", "sells", "sea", "shells", "by", "the", "seashore",
+  "The", "shells", "she", "sells", "are", "surely", "seashells",
+  "So", "if", "she", "sells", "shells", "on", "the", "seashore",
+  "I'm", "sure", "she", "sells", "seashore", "shells"
+)
+
+nchar_sea_shells <- nchar(sea_shells)
+nchar_sea_shells  # what is the vector? see this for yourself
+
+for(i in min(nchar_sea_shells):max(nchar_sea_shells))
+{
+  message("These words have", i, "characters:")
+  # The following is the REALLY difficult part
+  print(toString(unique(sea_shells[nchar_sea_shells == i])))
+}
+```
+
